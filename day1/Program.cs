@@ -1,7 +1,7 @@
 ﻿var lines = File.ReadAllLines("day1-input.txt");
 
+var elves = new List<int>();
 var total = 0;
-var max = 0;
 foreach (var line in lines)
 {
     try
@@ -11,10 +11,13 @@ foreach (var line in lines)
     }
     catch 
     {
-        if (total > max) max = total;
+        elves.Add(total);
         total = 0;
     }
 }
-if (total> max) max = total;
 
+elves.Add(total);
+elves.Sort();
+
+var max = elves[^1];
 Console.WriteLine($"Max = {max}");
