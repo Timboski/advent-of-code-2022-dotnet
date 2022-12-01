@@ -18,6 +18,11 @@ foreach (var line in lines)
 
 elves.Add(total);
 elves.Sort();
+elves.Reverse();
+var max = elves.First();
 
-var max = elves[^1];
 Console.WriteLine($"Max = {max}");
+
+var topThree = elves.Take(3).Sum();
+
+Console.WriteLine($"Top Three = {topThree}");
