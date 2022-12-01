@@ -26,3 +26,7 @@ Console.WriteLine($"Max = {max}");
 var topThree = elves.Take(3).Sum();
 
 Console.WriteLine($"Top Three = {topThree}");
+
+// Regression
+if (max != 67027 || topThree != 197291)
+    Console.WriteLine("ERROR: INCORRECT RESULT");
