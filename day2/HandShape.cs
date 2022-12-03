@@ -21,4 +21,10 @@ public abstract class HandShape
 
     private bool IsDraw(HandShape opponent) 
         => ShapeType == opponent.ShapeType;
+
+    internal abstract HandShape CreateLosingOpponent();
+
+    internal abstract HandShape CreateDrawingOpponent();
+
+    internal abstract HandShape CreateWinningOpponent();
 }

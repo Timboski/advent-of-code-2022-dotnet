@@ -15,4 +15,18 @@ public class GameRoundTest
         // Assert
         Assert.Equal(expectedScore, result);
     }
+
+    [Theory]
+    [InlineData("A Y", 4)]
+    [InlineData("B X", 1)]
+    [InlineData("C Z", 7)]
+    public void GivenStrategyForRound_WhenScoreFixed_ReturnsCorrectResult(string strategy, int expectedScore)
+    {
+        // Arrange
+        // Act
+        var result = GameRound.ScoreFixed(strategy);
+
+        // Assert
+        Assert.Equal(expectedScore, result);
+    }
 }

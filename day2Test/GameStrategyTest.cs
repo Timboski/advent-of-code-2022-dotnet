@@ -27,4 +27,17 @@ public class GameStrategyTest
         // Assert
         Assert.Equal(11449, result);
     }
+
+    [Fact]
+    public void GivenExampleInput_WhenRunStrategyFixed_ReturnsCorrectResult()
+    {
+        // Arrange
+        var exampleInput = File.ReadAllLines("day2-example-input.txt");
+
+        // Act
+        var result = GameStrategy.SolveFixed(exampleInput);
+
+        // Assert
+        Assert.Equal(12, result);
+    }
 }
