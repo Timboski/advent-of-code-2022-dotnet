@@ -1,4 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using day2;
 
-int Solve() => 15;
+var input = File.ReadAllLines("day2-input.txt");
+var result = GameStrategy.Solve(input);
+Console.WriteLine(result);
