@@ -1,2 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using Day3;
+
+var input = File.ReadAllLines("day3-input.txt");
+var result = input.Select(line => ScoreRucksack.FindPriority(ScoreRucksack.Examine(line))).Sum();
+Console.WriteLine(result);
