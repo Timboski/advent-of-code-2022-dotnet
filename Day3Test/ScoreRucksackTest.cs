@@ -18,4 +18,19 @@ public class ScoreRucksackTest
         // Assert
         Assert.Equal(duplicateItem, result);
     }
+
+    [Theory]
+    [InlineData('a', 1)]
+    [InlineData('z', 26)]
+    [InlineData('A', 27)]
+    [InlineData('Z', 52)]
+    public void GivenItemCode_WhenFindPriority_ReturnsExpectedPriority(char itemCode, int expectedPriority) 
+    {
+        // Arrange
+        // Act
+        var result = ScoreRucksack.FindPriority(itemCode);
+
+        // Assert
+        Assert.Equal(expectedPriority, result);
+    }
 }

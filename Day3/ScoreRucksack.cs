@@ -7,4 +7,9 @@ public static class ScoreRucksack
         var half = contents.Length / 2;
         return contents[0..half].Intersect(contents[half..^0]).First();
     }
+
+    public static int FindPriority(char itemCode)
+        => char.IsLower(itemCode) ?
+            itemCode - 'a' + 1 :
+            itemCode - 'A' + 27;
 }
