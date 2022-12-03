@@ -2,5 +2,9 @@
 
 public class GameStrategy
 {
-    public static int Solve(IEnumerable<string> strategy) => 15;
+    public static int Solve(IEnumerable<string> strategy)
+        => strategy.Select(ComputeScore).Sum();
+
+    private static int ComputeScore(string strategyEntry)
+        => new GameRound(strategyEntry).Score();
 }
