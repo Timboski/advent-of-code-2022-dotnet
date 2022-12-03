@@ -14,4 +14,17 @@ public class GameStrategyTest
         // Assert
         Assert.Equal(15, result);
     }
+
+    [Fact]
+    public void GivenProblemInput_WhenRunStrategy_ReturnsCorrectResult()
+    {
+        // Arrange
+        var input = File.ReadAllLines("day2-input.txt");
+
+        // Act
+        var result = GameStrategy.Solve(input);
+
+        // Assert
+        Assert.Equal(11449, result);
+    }
 }
