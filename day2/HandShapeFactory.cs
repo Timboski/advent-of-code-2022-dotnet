@@ -2,7 +2,7 @@
 
 public static class HandShapeFactory
 {
-    public static HandShape Create(this HandShape.Shape shape)
+    public static HandShape Create(HandShape.Shape shape)
         => shape switch
         {
             HandShape.Shape.Rock => new Rock(),
@@ -11,7 +11,7 @@ public static class HandShapeFactory
             _ => throw new ArgumentOutOfRangeException(nameof(shape)),
         };
 
-    public static HandShape Create(this string shape)
+    public static HandShape Create(string shape)
         => shape switch
         {
             "A" or "X" => new Rock(),

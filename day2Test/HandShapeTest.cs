@@ -15,8 +15,8 @@ public class HandShapeTest
     public void GivenHand_WhenScoreAgainstOpponent_ReturnsCorrectResult(HandShape.Shape hand, HandShape.Shape opponent, int expectedScore)
     {
         // Arrange
-        var sut = hand.Create();
-        var opp = opponent.Create();
+        var sut = HandShapeFactory.Create(hand);
+        var opp = HandShapeFactory.Create(opponent);
 
         // Act
         var result = sut.Score(opp);
