@@ -33,4 +33,34 @@ public class ScoreRucksackTest
         // Assert
         Assert.Equal(expectedPriority, result);
     }
+    [Theory]
+    [InlineData("vJrwpWtwJgWrhcsFMMfFFhFp", 16)]
+    [InlineData("jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", 38)]
+    [InlineData("PmmdzqPrVvPwwTWBwg", 42)]
+    [InlineData("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn", 22)]
+    [InlineData("ttgJtRGJQctTZtZT", 20)]
+    [InlineData("CrZsJsPPZsGzwwsLwLmpwMDw)]", 19)]
+    
+    public void GivenRucksackContents_WhenExampineAndFindPriority_ReturnsDuplicateItemPriority(string contents, int expectedPriority)
+    {
+        // Arrange
+        // Act
+        var result = ScoreRucksack.FindPriority(ScoreRucksack.Examine(contents));
+
+        // Assert
+        Assert.Equal(expectedPriority, result);
+    }
+
+    [Fact]
+    public void GivenExampleData_WhenComputePart1_ReturnsEampleResult()
+    {
+        // Arrange
+        var input = File.ReadAllLines("day3-example-input.txt");
+
+        // Act
+        var result = input.Select(line => ScoreRucksack.FindPriority(ScoreRucksack.Examine(line))).Sum();
+
+        // Assert
+        Assert.Equal(157, result);
+    }
 }
