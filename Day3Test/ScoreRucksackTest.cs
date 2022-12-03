@@ -52,7 +52,7 @@ public class ScoreRucksackTest
     }
 
     [Fact]
-    public void GivenExampleData_WhenComputePart1_ReturnsEampleResult()
+    public void GivenExampleData_WhenComputePart1_ReturnsExampleResult()
     {
         // Arrange
         var input = File.ReadAllLines("day3-example-input.txt");
@@ -62,5 +62,18 @@ public class ScoreRucksackTest
 
         // Assert
         Assert.Equal(157, result);
+    }
+
+    [Fact]
+    public void GivenInputData_WhenComputePart1_ReturnsCorrectResult()
+    {
+        // Arrange
+        var input = File.ReadAllLines("day3-input.txt");
+
+        // Act
+        var result = input.Select(line => ScoreRucksack.FindPriority(ScoreRucksack.Examine(line))).Sum();
+
+        // Assert
+        Assert.Equal(8053, result);
     }
 }
