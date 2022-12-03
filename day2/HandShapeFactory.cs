@@ -3,13 +3,20 @@
 public static class HandShapeFactory
 {
     public static HandShape Create(this HandShape.Shape shape)
-    {
-        switch (shape)
+        => shape switch
         {
-            case HandShape.Shape.Rock: return new Rock();
-            case HandShape.Shape.Paper: return new Paper();
-            case HandShape.Shape.Scissors: return new Scissors();
-        }
-        throw new ArgumentOutOfRangeException(nameof(shape));
-    }
+            HandShape.Shape.Rock => new Rock(),
+            HandShape.Shape.Paper => new Paper(),
+            HandShape.Shape.Scissors => new Scissors(),
+            _ => throw new ArgumentOutOfRangeException(nameof(shape)),
+        };
+
+    public static HandShape Create(this string shape)
+        => shape switch
+        {
+            "A" or "X" => new Rock(),
+            "B" or "Y" => new Paper(),
+            "C" or "Z" => new Scissors(),
+            _ => throw new ArgumentOutOfRangeException(nameof(shape)),
+        };
 }

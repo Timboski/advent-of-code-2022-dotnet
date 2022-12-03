@@ -6,5 +6,5 @@ public class GameStrategy
         => strategy.Select(ComputeScore).Sum();
 
     private static int ComputeScore(string strategyEntry)
-        => new GameRound(strategyEntry).Score();
+        => GameRound.Score(strategyEntry);
 }

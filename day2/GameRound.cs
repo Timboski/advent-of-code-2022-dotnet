@@ -1,16 +1,12 @@
 ﻿namespace day2;
 
-internal class GameRound
+public static class GameRound
 {
-    private string strategyEntry;
-
-    public GameRound(string strategyEntry)
+    public static int Score(string strategyEntry)
     {
-        this.strategyEntry = strategyEntry;
-    }
-
-    internal int Score()
-    {
-        throw new NotImplementedException();
+        var hands = strategyEntry.Split(' ');
+        var opponent = hands[0].Create();
+        var player = hands[1].Create();
+        return player.Score(opponent);
     }
 }
