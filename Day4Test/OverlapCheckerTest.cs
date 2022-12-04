@@ -42,4 +42,17 @@ public class OverlapCheckerTest
         // Assert
         Assert.Equal(2, result);
     }
+
+    [Fact]
+    public void GivenProblemInput_WhenCountOverlaps_GetCorrectNumber()
+    {
+        // Arrange
+        var input = File.ReadAllLines("day4-input.txt");
+
+        // Act
+        var result = OverlapChecker.Count(input);
+
+        // Assert
+        Assert.Equal(459, result);
+    }
 }
