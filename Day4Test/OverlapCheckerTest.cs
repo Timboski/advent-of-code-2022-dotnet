@@ -55,4 +55,31 @@ public class OverlapCheckerTest
         // Assert
         Assert.Equal(459, result);
     }
+    [Theory]
+    [InlineData("2-4,6-8")]
+    [InlineData("2-3,4-5")]
+    public void GivenNoOverlap_WhenCheckPartial_ReturnsFalse(string input)
+    {
+        // Arrange
+        // Act
+        var result = OverlapChecker.CheckPartial(input);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Theory]
+    [InlineData("5-7,7-9")]
+    [InlineData("2-8,3-7")]
+    [InlineData("6-6,4-6")]
+    [InlineData("2-6,4-8")]
+    public void GivenPartialOrTotalOverlap_WhenCheckPartial_ReturnsTrue(string input)
+    {
+        // Arrange
+        // Act
+        var result = OverlapChecker.CheckPartial(input);
+
+        // Assert
+        Assert.True(result);
+    }
 }
