@@ -27,4 +27,17 @@ public class ElfGroupTest
         // Assert
         Assert.Equal(70, result);
     }
+
+    [Fact]
+    public void GivenInputData_WhenComputePart2_ReturnsCorrectResult()
+    {
+        // Arrange
+        var input = File.ReadAllLines("day3-input.txt");
+
+        // Act
+        var result = ElfGroup.BadgePriority(input);
+
+        // Assert
+        Assert.Equal(2425, result);
+    }
 }
