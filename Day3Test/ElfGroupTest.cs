@@ -22,7 +22,7 @@ public class ElfGroupTest
         var input = File.ReadAllLines("day3-example-input.txt");
 
         // Act
-        var result = input.Chunk(3).Select(group => ScoreRucksack.FindPriority(ElfGroup.Examine(group[0], group[1], group[2]))).Sum();
+        var result = ElfGroup.BadgePriority(input);
 
         // Assert
         Assert.Equal(70, result);
