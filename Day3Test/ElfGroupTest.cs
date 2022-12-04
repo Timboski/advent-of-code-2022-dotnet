@@ -14,4 +14,17 @@ public class ElfGroupTest
         // Assert
         Assert.Equal(duplicateItem, result);
     }
+
+    [Fact]
+    public void GivenExampleData_WhenComputePart2_ReturnsExampleResult()
+    {
+        // Arrange
+        var input = File.ReadAllLines("day3-example-input.txt");
+
+        // Act
+        var result = input.Chunk(3).Select(group => ScoreRucksack.FindPriority(ElfGroup.Examine(group[0], group[1], group[2]))).Sum();
+
+        // Assert
+        Assert.Equal(70, result);
+    }
 }
