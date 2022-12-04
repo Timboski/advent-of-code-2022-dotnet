@@ -50,6 +50,9 @@ public static class OverlapChecker
         return false;
     }
 
-    public static object Count(IEnumerable<string> input) 
+    public static object Count(IEnumerable<string> input)
         => input.Where(Check).Count();
+
+    public static object CountPartial(IEnumerable<string> input)
+        => input.Where(CheckPartial).Count();
 }
