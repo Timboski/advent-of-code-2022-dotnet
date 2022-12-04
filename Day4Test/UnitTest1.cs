@@ -1,11 +1,10 @@
-namespace Day4Test
-{
-    public class UnitTest1
-    {
-        [Fact]
-        public void Test1()
-        {
+namespace Day4Test;
 
-        }
+public class UnitTest1
+{
+    [Fact]
+    public void Test1()
+    {
+
     }
 }
