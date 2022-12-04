@@ -22,4 +22,7 @@ public static class OverlapChecker
         // Not a full overlap
         return false;
     }
+
+    public static object Count(IEnumerable<string> input) 
+        => input.Where(Check).Count();
 }
