@@ -1,2 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using Day4;
+
+var input = File.ReadAllLines("day4-input.txt");
+var result = OverlapChecker.Count(input);
+Console.WriteLine(result);
