@@ -55,6 +55,7 @@ public class OverlapCheckerTest
         // Assert
         Assert.Equal(459, result);
     }
+
     [Theory]
     [InlineData("2-4,6-8")]
     [InlineData("2-3,4-5")]
@@ -81,5 +82,30 @@ public class OverlapCheckerTest
 
         // Assert
         Assert.True(result);
+    }
+    [Fact]
+    public void GivenExampleInput_WhenCountPartialOverlaps_GetCorrectNumber()
+    {
+        // Arrange
+        var input = File.ReadAllLines("day4-example-input.txt");
+
+        // Act
+        var result = OverlapChecker.CountPartial(input);
+
+        // Assert
+        Assert.Equal(4, result);
+    }
+
+    [Fact]
+    public void GivenProblemInput_WhenCountPartialOverlaps_GetCorrectNumber()
+    {
+        // Arrange
+        var input = File.ReadAllLines("day4-input.txt");
+
+        // Act
+        var result = OverlapChecker.CountPartial(input);
+
+        // Assert
+        Assert.Equal(779, result);
     }
 }
