@@ -71,7 +71,7 @@ public class ShipTest
         sut.MoveCrates(3, 1, 3);
 
         // Assert
-        //Assert.Equal('D', sut.PeekTopCrateMarking(1));
+        Assert.Throws<InvalidOperationException>(() => sut.PeekTopCrateMarking(1));
         Assert.Equal('C', sut.PeekTopCrateMarking(2));
         Assert.Equal('Z', sut.PeekTopCrateMarking(3));
     }
