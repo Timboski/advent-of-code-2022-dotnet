@@ -4,6 +4,17 @@ public class Ship
 {
     private Dictionary<int, Stack<char>> _stack = new();
 
+    public string Process(IEnumerable<string> lines)
+    {
+        var picture = lines.TakeWhile(line => line.Length > 0);
+        AddCrates(picture);
+        MoveCrates(lines);
+        var result = string.Empty;
+        for (var i = 1; _stack.ContainsKey(i); ++i)
+            result += PeekTopCrateMarking(i);
+        return result;
+    }
+
     public void AddCrates(IEnumerable<string> picture)
     {
         foreach (var row in picture.Reverse().Skip(1)) AddCrates(row);
@@ -27,6 +38,21 @@ public class Ship
         _stack[stackIndex].Push(crateMarking);
     }
     public char PeekTopCrateMarking(int stackIndex) => _stack[stackIndex].Peek();
+
+    public void MoveCrates(IEnumerable<string> lines)
+    {
+        foreach (var line in lines)
+        {
+            var sections = line.Split(' ');
+            if (sections[0] == "move")
+            {
+                var numberOfCrates = int.Parse(sections[1]);
+                var fromStackIndex = int.Parse(sections[3]);
+                var toStackIndex = int.Parse(sections[5]);
+                MoveCrates(numberOfCrates, fromStackIndex, toStackIndex);
+            }
+        }
+    }
 
     public void MoveCrates(int numberOfCrates, int fromStackIndex, int toStackIndex)
     {
