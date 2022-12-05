@@ -176,4 +176,18 @@ public class ShipTest
         // Assert
         Assert.Equal("MCD", result);
     }
+
+    [Fact]
+    public void GivenProblemInput_WhenProcessCraneMover9001_ProducesCorrectMarkings()
+    {
+        // Arrange
+        var sut = new Ship();
+        var lines = File.ReadLines("day5-input.txt");
+
+        // Act
+        var result = sut.WhenProcessCraneMover9001(lines);
+
+        // Assert
+        Assert.Equal("RWLWGJGFD", result);
+    }
 }
