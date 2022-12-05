@@ -135,7 +135,6 @@ public class ShipTest
         Assert.Equal('Z', sut.PeekTopCrateMarking(3));
     }
 
-
     [Fact]
     public void GivenExampleData_WhenProcess_ProducesCorrectMarkings()
     {
@@ -148,5 +147,19 @@ public class ShipTest
 
         // Assert
         Assert.Equal("CMZ", result);
+    }
+
+    [Fact]
+    public void GivenProblemInput_WhenProcess_ProducesCorrectMarkings()
+    {
+        // Arrange
+        var sut = new Ship();
+        var lines = File.ReadLines("day5-input.txt");
+
+        // Act
+        var result = sut.Process(lines);
+
+        // Assert
+        Assert.Equal("FCVRLMVQP", result);
     }
 }
