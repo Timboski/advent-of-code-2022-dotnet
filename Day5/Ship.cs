@@ -4,6 +4,11 @@ public class Ship
 {
     private Dictionary<int, Stack<char>> _stack = new();
 
+    public void AddCrates(IEnumerable<string> picture)
+    {
+        foreach (var row in picture.Reverse().Skip(1)) AddCrates(row);
+    }
+
     public void AddCrates(string rowOfCrates)
     {
         var crates = rowOfCrates
