@@ -28,6 +28,9 @@ public class Ship
     }
     public char PeekTopCrateMarking(int stackIndex) => _stack[stackIndex].Peek();
 
-    public void MoveCrates(int numberOfCrates, int fromStackIndex, int toStackIndex) 
-        => AddCrate(toStackIndex, _stack[fromStackIndex].Pop());
+    public void MoveCrates(int numberOfCrates, int fromStackIndex, int toStackIndex)
+    {
+        for (var i = 0; i < numberOfCrates; ++i)
+            AddCrate(toStackIndex, _stack[fromStackIndex].Pop());
+    }
 }

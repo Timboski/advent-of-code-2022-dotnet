@@ -56,4 +56,23 @@ public class ShipTest
         Assert.Equal('C', sut.PeekTopCrateMarking(2));
         Assert.Equal('P', sut.PeekTopCrateMarking(3));
     }
+
+    [Fact]
+    public void GivenExampleStacks_WhenPerformSecondMove_TopCratesAreCorrect()
+    {
+        // Arrange
+        var sut = new Ship();
+        var picture = File.ReadLines("day5-example-input.txt")
+            .TakeWhile(line => line.Length > 0);
+        sut.AddCrates(picture);
+        sut.MoveCrates(1, 2, 1);
+
+        // Act
+        sut.MoveCrates(3, 1, 3);
+
+        // Assert
+        //Assert.Equal('D', sut.PeekTopCrateMarking(1));
+        Assert.Equal('C', sut.PeekTopCrateMarking(2));
+        Assert.Equal('Z', sut.PeekTopCrateMarking(3));
+    }
 }
