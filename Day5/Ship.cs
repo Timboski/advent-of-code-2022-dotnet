@@ -6,9 +6,19 @@ public class Ship
 
     public string Process(IEnumerable<string> lines)
     {
+        LoadCrates(lines);
+        MoveCrates(lines);
+        return CreateStateString();
+    }
+
+    private void LoadCrates(IEnumerable<string> lines)
+    {
         var picture = lines.TakeWhile(line => line.Length > 0);
         AddCrates(picture);
-        MoveCrates(lines);
+    }
+
+    private string CreateStateString()
+    {
         var result = string.Empty;
         for (var i = 1; _stack.ContainsKey(i); ++i)
             result += PeekTopCrateMarking(i);
@@ -53,10 +63,40 @@ public class Ship
             }
         }
     }
+    public void MoveCratesCraneMover9001(IEnumerable<string> lines)
+    {
+        foreach (var line in lines)
+        {
+            var sections = line.Split(' ');
+            if (sections[0] == "move")
+            {
+                var numberOfCrates = int.Parse(sections[1]);
+                var fromStackIndex = int.Parse(sections[3]);
+                var toStackIndex = int.Parse(sections[5]);
+                MoveCratesCraneMover9001(numberOfCrates, fromStackIndex, toStackIndex);
+            }
+        }
+    }
 
     public void MoveCrates(int numberOfCrates, int fromStackIndex, int toStackIndex)
     {
         for (var i = 0; i < numberOfCrates; ++i)
             AddCrate(toStackIndex, _stack[fromStackIndex].Pop());
+    }
+
+    public void MoveCratesCraneMover9001(int numberOfCrates, int fromStackIndex, int toStackIndex)
+    {
+        var tempStack = new Stack<char>(numberOfCrates);
+        for (var i = 0; i < numberOfCrates; ++i)
+            tempStack.Push(_stack[fromStackIndex].Pop());
+        while (tempStack.TryPop(out char crate))
+            AddCrate(toStackIndex, crate);
+    }
+
+    public object WhenProcessCraneMover9001(IEnumerable<string> lines)
+    {
+        LoadCrates(lines);
+        MoveCratesCraneMover9001(lines);
+        return CreateStateString();
     }
 }

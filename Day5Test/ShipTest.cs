@@ -162,4 +162,18 @@ public class ShipTest
         // Assert
         Assert.Equal("FCVRLMVQP", result);
     }
+
+    [Fact]
+    public void GivenExampleData_WhenProcessCraneMover9001_ProducesCorrectMarkings()
+    {
+        // Arrange
+        var sut = new Ship();
+        var lines = File.ReadLines("day5-example-input.txt");
+
+        // Act
+        var result = sut.WhenProcessCraneMover9001(lines);
+
+        // Assert
+        Assert.Equal("MCD", result);
+    }
 }
