@@ -75,4 +75,45 @@ public class ShipTest
         Assert.Equal('C', sut.PeekTopCrateMarking(2));
         Assert.Equal('Z', sut.PeekTopCrateMarking(3));
     }
+
+    [Fact]
+    public void GivenExampleStacks_WhenPerformThirdMove_TopCratesAreCorrect()
+    {
+        // Arrange
+        var sut = new Ship();
+        var picture = File.ReadLines("day5-example-input.txt")
+            .TakeWhile(line => line.Length > 0);
+        sut.AddCrates(picture);
+        sut.MoveCrates(1, 2, 1);
+        sut.MoveCrates(3, 1, 3);
+
+        // Act
+        sut.MoveCrates(2, 2, 1);
+
+        // Assert
+        Assert.Equal('M', sut.PeekTopCrateMarking(1));
+        Assert.Throws<InvalidOperationException>(() => sut.PeekTopCrateMarking(2));
+        Assert.Equal('Z', sut.PeekTopCrateMarking(3));
+    }
+
+    [Fact]
+    public void GivenExampleStacks_WhenPerformFourthMove_TopCratesAreCorrect()
+    {
+        // Arrange
+        var sut = new Ship();
+        var picture = File.ReadLines("day5-example-input.txt")
+            .TakeWhile(line => line.Length > 0);
+        sut.AddCrates(picture);
+        sut.MoveCrates(1, 2, 1);
+        sut.MoveCrates(3, 1, 3);
+        sut.MoveCrates(2, 2, 1);
+
+        // Act
+        sut.MoveCrates(1, 1, 2);
+
+        // Assert
+        Assert.Equal('C', sut.PeekTopCrateMarking(1));
+        Assert.Equal('M', sut.PeekTopCrateMarking(2));
+        Assert.Equal('Z', sut.PeekTopCrateMarking(3));
+    }
 }
