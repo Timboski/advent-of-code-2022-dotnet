@@ -19,4 +19,17 @@ public class DataStreamDecoderTest
         // Assert
         Assert.Equal(expectedPacketStart, packetStart);
     }
+
+    [Fact]
+    public void GivenDataInput_WhenFindPacketStart_ReturnsCorrectIndex()
+    {
+        // Arrange
+        var data = File.ReadAllText("day6-input.txt");
+
+        // Act
+        var packetStart = DataStreamDecoder.FindStartOfPacket(data);
+
+        // Assert
+        Assert.Equal(1140, packetStart);
+    }
 }
