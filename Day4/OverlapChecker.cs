@@ -23,16 +23,16 @@ public static class OverlapChecker
         var (start1, end1, start2, end2) = DecodeInput(input);
 
         // Does Elf 1 range contain Elf 2 start?
-        if (start2 >= start1 && start2 <= end1) return true;
+        if (IsWithinRange(start2, (start1, end1))) return true;
 
         // Does Elf 1 range contain Elf 2 end?
-        if (end2 >= start1 && end2 <= end1) return true;
+        if (IsWithinRange(end2, (start1, end1))) return true;
 
         // Does Elf 2 range contain Elf 1 start?
-        if (start1 >= start2 && start1 <= end2) return true;
+        if (IsWithinRange(start1, (start2, end2))) return true;
 
         // Does Elf 2 range contain Elf 1 end?
-        if (end1 >= start2 && end1 <= end2) return true;
+        if (IsWithinRange(end1, (start2, end2))) return true;
 
         // Not a full overlap
         return false;
@@ -46,6 +46,9 @@ public static class OverlapChecker
 
     public static bool IsFullyContained((int start, int end) elf1, (int start, int end) elf2) 
         => elf1.start <= elf2.start && elf1.end >= elf2.end;
+
+    public static bool IsWithinRange(int point, (int start, int end) elf) 
+        => point >= elf.start && point <= elf.end;
 
     private static (int start1, int end1, int start2, int end2) DecodeInput(string input)
     {
