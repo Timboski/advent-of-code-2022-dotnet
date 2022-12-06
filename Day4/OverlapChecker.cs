@@ -8,10 +8,10 @@ public static class OverlapChecker
         var (start1, end1, start2, end2) = DecodeInput(input);
 
         // Does Elf 1 do all of Elf 2 work?
-        if (start1 <= start2 && end1 >= end2) return true;
+        if (IsFullyContained((start1, end1),(start2, end2))) return true;
 
         // Does Elf 2 do all of Elf 1 work?
-        if (start2 <= start1 && end2 >= end1) return true;
+        if (IsFullyContained((start2, end2), (start1, end1))) return true;
 
         // Not a full overlap
         return false;
@@ -43,6 +43,9 @@ public static class OverlapChecker
 
     public static object CountPartial(IEnumerable<string> input)
         => input.Where(CheckPartial).Count();
+
+    public static bool IsFullyContained((int start, int end) elf1, (int start, int end) elf2) 
+        => elf1.start <= elf2.start && elf1.end >= elf2.end;
 
     private static (int start1, int end1, int start2, int end2) DecodeInput(string input)
     {
