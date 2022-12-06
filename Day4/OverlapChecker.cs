@@ -26,10 +26,10 @@ public static class OverlapChecker
     public static object CountPartial(IEnumerable<string> input)
         => input.Where(CheckPartial).Count();
 
-    public static bool FullyContains(this (int start, int end) elf1, (int start, int end) elf2) 
+    private static bool FullyContains(this (int start, int end) elf1, (int start, int end) elf2) 
         => elf1.start <= elf2.start && elf1.end >= elf2.end;
 
-    public static bool ContainsPoint(this (int start, int end) elf, int point) 
+    private static bool ContainsPoint(this (int start, int end) elf, int point) 
         => point >= elf.start && point <= elf.end;
 
     private static ((int start, int end) elf1, (int start, int end) elf2) DecodeInput(string input)
