@@ -4,10 +4,11 @@ public class Ship
 {
     private Dictionary<int, Stack<char>> _stack = new();
 
-    public string Process(IEnumerable<string> lines)
+    public string State => CreateStateString();
+
+    public void Process(IEnumerable<string> lines)
     {
         MoveCrates(lines);
-        return CreateStateString();
     }
 
     private string CreateStateString()
@@ -69,9 +70,8 @@ public class Ship
             AddCrate(toStackIndex, crate);
     }
 
-    public object WhenProcessCraneMover9001(IEnumerable<string> lines)
+    public void WhenProcessCraneMover9001(IEnumerable<string> lines)
     {
         MoveCratesCraneMover9001(lines);
-        return CreateStateString();
     }
 }

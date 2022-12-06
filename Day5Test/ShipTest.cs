@@ -146,10 +146,10 @@ public class ShipTest
         ShipLoader.LoadCrates(sut, lines);
 
         // Act
-        var result = sut.Process(lines);
+        sut.Process(lines);
 
         // Assert
-        Assert.Equal("CMZ", result);
+        Assert.Equal("CMZ", sut.State);
     }
 
     [Fact]
@@ -161,10 +161,10 @@ public class ShipTest
         ShipLoader.LoadCrates(sut, lines);
 
         // Act
-        var result = sut.Process(lines);
+        sut.Process(lines);
 
         // Assert
-        Assert.Equal("FCVRLMVQP", result);
+        Assert.Equal("FCVRLMVQP", sut.State);
     }
 
     [Fact]
@@ -176,10 +176,10 @@ public class ShipTest
         ShipLoader.LoadCrates(sut, lines);
 
         // Act
-        var result = sut.WhenProcessCraneMover9001(lines);
+        sut.WhenProcessCraneMover9001(lines);
 
         // Assert
-        Assert.Equal("MCD", result);
+        Assert.Equal("MCD", sut.State);
     }
 
     [Fact]
@@ -191,9 +191,9 @@ public class ShipTest
         ShipLoader.LoadCrates(sut, lines);
 
         // Act
-        var result = sut.WhenProcessCraneMover9001(lines);
+        sut.WhenProcessCraneMover9001(lines);
 
         // Assert
-        Assert.Equal("RWLWGJGFD", result);
+        Assert.Equal("RWLWGJGFD", sut.State);
     }
 }
