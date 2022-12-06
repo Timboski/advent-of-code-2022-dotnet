@@ -1,4 +1,4 @@
-﻿using day2;
+﻿using Day2;
 
 var input = File.ReadAllLines("day2-input.txt");
 var result = GameStrategy.Solve(input);

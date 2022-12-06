@@ -1,4 +1,4 @@
-namespace day2Test;
+namespace Day2Test;
 
 public class GameStrategyTest
 {

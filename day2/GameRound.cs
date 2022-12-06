@@ -1,4 +1,4 @@
-﻿namespace day2;
+﻿namespace Day2;
 
 public static class GameRound
 {
