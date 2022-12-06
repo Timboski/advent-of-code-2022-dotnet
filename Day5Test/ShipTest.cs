@@ -14,7 +14,7 @@ public class ShipTest
     public void GivenCratePictureRow_WhenRead_AddsToCorrectStack(string line, int stackIndex, char crateMarker)
     {
         // Arrange
-        var sut = new Ship();
+        var sut = new CraneMover9000Ship();
 
         // Act
         ShipLoader.AddCrates(sut, line);
@@ -30,7 +30,7 @@ public class ShipTest
         var picture = File.ReadLines("day5-example-input.txt")
             .TakeWhile(line => line.Length > 0);
    
-        var sut = new Ship();
+        var sut = new CraneMover9000Ship();
 
         // Act
         ShipLoader.AddCrates(sut, picture);
@@ -45,7 +45,7 @@ public class ShipTest
     public void GivenExampleStacks_WhenPerformFirstMove_TopCratesAreCorrect()
     {
         // Arrange
-        var sut = new Ship();
+        var sut = new CraneMover9000Ship();
         var picture = File.ReadLines("day5-example-input.txt")
             .TakeWhile(line => line.Length > 0);
         ShipLoader.AddCrates(sut, picture);
@@ -63,7 +63,7 @@ public class ShipTest
     public void GivenExampleStacks_WhenPerformSecondMove_TopCratesAreCorrect()
     {
         // Arrange
-        var sut = new Ship();
+        var sut = new CraneMover9000Ship();
         var picture = File.ReadLines("day5-example-input.txt")
             .TakeWhile(line => line.Length > 0);
         ShipLoader.AddCrates(sut, picture);
@@ -82,7 +82,7 @@ public class ShipTest
     public void GivenExampleStacks_WhenPerformThirdMove_TopCratesAreCorrect()
     {
         // Arrange
-        var sut = new Ship();
+        var sut = new CraneMover9000Ship();
         var picture = File.ReadLines("day5-example-input.txt")
             .TakeWhile(line => line.Length > 0);
         ShipLoader.AddCrates(sut, picture);
@@ -102,7 +102,7 @@ public class ShipTest
     public void GivenExampleStacks_WhenPerformFourthMove_TopCratesAreCorrect()
     {
         // Arrange
-        var sut = new Ship();
+        var sut = new CraneMover9000Ship();
         var picture = File.ReadLines("day5-example-input.txt")
             .TakeWhile(line => line.Length > 0);
         ShipLoader.AddCrates(sut, picture);
@@ -123,7 +123,7 @@ public class ShipTest
     public void GivenExampleStacks_WhenReadMoves_TopCratesAreCorrect()
     {
         // Arrange
-        var sut = new Ship();
+        var sut = new CraneMover9000Ship();
         var lines = File.ReadLines("day5-example-input.txt");
         var picture = lines.TakeWhile(line => line.Length > 0);
         ShipLoader.AddCrates(sut, picture);
@@ -141,7 +141,7 @@ public class ShipTest
     public void GivenExampleData_WhenProcess_ProducesCorrectMarkings()
     {
         // Arrange
-        var sut = new Ship();
+        var sut = new CraneMover9000Ship();
         var lines = File.ReadLines("day5-example-input.txt");
         ShipLoader.LoadCrates(sut, lines);
 
@@ -156,7 +156,7 @@ public class ShipTest
     public void GivenProblemInput_WhenProcess_ProducesCorrectMarkings()
     {
         // Arrange
-        var sut = new Ship();
+        var sut = new CraneMover9000Ship();
         var lines = File.ReadLines("day5-input.txt");
         ShipLoader.LoadCrates(sut, lines);
 
@@ -171,12 +171,12 @@ public class ShipTest
     public void GivenExampleData_WhenProcessCraneMover9001_ProducesCorrectMarkings()
     {
         // Arrange
-        var sut = new Ship();
+        var sut = new CraneMover9001Ship();
         var lines = File.ReadLines("day5-example-input.txt");
         ShipLoader.LoadCrates(sut, lines);
 
         // Act
-        sut.MoveCratesCraneMover9001(lines);
+        sut.MoveCrates(lines);
 
         // Assert
         Assert.Equal("MCD", sut.State);
@@ -186,12 +186,12 @@ public class ShipTest
     public void GivenProblemInput_WhenProcessCraneMover9001_ProducesCorrectMarkings()
     {
         // Arrange
-        var sut = new Ship();
+        var sut = new CraneMover9001Ship();
         var lines = File.ReadLines("day5-input.txt");
         ShipLoader.LoadCrates(sut, lines);
 
         // Act
-        sut.MoveCratesCraneMover9001(lines);
+        sut.MoveCrates(lines);
 
         // Assert
         Assert.Equal("RWLWGJGFD", sut.State);
