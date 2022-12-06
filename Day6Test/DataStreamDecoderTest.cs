@@ -32,4 +32,20 @@ public class DataStreamDecoderTest
         // Assert
         Assert.Equal(1140, packetStart);
     }
+
+    [Theory]
+    [InlineData("mjqjpqmgbljsphdztnvjfqwrcgsmlb", 19)]
+    [InlineData("bvwbjplbgvbhsrlpgdmjqwftvncz", 23)]
+    [InlineData("nppdvjthqldpwncqszvftbrmjlhg", 23)]
+    [InlineData("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", 29)]
+    [InlineData("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", 26)]
+    public void GivenExampleDataStreams_WhenFindMessageStart_ReturnsCorrectResponse(string data, int expectedPacketStart)
+    {
+        // Arrange
+        // Act
+        var messageStart = DataStreamDecoder.FindStartOfMessage(data);
+
+        // Assert
+        Assert.Equal(expectedPacketStart, messageStart);
+    }
 }
