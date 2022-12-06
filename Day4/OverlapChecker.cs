@@ -5,13 +5,7 @@ public static class OverlapChecker
     public static bool Check(string input)
     {
         // Decode input
-        var elves = input.Split(',');
-        var elf1 = elves[0].Split('-');
-        var elf2 = elves[1].Split('-');
-        var start1 = int.Parse(elf1[0]);
-        var end1 = int.Parse(elf1[1]);
-        var start2 = int.Parse(elf2[0]);
-        var end2 = int.Parse(elf2[1]);
+        var (start1, end1, start2, end2) = DecodeInput(input);
 
         // Does Elf 1 do all of Elf 2 work?
         if (start1 <= start2 && end1 >= end2) return true;
@@ -24,15 +18,9 @@ public static class OverlapChecker
     }
 
     public static bool CheckPartial(string input)
-    {        
+    {
         // Decode input
-        var elves = input.Split(',');
-        var elf1 = elves[0].Split('-');
-        var elf2 = elves[1].Split('-');
-        var start1 = int.Parse(elf1[0]);
-        var end1 = int.Parse(elf1[1]);
-        var start2 = int.Parse(elf2[0]);
-        var end2 = int.Parse(elf2[1]);
+        var (start1, end1, start2, end2) = DecodeInput(input);
 
         // Does Elf 1 range contain Elf 2 start?
         if (start2 >= start1 && start2 <= end1) return true;
@@ -55,4 +43,16 @@ public static class OverlapChecker
 
     public static object CountPartial(IEnumerable<string> input)
         => input.Where(CheckPartial).Count();
+
+    private static (int start1, int end1, int start2, int end2) DecodeInput(string input)
+    {
+        var elves = input.Split(',');
+        var elf1 = elves[0].Split('-');
+        var elf2 = elves[1].Split('-');
+        var start1 = int.Parse(elf1[0]);
+        var end1 = int.Parse(elf1[1]);
+        var start2 = int.Parse(elf2[0]);
+        var end2 = int.Parse(elf2[1]);
+        return (start1, end1, start2, end2);
+    }
 }
