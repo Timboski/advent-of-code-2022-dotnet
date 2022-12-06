@@ -1,3 +1,5 @@
+using Day5;
+
 namespace Day5Test;
 
 public class ShipTest
@@ -15,7 +17,7 @@ public class ShipTest
         var sut = new Ship();
 
         // Act
-        sut.AddCrates(line);
+        ShipLoader.AddCrates(sut, line);
 
         // Assert
         Assert.Equal(crateMarker, sut.PeekTopCrateMarking(stackIndex));
@@ -31,7 +33,7 @@ public class ShipTest
         var sut = new Ship();
 
         // Act
-        sut.AddCrates(picture);
+        ShipLoader.AddCrates(sut, picture);
 
         // Assert
         Assert.Equal('N', sut.PeekTopCrateMarking(1));
@@ -46,7 +48,7 @@ public class ShipTest
         var sut = new Ship();
         var picture = File.ReadLines("day5-example-input.txt")
             .TakeWhile(line => line.Length > 0);
-        sut.AddCrates(picture);
+        ShipLoader.AddCrates(sut, picture);
 
         // Act
         sut.MoveCrates(1, 2, 1);
@@ -64,7 +66,7 @@ public class ShipTest
         var sut = new Ship();
         var picture = File.ReadLines("day5-example-input.txt")
             .TakeWhile(line => line.Length > 0);
-        sut.AddCrates(picture);
+        ShipLoader.AddCrates(sut, picture);
         sut.MoveCrates(1, 2, 1);
 
         // Act
@@ -83,7 +85,7 @@ public class ShipTest
         var sut = new Ship();
         var picture = File.ReadLines("day5-example-input.txt")
             .TakeWhile(line => line.Length > 0);
-        sut.AddCrates(picture);
+        ShipLoader.AddCrates(sut, picture);
         sut.MoveCrates(1, 2, 1);
         sut.MoveCrates(3, 1, 3);
 
@@ -103,7 +105,7 @@ public class ShipTest
         var sut = new Ship();
         var picture = File.ReadLines("day5-example-input.txt")
             .TakeWhile(line => line.Length > 0);
-        sut.AddCrates(picture);
+        ShipLoader.AddCrates(sut, picture);
         sut.MoveCrates(1, 2, 1);
         sut.MoveCrates(3, 1, 3);
         sut.MoveCrates(2, 2, 1);
@@ -124,7 +126,7 @@ public class ShipTest
         var sut = new Ship();
         var lines = File.ReadLines("day5-example-input.txt");
         var picture = lines.TakeWhile(line => line.Length > 0);
-        sut.AddCrates(picture);
+        ShipLoader.AddCrates(sut, picture);
 
         // Act
         sut.MoveCrates(lines);
@@ -141,6 +143,7 @@ public class ShipTest
         // Arrange
         var sut = new Ship();
         var lines = File.ReadLines("day5-example-input.txt");
+        ShipLoader.LoadCrates(sut, lines);
 
         // Act
         var result = sut.Process(lines);
@@ -155,6 +158,7 @@ public class ShipTest
         // Arrange
         var sut = new Ship();
         var lines = File.ReadLines("day5-input.txt");
+        ShipLoader.LoadCrates(sut, lines);
 
         // Act
         var result = sut.Process(lines);
@@ -169,6 +173,7 @@ public class ShipTest
         // Arrange
         var sut = new Ship();
         var lines = File.ReadLines("day5-example-input.txt");
+        ShipLoader.LoadCrates(sut, lines);
 
         // Act
         var result = sut.WhenProcessCraneMover9001(lines);
@@ -183,6 +188,7 @@ public class ShipTest
         // Arrange
         var sut = new Ship();
         var lines = File.ReadLines("day5-input.txt");
+        ShipLoader.LoadCrates(sut, lines);
 
         // Act
         var result = sut.WhenProcessCraneMover9001(lines);
