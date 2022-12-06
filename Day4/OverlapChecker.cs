@@ -5,18 +5,18 @@ public static class OverlapChecker
     public static bool Check(string input)
     {
         var (elf1, elf2) = DecodeInput(input);
-        if (IsFullyContained(elf1, elf2)) return true;
-        if (IsFullyContained(elf2, elf1)) return true;
+        if (elf1.FullyContains(elf2)) return true;
+        if (elf2.FullyContains(elf1)) return true;
         return false;
     }
 
     public static bool CheckPartial(string input)
     {
         var (elf1, elf2) = DecodeInput(input);
-        if (IsWithinRange(elf2.start, elf1)) return true;
-        if (IsWithinRange(elf2.end, elf1)) return true;
-        if (IsWithinRange(elf1.start, elf2)) return true;
-        if (IsWithinRange(elf1.end, elf2)) return true;
+        if (elf1.ContainsPoint(elf2.start)) return true;
+        if (elf1.ContainsPoint(elf2.end)) return true;
+        if (elf2.ContainsPoint(elf1.start)) return true;
+        if (elf2.ContainsPoint(elf1.end)) return true;
         return false;
     }
 
@@ -26,10 +26,10 @@ public static class OverlapChecker
     public static object CountPartial(IEnumerable<string> input)
         => input.Where(CheckPartial).Count();
 
-    public static bool IsFullyContained((int start, int end) elf1, (int start, int end) elf2) 
+    public static bool FullyContains(this (int start, int end) elf1, (int start, int end) elf2) 
         => elf1.start <= elf2.start && elf1.end >= elf2.end;
 
-    public static bool IsWithinRange(int point, (int start, int end) elf) 
+    public static bool ContainsPoint(this (int start, int end) elf, int point) 
         => point >= elf.start && point <= elf.end;
 
     private static ((int start, int end) elf1, (int start, int end) elf2) DecodeInput(string input)
