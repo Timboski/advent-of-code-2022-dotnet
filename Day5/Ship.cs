@@ -6,11 +6,6 @@ public class Ship
 
     public string State => CreateStateString();
 
-    public void Process(IEnumerable<string> lines)
-    {
-        MoveCrates(lines);
-    }
-
     private string CreateStateString()
     {
         var result = string.Empty;
@@ -68,10 +63,5 @@ public class Ship
             tempStack.Push(_stack[fromStackIndex].Pop());
         while (tempStack.TryPop(out char crate))
             AddCrate(toStackIndex, crate);
-    }
-
-    public void WhenProcessCraneMover9001(IEnumerable<string> lines)
-    {
-        MoveCratesCraneMover9001(lines);
     }
 }
