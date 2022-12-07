@@ -1,6 +1,6 @@
 ﻿namespace Day7;
 
-public class SystemDirectory
+public class SystemDirectory : ISystemDirectory
 {
     private readonly Dictionary<string, SystemDirectory> _children = new();
     private int _size = 0;
@@ -16,7 +16,7 @@ public class SystemDirectory
 
     public string Name { get; }
 
-    public int Size 
+    public int Size
         => _children.Values.Select(c => c.Size).Sum() + _size;
 
     public void AddFile(int size) => _size += size;
@@ -27,9 +27,9 @@ public class SystemDirectory
         return _children[subDirectoryName] = new SystemDirectory(subDirectoryName, this);
     }
 
-    public SystemDirectory MoveOut() 
+    public SystemDirectory MoveOut()
         => _parent ?? throw new InvalidOperationException($"No parent directory");
 
-    public bool IsChild(string subDirectoryName) 
+    public bool IsChild(string subDirectoryName)
         => _children.ContainsKey(subDirectoryName);
 }
