@@ -6,7 +6,7 @@ public class SystemDirectoryTest
     public void GivenDirectory_WhenAddFiles_ComputesSize()
     {
         // Arrange
-        var sut = new SystemDirectory();
+        var sut = new SystemDirectory("/");
 
         // Act
         sut.AddFile(10);
@@ -22,7 +22,7 @@ public class SystemDirectoryTest
     public void GivenDirectory_WhenMoveToNonExistantSubDirectory_ThrowsException()
     {
         // Arrange
-        var sut = new SystemDirectory();
+        var sut = new SystemDirectory("/");
 
         // Act, Assert
         Assert.Throws<InvalidOperationException>(() => sut.MoveIn("test"));
@@ -32,9 +32,23 @@ public class SystemDirectoryTest
     public void GivenDirectory_WhenMoveToNonExistantParentDirectory_ThrowsException()
     {
         // Arrange
-        var sut = new SystemDirectory();
+        var sut = new SystemDirectory("test");
 
         // Act, Assert
         Assert.Throws<InvalidOperationException>(() => sut.MoveOut());
+    }
+
+    [Fact]
+    public void GivenDirectory_WhenMoveToSubDirectory_ReturnsSubDirectory()
+    {
+        // Arrange
+        var sut = new SystemDirectory("/");
+        sut.AddDirectory("test");
+
+        // Act
+        var subDirectory = sut.MoveIn("test");
+
+        //Assert
+        Assert.Equal("test", subDirectory.Name);
     }
 }
