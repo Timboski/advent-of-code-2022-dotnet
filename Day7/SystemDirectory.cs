@@ -32,4 +32,11 @@ public class SystemDirectory : ISystemDirectory
 
     public bool IsChild(string subDirectoryName)
         => _children.ContainsKey(subDirectoryName);
+
+    public IEnumerable<SystemDirectory> ListDirectories()
+    {
+        yield return this;
+        foreach (var child in _children.Values) 
+            foreach (var dir in child.ListDirectories()) yield return dir;
+    }
 }
