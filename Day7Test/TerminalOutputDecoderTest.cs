@@ -54,6 +54,8 @@ public class TerminalOutputDecoderTest
         // Act
         sut.ProcessLine("$ cd a");
         sut.ProcessLine("$ cd b");
+        sut.ProcessLine("$ cd ..");
+        sut.ProcessLine("$ cd d");
         sut.ProcessLine("$ cd /");
         sut.ProcessLine("$ cd c");
 
@@ -61,5 +63,6 @@ public class TerminalOutputDecoderTest
         Assert.True(tree.IsChild("a"));
         Assert.True(tree.IsChild("c"));
         Assert.True(tree.MoveIn("a").IsChild("b"));
+        Assert.True(tree.MoveIn("a").IsChild("d"));
     }
 }

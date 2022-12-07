@@ -17,7 +17,12 @@ public class TerminalOutputDecoder
         if (sections[1] == "cd")
         {
             var target = sections[2];
-            _current = target == "/" ? _root : _current.MoveIn(target);
+            _current = target switch
+            {
+                "/" => _root,
+                ".." => _current.MoveOut(),
+                _ => _current.MoveIn(target),
+            };
         }
     }
 }
