@@ -109,4 +109,20 @@ public class TerminalOutputDecoderTest
         // Assert
         Assert.Equal(95437, result);
     }
+
+    [Fact]
+    public void GivenProblemInput_WhenSumDirsBelowThresholdSize_CreatesExpectedSize()
+    {
+        // Arrange
+        var tree = new SystemDirectory();
+        var sut = new TerminalOutputDecoder(tree);
+        var lines = File.ReadAllLines("day7-input.txt");
+        foreach (var line in lines) sut.ProcessLine(line);
+
+        // Act
+        var result = tree.ListDirectories().Select(d => d.Size).Where(s => s <= 100000).Sum();
+
+        // Assert
+        Assert.Equal(1443806, result);
+    }
 }
