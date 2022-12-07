@@ -65,4 +65,18 @@ public class TerminalOutputDecoderTest
         Assert.True(tree.MoveIn("a").IsChild("b"));
         Assert.True(tree.MoveIn("a").IsChild("d"));
     }
+
+    [Fact]
+    public void GivenChangeDirectoryToParent_WhenProcessLine_CallsMoveOut()
+    {
+        // Arrange
+        var tree = new Mock<ISystemDirectory>();
+        var sut = new TerminalOutputDecoder(tree.Object);
+
+        // Act
+        sut.ProcessLine("$ cd ..");
+
+        // Assert
+        tree.Verify(t => t.MoveOut());
+    }
 }
