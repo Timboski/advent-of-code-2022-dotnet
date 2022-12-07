@@ -14,6 +14,10 @@ public class TerminalOutputDecoder
     public void ProcessLine(string line)
     {
         var sections = line.Split(' ');
-        if (sections[1] == "cd") _current = _current.MoveIn(sections[2]);
+        if (sections[1] == "cd")
+        {
+            var target = sections[2];
+            _current = target == "/" ? _root : _current.MoveIn(target);
+        }
     }
 }
