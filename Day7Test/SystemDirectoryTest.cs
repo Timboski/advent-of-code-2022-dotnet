@@ -66,4 +66,22 @@ public class SystemDirectoryTest
         //Assert
         Assert.Same(parent, newDirectory);
     }
+
+    [Fact]
+    public void GivenDirectoryWithSubDirectory_WhenFindSize_ReturnsTotalSize()
+    {
+        // Arrange
+        var sut = new SystemDirectory();
+        sut.AddFile(10);
+        sut.AddFile(12);
+        var testDir = sut.AddDirectory("test");
+        testDir.AddFile(30);
+        testDir.AddFile(66);
+
+        // Act
+        var totalSize = sut.Size;
+
+        //Assert
+        Assert.Equal(118, totalSize);
+    }
 }

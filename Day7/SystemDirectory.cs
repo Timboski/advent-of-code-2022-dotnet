@@ -16,7 +16,8 @@ public class SystemDirectory
 
     public string Name { get; }
 
-    public int Size => _size;
+    public int Size 
+        => _directories.Values.Select(c => c.Size).Sum() + _size;
 
     public void AddFile(int size) => _size += size;
 
