@@ -6,25 +6,27 @@ public class TerminalOutputDecoderTest
     public void GivenEmptyListFileOutput_WhenProcessLine_TreeIsZeroSize()
     {
         // Arrange
-        var sut = new TerminalOutputDecoder();
+        var tree = new SystemDirectory();
+        var sut = new TerminalOutputDecoder(tree);
 
         // Act
         sut.ProcessLine("$ ls");
 
         // Assert
-        Assert.Equal(0, sut.Tree.Size);
+        Assert.Equal(0, tree.Size);
     }
 
     [Fact]
     public void GivenChangeDirectory_WhenProcessLine_SubDirectoryExists()
     {
         // Arrange
-        var sut = new TerminalOutputDecoder();
+        var tree = new SystemDirectory();
+        var sut = new TerminalOutputDecoder(tree);
 
         // Act
         sut.ProcessLine("$ cd a");
 
         // Assert
-        Assert.Equal(0, sut.Tree.Size);
+        Assert.True(tree.IsChild("a"));
     }
 }
