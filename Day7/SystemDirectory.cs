@@ -2,7 +2,7 @@
 
 public class SystemDirectory
 {
-    private Dictionary<string, SystemDirectory> _directories = new();
+    private readonly Dictionary<string, SystemDirectory> _children = new();
     private int _size = 0;
     private readonly SystemDirectory? _parent = null;
 
@@ -17,19 +17,19 @@ public class SystemDirectory
     public string Name { get; }
 
     public int Size 
-        => _directories.Values.Select(c => c.Size).Sum() + _size;
+        => _children.Values.Select(c => c.Size).Sum() + _size;
 
     public void AddFile(int size) => _size += size;
 
     public SystemDirectory AddDirectory(string name) 
-        => _directories[name] = new SystemDirectory(name, this);
+        => _children[name] = new SystemDirectory(name, this);
 
     public SystemDirectory MoveIn(string subDirectoryName)
     {
-        if (!_directories.ContainsKey(subDirectoryName))
+        if (!_children.ContainsKey(subDirectoryName))
             throw new InvalidOperationException($"Directory not found: {subDirectoryName}");
 
-        return _directories[subDirectoryName];
+        return _children[subDirectoryName];
     }
 
     public SystemDirectory MoveOut() 
