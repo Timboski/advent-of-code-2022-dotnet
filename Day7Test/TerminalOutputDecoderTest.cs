@@ -79,4 +79,18 @@ public class TerminalOutputDecoderTest
         // Assert
         tree.Verify(t => t.MoveOut());
     }
+
+    [Fact]
+    public void GivenFileDescription_WhenProcessLine_CallsAddFile()
+    {
+        // Arrange
+        var tree = new Mock<ISystemDirectory>();
+        var sut = new TerminalOutputDecoder(tree.Object);
+
+        // Act
+        sut.ProcessLine("14848514 b.txt");
+
+        // Assert
+        tree.Verify(t => t.AddFile(14848514));
+    }
 }

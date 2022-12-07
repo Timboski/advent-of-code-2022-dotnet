@@ -23,6 +23,12 @@ public class TerminalOutputDecoder
                 ".." => _current.MoveOut(),
                 _ => _current.MoveIn(target),
             };
+            return;
+        }
+        if (int.TryParse(sections[0], out var fileSize)) 
+        {
+            _current.AddFile(fileSize);
+            return;
         }
     }
 }
