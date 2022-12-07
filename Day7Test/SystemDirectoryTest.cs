@@ -17,4 +17,24 @@ public class SystemDirectoryTest
         // Assert
         Assert.Equal(66, sut.Size);
     }
+
+    [Fact]
+    public void GivenDirectory_WhenMoveToNonExistantSubDirectory_ThrowsException()
+    {
+        // Arrange
+        var sut = new SystemDirectory();
+
+        // Act, Assert
+        Assert.Throws<InvalidOperationException>(() => sut.MoveIn("test"));
+    }
+
+    [Fact]
+    public void GivenDirectory_WhenMoveToNonExistantParentDirectory_ThrowsException()
+    {
+        // Arrange
+        var sut = new SystemDirectory();
+
+        // Act, Assert
+        Assert.Throws<InvalidOperationException>(() => sut.MoveOut());
+    }
 }
