@@ -8,7 +8,7 @@ public class SystemDirectory
 
     public SystemDirectory() => Name = "/";
 
-    public SystemDirectory(string name, SystemDirectory parent)
+    private SystemDirectory(string name, SystemDirectory parent)
     {
         Name = name;
         _parent = parent;
