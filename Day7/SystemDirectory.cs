@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-namespace Day7;
+﻿namespace Day7;
 
 public class SystemDirectory
 {
