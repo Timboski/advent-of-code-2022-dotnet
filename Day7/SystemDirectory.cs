@@ -4,8 +4,15 @@ public class SystemDirectory
 {
     private Dictionary<string, SystemDirectory> _directories = new();
     private int _size = 0;
+    private readonly SystemDirectory? _parent = null;
 
-    public SystemDirectory(string name) => Name = name;
+    public SystemDirectory() => Name = "/";
+
+    public SystemDirectory(string name, SystemDirectory parent)
+    {
+        Name = name;
+        _parent = parent;
+    }
 
     public string Name { get; }
 
@@ -14,7 +21,7 @@ public class SystemDirectory
     public void AddFile(int size) => _size += size;
 
     public void AddDirectory(string name) 
-        => _directories[name] = new SystemDirectory(name);
+        => _directories[name] = new SystemDirectory(name, this);
 
     public SystemDirectory MoveIn(string subDirectoryName)
     {
@@ -24,8 +31,6 @@ public class SystemDirectory
         return _directories[subDirectoryName];
     }
 
-    public void MoveOut()
-    {
-        throw new InvalidOperationException($"No parent directory");
-    }
+    public SystemDirectory MoveOut() 
+        => _parent ?? throw new InvalidOperationException($"No parent directory");
 }
