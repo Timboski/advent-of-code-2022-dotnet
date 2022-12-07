@@ -43,4 +43,20 @@ public class TerminalOutputDecoderTest
         // Assert
         tree.Verify(t => t.MoveIn("a"));
     }
+
+    [Fact]
+    public void GivenDirectoryTraversals_WhenProcessLines_SubDirectoriesExist()
+    {
+        // Arrange
+        var tree = new SystemDirectory();
+        var sut = new TerminalOutputDecoder(tree);
+
+        // Act
+        sut.ProcessLine("$ cd a");
+        sut.ProcessLine("$ cd b");
+
+        // Assert
+        Assert.True(tree.IsChild("a"));
+        Assert.True(tree.MoveIn("a").IsChild("b"));
+    }
 }
