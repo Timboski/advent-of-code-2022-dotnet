@@ -19,16 +19,6 @@ public class SystemDirectoryTest
     }
 
     [Fact]
-    public void GivenDirectory_WhenMoveToNonExistantSubDirectory_ThrowsException()
-    {
-        // Arrange
-        var sut = new SystemDirectory();
-
-        // Act, Assert
-        Assert.Throws<InvalidOperationException>(() => sut.MoveIn("test"));
-    }
-
-    [Fact]
     public void GivenDirectory_WhenMoveToNonExistantParentDirectory_ThrowsException()
     {
         // Arrange
@@ -39,25 +29,10 @@ public class SystemDirectoryTest
     }
 
     [Fact]
-    public void GivenDirectory_WhenMoveToSubDirectory_ReturnsSubDirectory()
-    {
-        // Arrange
-        var sut = new SystemDirectory();
-        var testDir = sut.AddDirectory("test");
-
-        // Act
-        var subDirectory = sut.MoveIn("test");
-
-        //Assert
-        Assert.Same(testDir, subDirectory);
-    }
-
-    [Fact]
     public void GivenDirectory_WhenMoveOut_ReturnsParentDirectory()
     {
         // Arrange
         var parent = new SystemDirectory();
-        parent.AddDirectory("test");
         var sut = parent.MoveIn("test");
 
         // Act
@@ -68,13 +43,39 @@ public class SystemDirectoryTest
     }
 
     [Fact]
+    public void GivenEmptyDirectory_WhenCheckChild_ReturnsFalse()
+    {
+        // Arrange
+        var sut = new SystemDirectory();
+
+        // Act
+        var test = sut.IsChild("test");
+
+        //Assert
+        Assert.False(test);
+    }
+
+    [Fact]
+    public void GivenDirectory_WhenMoveToSubDirectory_CreatesSubDirectory()
+    {
+        // Arrange
+        var sut = new SystemDirectory();
+
+        // Act
+        sut.MoveIn("test");
+
+        //Assert
+        Assert.True(sut.IsChild("test"));
+    }
+
+    [Fact]
     public void GivenDirectoryWithSubDirectory_WhenFindSize_ReturnsTotalSize()
     {
         // Arrange
         var sut = new SystemDirectory();
         sut.AddFile(10);
         sut.AddFile(12);
-        var testDir = sut.AddDirectory("test");
+        var testDir = sut.MoveIn("test");
         testDir.AddFile(30);
         testDir.AddFile(66);
 

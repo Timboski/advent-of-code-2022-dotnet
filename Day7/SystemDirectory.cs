@@ -1,4 +1,6 @@
-﻿namespace Day7;
+﻿using System.Xml.Linq;
+
+namespace Day7;
 
 public class SystemDirectory
 {
@@ -21,17 +23,15 @@ public class SystemDirectory
 
     public void AddFile(int size) => _size += size;
 
-    public SystemDirectory AddDirectory(string name) 
-        => _children[name] = new SystemDirectory(name, this);
-
     public SystemDirectory MoveIn(string subDirectoryName)
     {
-        if (!_children.ContainsKey(subDirectoryName))
-            throw new InvalidOperationException($"Directory not found: {subDirectoryName}");
-
-        return _children[subDirectoryName];
+        if (_children.TryGetValue(subDirectoryName, out SystemDirectory? value)) return value;
+        return _children[subDirectoryName] = new SystemDirectory(subDirectoryName, this);
     }
 
     public SystemDirectory MoveOut() 
         => _parent ?? throw new InvalidOperationException($"No parent directory");
+
+    public bool IsChild(string subDirectoryName) 
+        => _children.ContainsKey(subDirectoryName);
 }
