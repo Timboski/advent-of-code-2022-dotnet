@@ -20,7 +20,7 @@ public class SystemDirectory
 
     public void AddFile(int size) => _size += size;
 
-    public void AddDirectory(string name) 
+    public SystemDirectory AddDirectory(string name) 
         => _directories[name] = new SystemDirectory(name, this);
 
     public SystemDirectory MoveIn(string subDirectoryName)

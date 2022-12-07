@@ -35,7 +35,7 @@ public class SystemDirectoryTest
         var sut = new SystemDirectory();
 
         // Act, Assert
-        Assert.Throws<InvalidOperationException>(() => sut.MoveOut());
+        Assert.Throws<InvalidOperationException>(sut.MoveOut);
     }
 
     [Fact]
@@ -43,13 +43,13 @@ public class SystemDirectoryTest
     {
         // Arrange
         var sut = new SystemDirectory();
-        sut.AddDirectory("test");
+        var testDir = sut.AddDirectory("test");
 
         // Act
         var subDirectory = sut.MoveIn("test");
 
         //Assert
-        Assert.Equal("test", subDirectory.Name);
+        Assert.Same(testDir, subDirectory);
     }
 
     [Fact]
