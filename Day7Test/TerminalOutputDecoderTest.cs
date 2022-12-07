@@ -29,4 +29,18 @@ public class TerminalOutputDecoderTest
         // Assert
         Assert.True(tree.IsChild("a"));
     }
+
+    [Fact]
+    public void GivenChangeDirectory_WhenProcessLine_CallsMoveIn()
+    {
+        // Arrange
+        var tree = new Mock<ISystemDirectory>();
+        var sut = new TerminalOutputDecoder(tree.Object);
+
+        // Act
+        sut.ProcessLine("$ cd a");
+
+        // Assert
+        tree.Verify(t => t.MoveIn("a"));
+    }
 }
