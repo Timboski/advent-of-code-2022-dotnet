@@ -27,4 +27,17 @@ public class TreeRow
 
         return count;
     }
+
+    public int VisibleTreesToRight(int index)
+    {
+        var height = _row[index];
+        var count = 0;
+        for (var i = index + 1; i < _row.Length; ++i)
+        {
+            ++count;
+            if (_row[i] >= height) return count;
+        }
+
+        return count;
+    }
 }

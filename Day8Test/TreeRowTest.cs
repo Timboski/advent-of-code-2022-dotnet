@@ -100,4 +100,21 @@ public class TreeRowTest
         // Assert
         Assert.Equal(expectedCount, count);
     }
+
+    [Theory]
+    [InlineData("25512", 2, 2)]
+    [InlineData("25512", 4, 0)]
+    [InlineData("33549", 2, 2)]
+    [InlineData("33549", 0, 1)]
+    public void GivenRowAndIndex_WhenCheckRight_ReturnsVisibleTreeCount(string row, int index, int expectedCount)
+    {
+        // Arrange
+        var sut = new TreeRow(row);
+
+        // Act
+        var count = sut.VisibleTreesToRight(index);
+
+        // Assert
+        Assert.Equal(expectedCount, count);
+    }
 }
