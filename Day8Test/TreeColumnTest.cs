@@ -83,4 +83,40 @@ public class TreeColumnTest
         // Assert
         Assert.False(result);
     }
+
+    [Theory]
+    [InlineData("35353", 0, 0)]
+    [InlineData("35353", 1, 1)]
+    [InlineData("35353", 2, 1)]
+    [InlineData("35353", 3, 2)]
+    [InlineData("35353", 4, 1)]
+    public void GivenColumnAndIndex_WhenCheckUp_ReturnsVisibleTreeCount(string column, int index, int expectedCount)
+    {
+        // Arrange
+        var sut = new TreeColumn(column);
+
+        // Act
+        var count = sut.VisibleTreesToTop(index);
+
+        // Assert
+        Assert.Equal(expectedCount, count);
+    }
+
+    [Theory]
+    [InlineData("35353", 0, 1)]
+    [InlineData("35353", 1, 2)]
+    [InlineData("35353", 2, 1)]
+    [InlineData("35353", 3, 1)]
+    [InlineData("35353", 4, 0)]
+    public void GivenColumnAndIndex_WhenCheckDown_ReturnsVisibleTreeCount(string column, int index, int expectedCount)
+    {
+        // Arrange
+        var sut = new TreeColumn(column);
+
+        // Act
+        var count = sut.VisibleTreesToBottom(index);
+
+        // Assert
+        Assert.Equal(expectedCount, count);
+    }
 }
