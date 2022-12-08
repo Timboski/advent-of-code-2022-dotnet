@@ -39,4 +39,26 @@ public class TreePatch
         if (_column[column].IsVisibleFromBottom(row)) return true;
         return false;
     }
+
+    public int GetMaxScenicScore()
+    {
+        var maxScore = 0;
+        for (var row = 0; row < _row.Count; ++row)
+        {
+            for (var column = 0; column < _column.Count; ++column)
+            {
+                maxScore = Math.Max(maxScore, ComputeScenicScore(row, column));
+            }
+        }
+        return maxScore;
+    }
+
+    private int ComputeScenicScore(int row, int column)
+    {
+        var left = _row[row].VisibleTreesToLeft(column);
+        var right = _row[row].VisibleTreesToRight(column);
+        var up = _column[column].VisibleTreesToTop(row);
+        var down = _column[column].VisibleTreesToBottom(row);
+        return left * right * up * down;
+    }
 }

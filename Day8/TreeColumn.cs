@@ -12,9 +12,9 @@ public class TreeColumn
     public bool IsVisibleFromBottom(int index)
         => _column.IsVisibleFromRight(index);
 
-    public object VisibleTreesToTop(int index)
+    public int VisibleTreesToTop(int index)
         => _column.VisibleTreesToLeft(index);
 
-    public object VisibleTreesToBottom(int index)
+    public int VisibleTreesToBottom(int index)
         => _column.VisibleTreesToRight(index);
 }
