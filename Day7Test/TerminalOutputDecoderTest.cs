@@ -144,4 +144,23 @@ public class TerminalOutputDecoderTest
         // Assert
         Assert.Equal(24933642, bestMatch);
     }
+
+    [Fact]
+    public void GivenProblemInput_WhenFindSmallestSuitableDirectory_CreatesExpectedSize()
+    {
+        // Arrange
+        var tree = new SystemDirectory();
+        var sut = new TerminalOutputDecoder(tree);
+        var lines = File.ReadAllLines("day7-input.txt");
+        foreach (var line in lines) sut.ProcessLine(line);
+
+        // Act
+        var max = 70000000 - 30000000;
+        var target = tree.Size - max;
+        var largeEnoughDirectories = tree.ListDirectories().Select(d => d.Size).Where(s => s >= target);
+        var bestMatch = largeEnoughDirectories.OrderDescending().Reverse().First();
+
+        // Assert
+        Assert.Equal(942298, bestMatch);
+    }
 }
