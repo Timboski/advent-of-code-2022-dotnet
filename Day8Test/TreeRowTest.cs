@@ -83,4 +83,21 @@ public class TreeRowTest
         // Assert
         Assert.False(result);
     }
+
+    [Theory]
+    [InlineData("25512", 2, 1)]
+    [InlineData("25512", 4, 2)]
+    [InlineData("33549", 2, 2)]
+    [InlineData("33549", 0, 0)]
+    public void GivenRowAndIndex_WhenCheckLeft_ReturnsVisibleTreeCount(string row, int index, int expectedCount)
+    {
+        // Arrange
+        var sut = new TreeRow(row);
+
+        // Act
+        var count = sut.VisibleTreesToLeft(index);
+
+        // Assert
+        Assert.Equal(expectedCount, count);
+    }
 }
