@@ -1,4 +1,6 @@
-﻿namespace Day8;
+﻿using System;
+
+namespace Day8;
 
 public class TreeRow
 {
@@ -6,9 +8,12 @@ public class TreeRow
 
     public TreeRow(string row) => _row = row;
 
-    public bool IsVisibleFromLeft(int index) 
-        => !_row.Take(index).Where(h => h >= _row[index]).Any();
+    public bool IsVisibleFromLeft(int index)
+        => CheckAllShorter(_row.Take(index), _row[index]);
 
-    public bool IsVisibleFromRight(int index) 
-        => !_row.Skip(index + 1).Where(h => h >= _row[index]).Any();
+    public bool IsVisibleFromRight(int index)
+        => CheckAllShorter(_row.Skip(index + 1), _row[index]);
+
+    private static bool CheckAllShorter(IEnumerable<char> trees, char height)
+        => !trees.Where(h => h >= height).Any();
 }
