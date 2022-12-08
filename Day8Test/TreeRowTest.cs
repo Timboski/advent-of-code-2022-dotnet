@@ -1,5 +1,3 @@
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Utilities;
-
 namespace Day8Test;
 
 public class TreeRowTest
