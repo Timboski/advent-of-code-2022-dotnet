@@ -6,5 +6,6 @@ public class TreeRow
 
     public TreeRow(string row) => _row = row;
 
-    public bool IsVisibleFromLeft(int index) => true;
+    public bool IsVisibleFromLeft(int index) 
+        => !_row.Take(index).Where(h => h >= _row[index]).Any();
 }
