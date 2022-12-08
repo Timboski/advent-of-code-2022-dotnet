@@ -20,7 +20,7 @@ public class TreePatchTest
 
     [Theory]
     [InlineData("day8-example-input.txt", 8)]
-    // [InlineData("day8-input.txt", ??)]
+    [InlineData("day8-input.txt", 480000)]
     public void GivenMap_WhenCheckScenicScore_ReturnsExpectedScore(string filename, int expectedCount)
     {
         // Arrange
