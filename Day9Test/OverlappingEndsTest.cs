@@ -17,4 +17,20 @@ public class OverlappingEndsTest
         Assert.Equal(endHeadPosition, newState.HeadPosition);
         Assert.Equal(startPosition, newState.TailPosition);
     }
+
+    [Fact]
+    public void GivenStartingState_WhenMoveSouth_OnlyHeadMovesSouth()
+    {
+        // Arrange
+        var startPosition = new EndPosition(0, 0);
+        var endHeadPosition = new EndPosition(0, -1);
+        var sut = new OverlappingEnds(startPosition);
+
+        // Act
+        var newState = sut.MoveSouth();
+
+        // Assert
+        Assert.Equal(endHeadPosition, newState.HeadPosition);
+        Assert.Equal(startPosition, newState.TailPosition);
+    }
 }
