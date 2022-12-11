@@ -12,9 +12,7 @@ public class OverlappingEnds : RopeState
         => new HeadNorth(HeadPosition.North);
 
     public override RopeState MoveEast()
-    {
-        throw new NotImplementedException();
-    }
+        => new HeadEast(HeadPosition.East);
 
     public override RopeState MoveSouth()
         => new HeadSouth(HeadPosition.South);
