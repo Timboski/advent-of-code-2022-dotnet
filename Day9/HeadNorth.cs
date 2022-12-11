@@ -9,22 +9,14 @@ public class HeadNorth : RopeState
     public override EndPosition TailPosition => HeadPosition.South;
 
     public override RopeState MoveNorth()
-    {
-        throw new NotImplementedException();
-    }
+        => new HeadNorth(HeadPosition.North);
 
     public override RopeState MoveEast()
-    {
-        throw new NotImplementedException();
-    }
+        => new HeadNorthEast(HeadPosition.East);
 
     public override RopeState MoveSouth()
-    {
-        throw new NotImplementedException();
-    }
+        => new OverlappingEnds(HeadPosition.South);
 
     public override RopeState MoveWest()
-    {
-        throw new NotImplementedException();
-    }
+        => new HeadNorthWest(HeadPosition.West);
 }
