@@ -3,6 +3,20 @@ namespace Day9Test;
 public class OverlappingEndsTest
 {
     [Fact]
+    public void GivenStartPosition_WhenCreateState_HeadAndTailAreAtStart()
+    {
+        // Arrange
+        var startPosition = new EndPosition(0, 0);
+
+        // Act
+        var sut = new OverlappingEnds(startPosition);
+
+        // Assert
+        Assert.Equal(startPosition, sut.HeadPosition);
+        Assert.Equal(startPosition, sut.TailPosition);
+    }
+
+    [Fact]
     public void GivenStartingState_WhenMoveNorth_OnlyHeadMovesNorth()
     {
         // Arrange
