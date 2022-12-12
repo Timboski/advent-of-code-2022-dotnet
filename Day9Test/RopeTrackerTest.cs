@@ -89,10 +89,27 @@ public class RopeTrackerTest
     [Theory]
     [InlineData("day9-example-input.txt", 13)]
     [InlineData("day9-input.txt", 6357)]
-    public void GivenRopeMotions_WhenTrackTail_VisitsExpectedNumberOfLocations(string fileName, int expectedCount) 
+    public void GivenRopeMotions_WhenTrackTail_VisitsExpectedNumberOfLocations(string fileName, int expectedCount)
     {
         // Arrange
         var sut = new RopeTracker();
+
+        // Act
+        sut.ParseFile(fileName);
+
+        // Assert
+        Assert.Equal(expectedCount, sut.TailVisits);
+    }
+
+    [Theory]
+    [InlineData("day9-example-input.txt", 13)]
+    [InlineData("day9-input.txt", 6357)]
+    public void GivenRopeMotions_WhenTrackTailUsingRuleBasedMovement_VisitsExpectedNumberOfLocations(string fileName, int expectedCount)
+    {
+        // Arrange
+        var origin = new EndPosition(0, 0);
+        var ruleBasedMovement = new RuleBasedMovement(origin);
+        var sut = new RopeTracker(ruleBasedMovement);
 
         // Act
         sut.ParseFile(fileName);
