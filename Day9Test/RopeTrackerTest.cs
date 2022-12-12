@@ -19,6 +19,7 @@ public class RopeTrackerTest
 
         // Assert
         state.Verify(a => a.MoveNorth(), Times.Exactly(expectedCount));
+        state.Verify(a => a.TailPosition, Times.AtLeast(1));
         state.VerifyNoOtherCalls();
     }
 
@@ -39,6 +40,7 @@ public class RopeTrackerTest
 
         // Assert
         state.Verify(a => a.MoveSouth(), Times.Exactly(expectedCount));
+        state.Verify(a => a.TailPosition, Times.AtLeast(1));
         state.VerifyNoOtherCalls();
     }
 
@@ -59,6 +61,7 @@ public class RopeTrackerTest
 
         // Assert
         state.Verify(a => a.MoveWest(), Times.Exactly(expectedCount));
+        state.Verify(a => a.TailPosition, Times.AtLeast(1));
         state.VerifyNoOtherCalls();
     }
 
@@ -79,6 +82,7 @@ public class RopeTrackerTest
 
         // Assert
         state.Verify(a => a.MoveEast(), Times.Exactly(expectedCount));
+        state.Verify(a => a.TailPosition, Times.AtLeast(1));
         state.VerifyNoOtherCalls();
     }
 
