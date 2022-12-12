@@ -41,4 +41,44 @@ public class RopeTrackerTest
         state.Verify(a => a.MoveSouth(), Times.Exactly(expectedCount));
         state.VerifyNoOtherCalls();
     }
+
+    [Theory]
+    [InlineData("L 1", 1)]
+    [InlineData("L 5", 5)]
+    [InlineData("L 10", 10)]
+    public void GivenMockState_WhenParseLeftInstruction_CallsExpectedMethods(string instruction, int expectedCount)
+    {
+        // Arrange
+        var position = new EndPosition(0, 0);
+        var state = new Mock<RopeState>(position);
+        state.Setup(a => a.MoveWest()).Returns(state.Object);
+        var sut = new RopeTracker(state.Object);
+
+        // Act
+        sut.TrackMotion(instruction);
+
+        // Assert
+        state.Verify(a => a.MoveWest(), Times.Exactly(expectedCount));
+        state.VerifyNoOtherCalls();
+    }
+
+    [Theory]
+    [InlineData("R 1", 1)]
+    [InlineData("R 5", 5)]
+    [InlineData("R 10", 10)]
+    public void GivenMockState_WhenParseRightInstruction_CallsExpectedMethods(string instruction, int expectedCount)
+    {
+        // Arrange
+        var position = new EndPosition(0, 0);
+        var state = new Mock<RopeState>(position);
+        state.Setup(a => a.MoveEast()).Returns(state.Object);
+        var sut = new RopeTracker(state.Object);
+
+        // Act
+        sut.TrackMotion(instruction);
+
+        // Assert
+        state.Verify(a => a.MoveEast(), Times.Exactly(expectedCount));
+        state.VerifyNoOtherCalls();
+    }
 }

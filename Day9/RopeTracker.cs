@@ -14,12 +14,16 @@ public class RopeTracker
     {
         var parts = instruction.Split(' ');
         var direction = parts[0];
-        for (var i = 0; i < int.Parse(parts[1]); ++i)
+        int iterations = int.Parse(parts[1]);
+
+        for (var i = 0; i < iterations; ++i)
         {
             _state = direction switch
             {
                 "U" => _state.MoveNorth(),
+                "R" => _state.MoveEast(),
                 "D" => _state.MoveSouth(),
+                "L" => _state.MoveWest(),
                 _ => throw new NotImplementedException(),
             };
         }
