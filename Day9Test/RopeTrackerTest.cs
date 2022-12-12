@@ -81,4 +81,18 @@ public class RopeTrackerTest
         state.Verify(a => a.MoveEast(), Times.Exactly(expectedCount));
         state.VerifyNoOtherCalls();
     }
+
+    [Theory]
+    [InlineData("day9-example-input.txt", 13)]
+    public void GivenRopeMotions_WhenTrackTail_VisitsExpectedNumberOfLocations(string fileName, int expectedCount) 
+    {
+        // Arrange
+        var sut = new RopeTracker();
+
+        // Act
+        sut.ParseFile(fileName);
+
+        // Assert
+        Assert.Equal(expectedCount, sut.TailVisits);
+    }
 }

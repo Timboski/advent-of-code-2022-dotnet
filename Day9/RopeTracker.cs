@@ -2,13 +2,26 @@
 
 public class RopeTracker
 {
-    private RopeState _state = new OverlappingEnds(new EndPosition(0, 0));
+    private RopeState _state;
+    private HashSet<EndPosition> _tailLocations = new();
 
-    public RopeTracker()
+    public RopeTracker() : this(new OverlappingEnds(new EndPosition(0, 0)))
 	{
 	}
 
-    public RopeTracker(RopeState startState) => _state = startState;
+    public RopeTracker(RopeState startState)
+    {
+        _state = startState;
+        _tailLocations.Add(_state.TailPosition);
+    }
+
+    public int TailVisits => _tailLocations.Count;
+
+    public void ParseFile(string fileName)
+    {
+        var instructions = File.ReadAllLines(fileName);
+        foreach (var instruction in instructions) TrackMotion(instruction);
+    }
 
     public void TrackMotion(string instruction)
     {
@@ -26,6 +39,7 @@ public class RopeTracker
                 "L" => _state.MoveWest(),
                 _ => throw new NotImplementedException(),
             };
+            _tailLocations.Add(_state.TailPosition);
         }
     }
 }
