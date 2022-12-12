@@ -13,6 +13,15 @@ public class RopeTracker
     public void TrackMotion(string instruction)
     {
         var parts = instruction.Split(' ');
-        for (var i = 0; i < int.Parse(parts[1]); ++i) _state = _state.MoveNorth();
+        var direction = parts[0];
+        for (var i = 0; i < int.Parse(parts[1]); ++i)
+        {
+            _state = direction switch
+            {
+                "U" => _state.MoveNorth(),
+                "D" => _state.MoveSouth(),
+                _ => throw new NotImplementedException(),
+            };
+        }
     }
 }
