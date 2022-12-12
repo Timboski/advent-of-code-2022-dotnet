@@ -117,4 +117,22 @@ public class RopeTrackerTest
         // Assert
         Assert.Equal(expectedCount, sut.TailVisits);
     }
+
+    [Theory]
+    [InlineData("day9-example-input.txt", 1)]
+    [InlineData("day9-example-input-2.txt", 36)]
+    //[InlineData("day9-input.txt", 6357)]
+    public void GivenRopeMotions_WhenTrackTailWithTenKnots_VisitsExpectedNumberOfLocations(string fileName, int expectedCount)
+    {
+        // Arrange
+        var origin = new EndPosition(0, 0);
+        var tenKnots = new TenKnots(origin);
+        var sut = new RopeTracker(tenKnots);
+
+        // Act
+        sut.ParseFile(fileName);
+
+        // Assert
+        Assert.Equal(expectedCount, sut.TailVisits);
+    }
 }
