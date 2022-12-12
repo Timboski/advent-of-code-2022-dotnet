@@ -88,6 +88,7 @@ public class RopeTrackerTest
 
     [Theory]
     [InlineData("day9-example-input.txt", 13)]
+    [InlineData("day9-input.txt", 6357)]
     public void GivenRopeMotions_WhenTrackTail_VisitsExpectedNumberOfLocations(string fileName, int expectedCount) 
     {
         // Arrange
