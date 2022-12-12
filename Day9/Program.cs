@@ -1,2 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using Day9;
+
+var sut = new RopeTracker();
+sut.ParseFile("day9-input.txt");
+Console.WriteLine(sut.TailVisits);
