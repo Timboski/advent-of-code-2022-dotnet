@@ -120,4 +120,27 @@ public class CPUTest
         // Assert
         Assert.Equal(expectedSignalStrength, signalStrength);
     }
+
+    [Fact]
+    public void GivenEampleInputData_WhenRenderScreen_ProducesExpectedLines()
+    {
+        // Arrange
+        var expectedOutput = """
+           ##..##..##..##..##..##..##..##..##..##..
+           ###...###...###...###...###...###...###.
+           ####....####....####....####....####....
+           #####.....#####.....#####.....#####.....
+           ######......######......######......####
+           #######.......#######.......#######.....
+
+           """;
+
+        var sut = new CPU();
+
+        // Act
+        var screen = sut.RenderScreen("day10-example-input.txt");
+
+        // Assert
+        Assert.Equal(expectedOutput, screen);
+    }
 }

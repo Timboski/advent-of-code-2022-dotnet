@@ -1,4 +1,6 @@
-﻿namespace Day10;
+﻿using System.Text;
+
+namespace Day10;
 
 public class CPU
 {
@@ -36,5 +38,26 @@ public class CPU
         var interestingStates = new int[] { 20, 60, 100, 140, 180, 220 };
         var states = RunProgram(filename);
         return interestingStates.Select(s => states[s] * s).Sum();
+    }
+
+    public string RenderScreen(string filename)
+    {
+        var spritePositions = RunProgram(filename);
+        var sb = new StringBuilder(260);
+        var cycle = 1;
+        for (int line = 0; line < 6; ++line)
+        {
+            for (int col = 1; col < 41; ++col)
+            {
+                var pos = spritePositions[cycle];
+                var sprite = new int[] { pos, pos + 1, pos + 2 };
+                var glyph = sprite.Contains(col) ? '#' : '.';
+                sb.Append(glyph);
+                ++cycle;
+            }
+
+            sb.AppendLine();
+        }
+        return sb.ToString();
     }
 }
