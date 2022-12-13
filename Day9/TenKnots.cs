@@ -5,7 +5,7 @@ public class TenKnots : RopeState
     private List<EndPosition> _tailPositions = new(10);
 
     public TenKnots(EndPosition headPosition) 
-        : this(headPosition, Enumerable.Repeat(headPosition, 10).ToList())
+        : this(headPosition, Enumerable.Repeat(headPosition, 9).ToList())
     {
     }
 
