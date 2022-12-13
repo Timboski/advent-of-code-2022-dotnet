@@ -23,7 +23,7 @@ public class CPUTest
         var sut = new CPU(17);
 
         // Act
-        var seq = sut.Noop();
+        _ = sut.Noop();
 
         // Assert
         Assert.Equal(17, sut.State);
@@ -54,5 +54,20 @@ public class CPUTest
 
         // Assert
         Assert.Equal(32, sut.State);
+    }
+
+    [Fact]
+    public void GivenCpuInGivenState_WhenParseNoop_RunsNoop()
+    {
+        // Arrange
+        var sut = new CPU(17);
+
+        // Act
+        var seq = sut.Parse("noop");
+
+        // Assert
+        Assert.Equal(17, sut.State);
+        Assert.Single(seq);
+        Assert.Equal(17, seq.First());
     }
 }

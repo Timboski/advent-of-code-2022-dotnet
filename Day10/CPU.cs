@@ -15,4 +15,7 @@ public class CPU
         State += stateOffset;
         return seq;
     }
+
+    public IEnumerable<int> Parse(string instruction)
+        => Noop();
 }
