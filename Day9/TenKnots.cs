@@ -20,6 +20,8 @@ public class TenKnots : RopeState
             _tailPositions.Add(nextHead);
         }
         TailPosition = nextHead;
+
+        DebugPrint();
     }
 
     public override EndPosition TailPosition { get; }
@@ -35,4 +37,34 @@ public class TenKnots : RopeState
 
     public override RopeState MoveWest()
         => new TenKnots(HeadPosition.West, _tailPositions);
+
+    private void DebugPrint()
+    {
+        var minx = 0;
+        var maxx = 0;
+        var miny = 0;
+        var maxy = 0;
+        var knots = _tailPositions.Append(HeadPosition).ToList();
+        foreach (var knot in knots)
+        {
+            if (knot.X > maxx) maxx = knot.X;
+            if (knot.X < minx) minx = knot.X;
+            if (knot.Y > maxy) maxy = knot.Y;
+            if (knot.Y < miny) miny = knot.Y;
+        }
+
+        Console.WriteLine();
+        for (int y = miny; y <= maxy; ++y)
+        {
+            for (int x = minx; x <= maxx; ++x)
+            {
+                var point = new EndPosition(x, y);
+                var isKnot = knots.Contains(point);
+                var glyph = isKnot ? '#' : '.';
+                Console.Write(glyph);
+            }
+
+            Console.WriteLine();
+        }
+    }
 }
