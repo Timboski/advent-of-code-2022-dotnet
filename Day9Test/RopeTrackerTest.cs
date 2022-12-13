@@ -121,7 +121,7 @@ public class RopeTrackerTest
     [Theory]
     [InlineData("day9-example-input.txt", 1)]
     [InlineData("day9-example-input-2.txt", 36)]
-    //[InlineData("day9-input.txt", 6357)]
+    [InlineData("day9-input.txt", 2627)]
     public void GivenRopeMotions_WhenTrackTailWithTenKnots_VisitsExpectedNumberOfLocations(string fileName, int expectedCount)
     {
         // Arrange
