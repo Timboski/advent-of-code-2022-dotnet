@@ -21,7 +21,7 @@ public class TenKnots : RopeState
         }
         TailPosition = nextHead;
 
-        DebugPrint();
+        // DebugPrint();
     }
 
     public override EndPosition TailPosition { get; }
