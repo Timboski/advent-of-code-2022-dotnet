@@ -17,5 +17,11 @@ public class CPU
     }
 
     public IEnumerable<int> Parse(string instruction)
-        => Noop();
+    {
+        if (instruction == "noop") return Noop();
+
+        var split = instruction.Split(' ');
+        var offset = int.Parse(split[1]);
+        return Addx(offset);
+    }
 }

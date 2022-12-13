@@ -70,4 +70,19 @@ public class CPUTest
         Assert.Single(seq);
         Assert.Equal(17, seq.First());
     }
+
+    [Fact]
+    public void GivenCpuInGivenState_WhenParseAddx_RunsAddx()
+    {
+        // Arrange
+        var sut = new CPU(17);
+
+        // Act
+        var seq = sut.Parse("addx 15");
+
+        // Assert
+        Assert.Equal(32, sut.State);
+        Assert.Equal(2, seq.Count());
+        Assert.True(seq.All(a => a == 17));
+    }
 }
