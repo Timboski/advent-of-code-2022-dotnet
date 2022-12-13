@@ -24,4 +24,10 @@ public class CPU
         var offset = int.Parse(split[1]);
         return Addx(offset);
     }
+
+    public List<int> RunProgram(string filename) 
+        => new int[] { State }
+            .Concat(
+                File.ReadLines(filename).SelectMany(Parse))
+            .ToList();
 }

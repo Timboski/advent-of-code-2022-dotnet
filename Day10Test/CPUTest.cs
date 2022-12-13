@@ -85,4 +85,22 @@ public class CPUTest
         Assert.Equal(2, seq.Count());
         Assert.True(seq.All(a => a == 17));
     }
+
+    [Fact]
+    public void GivenExampleInput_WhenRunProgram_ReturnedSequenceContainsExpectedElements()
+    {
+        // Arrange
+        var sut = new CPU();
+
+        // Act
+        var seq = sut.RunProgram("day10-example-input.txt");
+
+        // Assert
+        Assert.Equal(21, seq[20]);
+        Assert.Equal(19, seq[60]);
+        Assert.Equal(18, seq[100]);
+        Assert.Equal(21, seq[140]);
+        Assert.Equal(16, seq[180]);
+        Assert.Equal(18, seq[220]);
+    }
 }
