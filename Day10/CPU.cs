@@ -4,10 +4,15 @@ public class CPU
 {
     public CPU(int state = 1) => State = state;
 
-    public int State { get; }
+    public int State { get; private set; }
 
-    public IEnumerable<int> Noop()
+    public IEnumerable<int> Noop() 
+        => new List<int>(1) { State };
+
+    public IEnumerable<int> Addx(int stateOffset)
     {
-        yield return State;
+        var seq = new List<int>(2) { State, State };
+        State += stateOffset;
+        return seq;
     }
 }
