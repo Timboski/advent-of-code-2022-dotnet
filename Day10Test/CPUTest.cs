@@ -103,4 +103,20 @@ public class CPUTest
         Assert.Equal(16, seq[180]);
         Assert.Equal(18, seq[220]);
     }
+
+
+
+    [Theory]
+    [InlineData("day10-example-input.txt", 13140)]
+    public void GivenInputData_WhenFindSignalStrength_ReturnsExpectedResult(string filename, int expectedSignalStrength)
+    {
+        // Arrange
+        var sut = new CPU();
+
+        // Act
+        var signalStrength = sut.FindSignalStrength(filename);
+
+        // Assert
+        Assert.Equal(expectedSignalStrength, signalStrength);
+    }
 }

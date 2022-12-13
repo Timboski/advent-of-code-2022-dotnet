@@ -30,4 +30,11 @@ public class CPU
             .Concat(
                 File.ReadLines(filename).SelectMany(Parse))
             .ToList();
+
+    public int FindSignalStrength(string filename)
+    {
+        var interestingStates = new int[] { 20, 60, 100, 140, 180, 220 };
+        var states = RunProgram(filename);
+        return interestingStates.Select(s => states[s] * s).Sum();
+    }
 }
