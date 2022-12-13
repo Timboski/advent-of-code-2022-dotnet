@@ -108,6 +108,7 @@ public class CPUTest
 
     [Theory]
     [InlineData("day10-example-input.txt", 13140)]
+    [InlineData("day10-input.txt", 13440)]
     public void GivenInputData_WhenFindSignalStrength_ReturnsExpectedResult(string filename, int expectedSignalStrength)
     {
         // Arrange
