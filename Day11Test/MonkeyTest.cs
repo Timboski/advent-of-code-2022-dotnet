@@ -14,7 +14,7 @@ public class MonkeyTest
     {
         // Arrange
         // Act
-        var sut = new Monkey(monkeyData);
+        var sut = new Monkey(monkeyData, true);
 
         // Assert
         Assert.Equal(expectedItems, sut.Items);
@@ -25,7 +25,7 @@ public class MonkeyTest
     public void GivenMonkeyData_WhenInspectItems_ReturnsExpectedWorryLevel(List<string> monkeyData, long[] expectedWorryLevel)
     {
         // Arrange
-        var sut = new Monkey(monkeyData);
+        var sut = new Monkey(monkeyData, true);
 
         // Act
         var res = new List<long>(expectedWorryLevel.Length);
@@ -40,7 +40,7 @@ public class MonkeyTest
     public void GivenMonkeyData_WhenInspectItems_ReturnsExpectedTargetMonkey(List<string> monkeyData, int[] expectedTargetMonkey)
     {
         // Arrange
-        var sut = new Monkey(monkeyData);
+        var sut = new Monkey(monkeyData, true);
 
         // Act
         var res = new List<int>(expectedTargetMonkey.Length);

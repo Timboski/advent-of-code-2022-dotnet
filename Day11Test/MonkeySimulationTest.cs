@@ -13,7 +13,7 @@ public class MonkeySimulationTest
     public void GivenMonkeyData_WhenRunRounds_MonkeysHoldExpectedItems(string monkeyDataFile, int numberOfRounds, long[][] expectedItems)
     {
         // Arrange
-        var sut = new MonkeySimulation(monkeyDataFile);
+        var sut = new MonkeySimulation(monkeyDataFile, true);
 
         // Act
         for (int i = 0; i < numberOfRounds; ++i)
@@ -39,7 +39,7 @@ public class MonkeySimulationTest
     public void GivenMonkeyData_WhenFindMonkyBusinessAfter20Rounds_ReturnsExpectedScore(string monkeyDataFile, long expectedMonkeyBusiness)
     {
         // Arrange
-        var sut = new MonkeySimulation(monkeyDataFile);
+        var sut = new MonkeySimulation(monkeyDataFile, true);
 
         // Act
         var monkeyBusiness = sut.FindMonkeyBusiness(20);

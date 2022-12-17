@@ -2,7 +2,7 @@
 
 public class MonkeySimulation
 {
-	public MonkeySimulation(string filename)
+	public MonkeySimulation(string filename, bool relief = false)
 	{
 		var monkeys = new List<Monkey>();
 		var lines = File.ReadAllLines(filename);
@@ -12,7 +12,7 @@ public class MonkeySimulation
 			if (!lines[i].Contains($"Monkey {monkeys.Count}")) 
 				throw new InvalidOperationException();
 			
-			monkeys.Add(new Monkey(lines[(i + 1)..(i + 6)].ToList()));
+			monkeys.Add(new Monkey(lines[(i + 1)..(i + 6)].ToList(), relief));
 		}
 
 		Monkey = monkeys.ToArray();

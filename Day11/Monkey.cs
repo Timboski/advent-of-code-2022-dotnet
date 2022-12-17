@@ -5,12 +5,14 @@ public class Monkey
 	private Queue<long> _items = new();
     private readonly Func<long, long> _worryEvaulation;
     private readonly Func<long, int> _findTargetMonkey;
+    private readonly bool _relief;
 
-	public Monkey(List<string> monkeyData)
+	public Monkey(List<string> monkeyData, bool relief = false)
     {
         ParseStartingItems(monkeyData[0]);
         _worryEvaulation = ParseWorryEvaluation(monkeyData[1]);
         _findTargetMonkey = ParseTargetDecision(monkeyData.Skip(2).ToList());
+        _relief = relief;
     }
 
     public long[] Items => _items.ToArray();
@@ -25,7 +27,8 @@ public class Monkey
 
         ++NumInspections;
 
-        worryLevel = _worryEvaulation(item) / 3;
+        worryLevel = _worryEvaulation(item);
+        if (_relief) worryLevel /= 3;
         targetMonkey = _findTargetMonkey(worryLevel);
         return true;
     }
