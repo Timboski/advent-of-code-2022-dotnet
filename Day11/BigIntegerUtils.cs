@@ -13,6 +13,7 @@ public static class BigIntegerUtils
             5 => number.IsDivisibleBy5(),
             7 => number.IsDivisibleBy7(),
             11 => number.IsDivisibleBy11(),
+            13 => number.IsDivisibleBy13(),
             _ => number % divisor == 0,
         };
 
@@ -79,5 +80,21 @@ public static class BigIntegerUtils
             .Select((item, index) => item * (index.IntIsDivisible(2) ? 1 : -1))
             .Sum();
         return reducedNumber.IntIsDivisible(11);
+    }
+
+    /// <summary>
+    /// Form the alternating sum of blocks of three from right to left. 
+    /// The result must be divisible by 13.
+    /// </summary>
+    public static bool IsDivisibleBy13(this BigInteger number)
+    {
+        var reducedNumber = number.ToString()
+            .Reverse()
+            .Chunk(3)
+            .Select(a => string.Join("", a.Reverse()))
+            .Select(int.Parse)
+            .Select((item, index) => item * (index.IntIsDivisible(2) ? 1 : -1))
+            .Sum();
+        return reducedNumber.IntIsDivisible(13);
     }
 }

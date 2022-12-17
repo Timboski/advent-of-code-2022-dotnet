@@ -14,6 +14,7 @@ public class BigIntegerUtilsTest
     [InlineData(6557538333835635, 7)]
     [InlineData(29220, 7)]
     [InlineData(3432583918349934921, 11)]
+    [InlineData(4885798252409458493, 13)]
     public void GivenMultipleOfANumber_WhenCheckIfDivisible_ReturnsTrue(long multiple, int divisor)
     {
         // Arrange
@@ -41,6 +42,8 @@ public class BigIntegerUtilsTest
     [InlineData(3432583918349934921, 11, 10)]
     [InlineData(3432583918349934921, 11 , 5)]
     [InlineData(3432583918349934921, 11, 7)]
+    [InlineData(4885798252409458493, 13, 1)]
+    [InlineData(4885798252409458493, 13, 7)]
     public void GivenMultipleOfANumberAndOffsetSoNotDivisible_WhenCheckIfDivisible_ReturnsFalse(long multiple, int divisor, int offset)
     {
         // Arrange
