@@ -1,8 +1,8 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace Day11;
 
+/// <see cref="https://en.wikipedia.org/wiki/Divisibility_rule"/>
 public static class BigIntegerUtils
 {
     public static bool IsDivisibleBy(this BigInteger number, int divisor)
