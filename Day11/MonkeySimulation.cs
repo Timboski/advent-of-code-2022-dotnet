@@ -22,15 +22,16 @@ public class MonkeySimulation
 
 	public Monkey[] Monkey { get; }
 
-    public int FindMonkeyBusiness(int numberOfRounds)
+    public BigInteger FindMonkeyBusiness(int numberOfRounds)
     {
 		for (int i = 0; i < numberOfRounds; ++i) ProcessRound();
 
-        return Monkey
+		var mostBusiness = Monkey
 			.Select(m => m.NumInspections)
 			.OrderDescending()
-			.Take(2)
-			.Aggregate(1, (acc, a) => acc * a);
+			.Take(2);
+
+		return (BigInteger)mostBusiness.First() * (BigInteger)mostBusiness.Last();
     }
 
     public void ProcessRound()

@@ -27,7 +27,7 @@ public class Monkey
         worryLevel = 0;
 		if (!_items.TryDequeue(out BigInteger item)) return false;
 
-        ++NumInspections;
+        NumInspections = checked(NumInspections + 1);
 
         worryLevel = _worryEvaulation(item);
         if (_relief) worryLevel /= 3;
