@@ -18,4 +18,19 @@ public class BigIntegerUtilsTest
         // Assert
         Assert.True(isDivisible);
     }
+
+    [Theory]
+    [InlineData(13892429, 2, 1)]
+    [InlineData(13892429, 2, -1)]
+    public void GivenMultipleOfANumberAndOffsetSoNotDivisible_WhenCheckIfDivisible_ReturnsFalse(long multiple, int divisor, int offset)
+    {
+        // Arrange
+        var input = (BigInteger)multiple * divisor + offset;
+
+        // Act
+        var isDivisible = input.IsDivisibleBy(divisor);
+
+        // Assert
+        Assert.False(isDivisible);
+    }
 }
