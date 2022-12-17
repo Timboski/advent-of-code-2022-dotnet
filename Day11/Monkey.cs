@@ -16,4 +16,10 @@ public class Monkey
     }
 
 	public int[] Items => _items.ToArray();
+
+    public bool InspectItem(out int targetMonkey, out int worryLevel)
+    {
+		targetMonkey = 0;
+		return _items.TryDequeue(out worryLevel);
+    }
 }
