@@ -1,4 +1,3 @@
-using System.Linq;
 using Xunit.Abstractions;
 
 namespace Day11Test;
@@ -13,9 +12,12 @@ public class MonkeyTest
     [MemberData(nameof(InitialItems))]
     public void GivenMonkeyData_WhenCreateMonkey_HoldsExpectedItems(List<string> monkeyData, int[] expectedItems)
     {
-        // Check the test is receving the correct data!
-        _output.WriteLine(string.Join(Environment.NewLine, monkeyData));
-        _output.WriteLine(string.Join(", ", expectedItems));
+        // Arrange
+        // Act
+        var sut = new Monkey(monkeyData);
+
+        // Assert
+        Assert.Equal(expectedItems, sut.Items);
     }
 
     public static IEnumerable<object[]> InitialItems()
