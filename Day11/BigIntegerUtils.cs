@@ -106,50 +106,31 @@ public static class BigIntegerUtils
     /// (Works because 51 is divisible by 17.)
     /// </summary>
     public static bool IsDivisibleBy17(this BigInteger number)
-    {
-        var reducedNumberDigits = number.ToString();
-        while (reducedNumberDigits.Length > 6)
-        {
-            var lastDigit = int.Parse(reducedNumberDigits.Last().ToString());
-            var remainingDigits = BigInteger.Parse(reducedNumberDigits[0..^1]);
-            var reducedNumber = remainingDigits - (lastDigit * 5);
-            reducedNumberDigits = reducedNumber.ToString();
-        }
-
-        return int.Parse(reducedNumberDigits).IntIsDivisible(17);
-    }
+        => DivisibleWithLastDigitReduction(number, -5, 17);
 
     /// <summary>
     /// Add twice the last digit to the rest.
     /// </summary>
     public static bool IsDivisibleBy19(this BigInteger number)
-    {
-        var reducedNumberDigits = number.ToString();
-        while (reducedNumberDigits.Length > 6)
-        {
-            var lastDigit = int.Parse(reducedNumberDigits.Last().ToString());
-            var remainingDigits = BigInteger.Parse(reducedNumberDigits[0..^1]);
-            var reducedNumber = remainingDigits + (lastDigit * 2);
-            reducedNumberDigits = reducedNumber.ToString();
-        }
-
-        return int.Parse(reducedNumberDigits).IntIsDivisible(19);
-    }
+        => DivisibleWithLastDigitReduction(number, 2, 19);
 
     /// <summary>
     /// Add 7 times the last digit to the rest.
     /// </summary>
-    public static bool IsDivisibleBy23(this BigInteger number)
+    public static bool IsDivisibleBy23(this BigInteger number) 
+        => DivisibleWithLastDigitReduction(number, 7, 23);
+
+    private static bool DivisibleWithLastDigitReduction(this BigInteger number, int multiplier, int divisor)
     {
         var reducedNumberDigits = number.ToString();
         while (reducedNumberDigits.Length > 6)
         {
             var lastDigit = int.Parse(reducedNumberDigits.Last().ToString());
             var remainingDigits = BigInteger.Parse(reducedNumberDigits[0..^1]);
-            var reducedNumber = remainingDigits + (lastDigit * 7);
+            var reducedNumber = remainingDigits + (lastDigit * multiplier);
             reducedNumberDigits = reducedNumber.ToString();
         }
 
-        return int.Parse(reducedNumberDigits).IntIsDivisible(23);
+        return int.Parse(reducedNumberDigits).IntIsDivisible(divisor);
     }
 }
