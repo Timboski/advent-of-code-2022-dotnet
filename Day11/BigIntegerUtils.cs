@@ -14,6 +14,7 @@ public static class BigIntegerUtils
             7 => number.IsDivisibleBy7(),
             11 => number.IsDivisibleBy11(),
             13 => number.IsDivisibleBy13(),
+            17 => number.IsDivisibleBy17(),
             _ => number % divisor == 0,
         };
 
@@ -96,5 +97,23 @@ public static class BigIntegerUtils
             .Select((item, index) => item * (index.IntIsDivisible(2) ? 1 : -1))
             .Sum();
         return reducedNumber.IntIsDivisible(13);
+    }
+
+    /// <summary>
+    /// Subtract 5 times the last digit from the rest. 
+    /// (Works because 51 is divisible by 17.)
+    /// </summary>
+    public static bool IsDivisibleBy17(this BigInteger number)
+    {
+        var reducedNumberDigits = number.ToString();
+        while (reducedNumberDigits.Length > 6)
+        {
+            var lastDigit = int.Parse(reducedNumberDigits.Last().ToString());
+            var remainingDigits = BigInteger.Parse(reducedNumberDigits[0..^1]);
+            var reducedNumber = remainingDigits - (lastDigit * 5);
+            reducedNumberDigits = reducedNumber.ToString();
+        }
+
+        return int.Parse(reducedNumberDigits).IntIsDivisible(17);
     }
 }
