@@ -1,6 +1,6 @@
 ﻿using Day11;
 
-var sut = new MonkeySimulation("day11-input.txt");
+var sut = new MonkeySimulation("day11-input.txt", true);
 
 // Act
 var monkeyBusiness = sut.FindMonkeyBusiness(20);
