@@ -1,10 +1,12 @@
-﻿namespace Day11;
+﻿using System.Numerics;
+
+namespace Day11;
 
 public class Monkey
 {
-	private Queue<long> _items = new();
-    private readonly Func<long, long> _worryEvaulation;
-    private readonly Func<long, int> _findTargetMonkey;
+	private readonly Queue<BigInteger> _items = new();
+    private readonly Func<BigInteger, BigInteger> _worryEvaulation;
+    private readonly Func<BigInteger, int> _findTargetMonkey;
     private readonly bool _relief;
 
 	public Monkey(List<string> monkeyData, bool relief = false)
@@ -15,15 +17,15 @@ public class Monkey
         _relief = relief;
     }
 
-    public long[] Items => _items.ToArray();
+    public BigInteger[] Items => _items.ToArray();
 
     public int NumInspections { get; private set; } = 0;
 
-    public bool InspectItem(out int targetMonkey, out long worryLevel)
+    public bool InspectItem(out int targetMonkey, out BigInteger worryLevel)
     {
 		targetMonkey = 0;
         worryLevel = 0;
-		if (!_items.TryDequeue(out long item)) return false;
+		if (!_items.TryDequeue(out BigInteger item)) return false;
 
         ++NumInspections;
 
@@ -33,7 +35,7 @@ public class Monkey
         return true;
     }
 
-    public void AddItem(long worryLevel)
+    public void AddItem(BigInteger worryLevel)
         => _items.Enqueue(worryLevel);
 
     /// <example>
@@ -44,7 +46,7 @@ public class Monkey
         var items = itemsList
             .Split("Starting items:")[1]
             .Split(",")
-            .Select(long.Parse);
+            .Select(BigInteger.Parse);
         foreach (var item in items) AddItem(item);
     }
 
@@ -54,13 +56,13 @@ public class Monkey
     /// "  Operation: new = old * old"
     /// "  Operation: new = old + 3"
     /// </example>
-    private static Func<long, long> ParseWorryEvaluation(string operation)
+    private static Func<BigInteger, BigInteger> ParseWorryEvaluation(string operation)
     {
         var rule = operation.Split("Operation: new = old ")[1];
         if (rule == "* old") return a => checked(a * a);
 
         var part = rule.Split(" ");
-        var operand = long.Parse(part[1]);
+        var operand = BigInteger.Parse(part[1]);
 
         return part[0] switch
         {
@@ -77,9 +79,9 @@ public class Monkey
     ///     If false: throw to monkey 3
     /// """
     /// </example>
-    private Func<long, int> ParseTargetDecision(List<string> testDescription)
+    private Func<BigInteger, int> ParseTargetDecision(List<string> testDescription)
     {
-        var testDivisor = long.Parse(testDescription[0].Split("Test: divisible by ")[1]);
+        var testDivisor = BigInteger.Parse(testDescription[0].Split("Test: divisible by ")[1]);
         var trueMonkey = int.Parse(testDescription[1].Split("If true: throw to monkey ")[1]);
         var falseMonkey = int.Parse(testDescription[2].Split("If false: throw to monkey ")[1]);
         return worry => worry % testDivisor == 0 ? trueMonkey : falseMonkey;

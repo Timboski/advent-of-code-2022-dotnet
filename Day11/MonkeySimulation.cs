@@ -1,4 +1,6 @@
-﻿namespace Day11;
+﻿using System.Numerics;
+
+namespace Day11;
 
 public class MonkeySimulation
 {
@@ -35,7 +37,7 @@ public class MonkeySimulation
     {
 		foreach (var monkey in Monkey)
 		{
-			while (monkey.InspectItem(out int targetMonkey, out long worryLevel))
+			while (monkey.InspectItem(out int targetMonkey, out BigInteger worryLevel))
 			{
 				Monkey[targetMonkey].AddItem(worryLevel);
 			}
