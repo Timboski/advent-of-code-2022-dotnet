@@ -10,7 +10,7 @@ public class MonkeyTest
 
     [Theory]
     [MemberData(nameof(InitialItems))]
-    public void GivenMonkeyData_WhenCreateMonkey_HoldsExpectedItems(List<string> monkeyData, int[] expectedItems)
+    public void GivenMonkeyData_WhenCreateMonkey_HoldsExpectedItems(List<string> monkeyData, long[] expectedItems)
     {
         // Arrange
         // Act
@@ -22,14 +22,14 @@ public class MonkeyTest
 
     [Theory]
     [MemberData(nameof(NewWorryLevel))]
-    public void GivenMonkeyData_WhenInspectItems_ReturnsExpectedWorryLevel(List<string> monkeyData, int[] expectedWorryLevel)
+    public void GivenMonkeyData_WhenInspectItems_ReturnsExpectedWorryLevel(List<string> monkeyData, long[] expectedWorryLevel)
     {
         // Arrange
         var sut = new Monkey(monkeyData);
 
         // Act
-        var res = new List<int>(expectedWorryLevel.Length);
-        while (sut.InspectItem(out int _, out int worryLevel)) res.Add(worryLevel);
+        var res = new List<long>(expectedWorryLevel.Length);
+        while (sut.InspectItem(out int _, out long worryLevel)) res.Add(worryLevel);
 
         // Assert
         Assert.Equal(expectedWorryLevel, res);
@@ -44,7 +44,7 @@ public class MonkeyTest
 
         // Act
         var res = new List<int>(expectedTargetMonkey.Length);
-        while (sut.InspectItem(out int targetMonkey, out int _)) res.Add(targetMonkey);
+        while (sut.InspectItem(out int targetMonkey, out long _)) res.Add(targetMonkey);
 
         // Assert
         Assert.Equal(expectedTargetMonkey, res);
@@ -55,10 +55,10 @@ public class MonkeyTest
         var monkey = MonkeyData();
         return new List<object[]>
         {
-            new object[] { monkey[0], new int[] { 79, 98 } },
-            new object[] { monkey[1], new int[] { 54, 65, 75, 74 } },
-            new object[] { monkey[2], new int[] { 79, 60, 97 } },
-            new object[] { monkey[3], new int[] { 74 } },
+            new object[] { monkey[0], new long[] { 79, 98 } },
+            new object[] { monkey[1], new long[] { 54, 65, 75, 74 } },
+            new object[] { monkey[2], new long[] { 79, 60, 97 } },
+            new object[] { monkey[3], new long[] { 74 } },
         };
     }
 
@@ -68,13 +68,13 @@ public class MonkeyTest
         return new List<object[]>
         {
             // new = old * 19  (and then divided by 3)
-            new object[] { monkey[0], new int[] { 500, 620 } },
+            new object[] { monkey[0], new long[] { 500, 620 } },
             // new = old + 6  (and then divided by 3)
-            new object[] { monkey[1], new int[] { 20, 23, 27, 26 } },
+            new object[] { monkey[1], new long[] { 20, 23, 27, 26 } },
             // new = old * old  (and then divided by 3)
-            new object[] { monkey[2], new int[] { 2080, 1200, 3136 } },
+            new object[] { monkey[2], new long[] { 2080, 1200, 3136 } },
             // new = old + 3  (and then divided by 3)
-            new object[] { monkey[3], new int[] { 25 } },
+            new object[] { monkey[3], new long[] { 25 } },
         };
     }
 

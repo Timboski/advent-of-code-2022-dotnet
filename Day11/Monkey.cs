@@ -2,9 +2,9 @@
 
 public class Monkey
 {
-	private Queue<int> _items = new();
-    private readonly Func<int, int> _worryEvaulation;
-    private readonly Func<int, int> _findTargetMonkey;
+	private Queue<long> _items = new();
+    private readonly Func<long, long> _worryEvaulation;
+    private readonly Func<long, int> _findTargetMonkey;
 
 	public Monkey(List<string> monkeyData)
     {
@@ -13,15 +13,15 @@ public class Monkey
         _findTargetMonkey = ParseTargetDecision(monkeyData.Skip(2).ToList());
     }
 
-    public int[] Items => _items.ToArray();
+    public long[] Items => _items.ToArray();
 
     public int NumInspections { get; private set; } = 0;
 
-    public bool InspectItem(out int targetMonkey, out int worryLevel)
+    public bool InspectItem(out int targetMonkey, out long worryLevel)
     {
 		targetMonkey = 0;
         worryLevel = 0;
-		if (!_items.TryDequeue(out int item)) return false;
+		if (!_items.TryDequeue(out long item)) return false;
 
         ++NumInspections;
 
@@ -30,7 +30,7 @@ public class Monkey
         return true;
     }
 
-    public void AddItem(int worryLevel)
+    public void AddItem(long worryLevel)
         => _items.Enqueue(worryLevel);
 
     /// <example>
@@ -41,7 +41,7 @@ public class Monkey
         var items = itemsList
             .Split("Starting items:")[1]
             .Split(",")
-            .Select(int.Parse);
+            .Select(long.Parse);
         foreach (var item in items) AddItem(item);
     }
 
@@ -51,18 +51,18 @@ public class Monkey
     /// "  Operation: new = old * old"
     /// "  Operation: new = old + 3"
     /// </example>
-    private static Func<int, int> ParseWorryEvaluation(string operation)
+    private static Func<long, long> ParseWorryEvaluation(string operation)
     {
         var rule = operation.Split("Operation: new = old ")[1];
-        if (rule == "* old") return a => a * a;
+        if (rule == "* old") return a => checked(a * a);
 
         var part = rule.Split(" ");
-        var operand = int.Parse(part[1]);
+        var operand = long.Parse(part[1]);
 
         return part[0] switch
         {
-            "*" => a => a * operand,
-            "+" => a => a + operand,
+            "*" => a => checked(a * operand),
+            "+" => a => checked(a + operand),
             _ => throw new NotImplementedException(operation),
         };
     }
@@ -74,11 +74,11 @@ public class Monkey
     ///     If false: throw to monkey 3
     /// """
     /// </example>
-    private Func<int, int> ParseTargetDecision(List<string> testDescription)
+    private Func<long, int> ParseTargetDecision(List<string> testDescription)
     {
-        var testDivisor = int.Parse(testDescription[0].Split("Test: divisible by ")[1]);
+        var testDivisor = long.Parse(testDescription[0].Split("Test: divisible by ")[1]);
         var trueMonkey = int.Parse(testDescription[1].Split("If true: throw to monkey ")[1]);
         var falseMonkey = int.Parse(testDescription[2].Split("If false: throw to monkey ")[1]);
-        return worry => worry % testDivisor == 0 ? trueMonkey: falseMonkey;
+        return worry => worry % testDivisor == 0 ? trueMonkey : falseMonkey;
     }
 }
