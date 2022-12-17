@@ -16,6 +16,7 @@ public static class BigIntegerUtils
             13 => number.IsDivisibleBy13(),
             17 => number.IsDivisibleBy17(),
             19 => number.IsDivisibleBy19(),
+            23 => number.IsDivisibleBy23(),
             _ => number % divisor == 0,
         };
 
@@ -133,5 +134,22 @@ public static class BigIntegerUtils
         }
 
         return int.Parse(reducedNumberDigits).IntIsDivisible(19);
+    }
+
+    /// <summary>
+    /// Add 7 times the last digit to the rest.
+    /// </summary>
+    public static bool IsDivisibleBy23(this BigInteger number)
+    {
+        var reducedNumberDigits = number.ToString();
+        while (reducedNumberDigits.Length > 6)
+        {
+            var lastDigit = int.Parse(reducedNumberDigits.Last().ToString());
+            var remainingDigits = BigInteger.Parse(reducedNumberDigits[0..^1]);
+            var reducedNumber = remainingDigits + (lastDigit * 7);
+            reducedNumberDigits = reducedNumber.ToString();
+        }
+
+        return int.Parse(reducedNumberDigits).IntIsDivisible(23);
     }
 }
