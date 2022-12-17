@@ -35,6 +35,21 @@ public class MonkeyTest
         Assert.Equal(expectedWorryLevel, res);
     }
 
+    [Theory]
+    [MemberData(nameof(TargetMonkey))]
+    public void GivenMonkeyData_WhenInspectItems_ReturnsExpectedTargetMonkey(List<string> monkeyData, int[] expectedTargetMonkey)
+    {
+        // Arrange
+        var sut = new Monkey(monkeyData);
+
+        // Act
+        var res = new List<int>(expectedTargetMonkey.Length);
+        while (sut.InspectItem(out int targetMonkey, out int _)) res.Add(targetMonkey);
+
+        // Assert
+        Assert.Equal(expectedTargetMonkey, res);
+    }
+
     public static IEnumerable<object[]> InitialItems()
     {
         var monkey = MonkeyData();
@@ -52,14 +67,26 @@ public class MonkeyTest
         var monkey = MonkeyData();
         return new List<object[]>
         {
-            // new = old * 19
-            new object[] { monkey[0], new int[] { 79 * 19, 98 * 19 } },
-            // new = old + 6
-            new object[] { monkey[1], new int[] { 54 + 6, 65 + 6, 75 + 6, 74 + 6 } },
-            // new = old * old
-            new object[] { monkey[2], new int[] { 79 * 79, 60 * 60, 97 * 97 } },
-            // new = old + 3
-            new object[] { monkey[3], new int[] { 74 + 3 } },
+            // new = old * 19  (and then divided by 3)
+            new object[] { monkey[0], new int[] { 500, 620 } },
+            // new = old + 6  (and then divided by 3)
+            new object[] { monkey[1], new int[] { 20, 23, 27, 26 } },
+            // new = old * old  (and then divided by 3)
+            new object[] { monkey[2], new int[] { 2080, 1200, 3136 } },
+            // new = old + 3  (and then divided by 3)
+            new object[] { monkey[3], new int[] { 25 } },
+        };
+    }
+
+    public static IEnumerable<object[]> TargetMonkey()
+    {
+        var monkey = MonkeyData();
+        return new List<object[]>
+        {
+            new object[] { monkey[0], new int[] { 3, 3 } },
+            new object[] { monkey[1], new int[] { 0, 0, 0, 0 } },
+            new object[] { monkey[2], new int[] { 1, 3, 3 } },
+            new object[] { monkey[3], new int[] { 1 } },
         };
     }
 
