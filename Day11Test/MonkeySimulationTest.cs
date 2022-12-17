@@ -48,6 +48,21 @@ public class MonkeySimulationTest
         Assert.Equal(expectedMonkeyBusiness, monkeyBusiness);
     }
 
+    [Theory]
+    [InlineData("day11-example-input.txt", 1, new int[] { 2, 4, 3, 6 })]
+    public void GivenMonkeyData_WhenFindMonkyBusinessWithNoRelief_ReturnsExpectedScore(string monkeyDataFile, int numRounds, int[] expectedMonkeyBusiness)
+    {
+        // Arrange
+        var sut = new MonkeySimulation(monkeyDataFile);
+
+        // Act
+        _ = sut.FindMonkeyBusiness(numRounds);
+
+        // Assert
+        var monkeyBusiness = sut.Monkey.Select(m => m.NumInspections).ToArray();
+        Assert.Equal(expectedMonkeyBusiness, monkeyBusiness);
+    }
+
     public static IEnumerable<object[]> ExampleRoundData() 
         => new List<object[]>
         {
