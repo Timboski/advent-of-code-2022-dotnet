@@ -12,6 +12,7 @@ public static class BigIntegerUtils
             3 => number.IsDivisibleBy3(),
             5 => number.IsDivisibleBy5(),
             7 => number.IsDivisibleBy7(),
+            11 => number.IsDivisibleBy11(),
             _ => number % divisor == 0,
         };
 
@@ -64,5 +65,19 @@ public static class BigIntegerUtils
             .Select((item, index) => item * (int)(Math.Pow(2, index)))
             .Sum();
         return reducedNumber.IntIsDivisible(7);
+    }
+
+    /// <summary>
+    /// Form the alternating sum of the digits, 
+    /// or equivalently sum(odd) - sum(even).
+    /// The result must be divisible by 11.
+    /// </summary>
+    public static bool IsDivisibleBy11(this BigInteger number)
+    {
+        var reducedNumber = number.ToString()
+            .Select(a => int.Parse(a.ToString()))
+            .Select((item, index) => item * (index.IntIsDivisible(2) ? 1 : -1))
+            .Sum();
+        return reducedNumber.IntIsDivisible(11);
     }
 }
