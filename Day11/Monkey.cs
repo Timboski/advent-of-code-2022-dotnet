@@ -46,6 +46,15 @@ public class Monkey
     {
         var rule = operation.Split("Operation: new = old ")[1];
         if (rule == "* old") return a => a * a;
-        throw new NotImplementedException(rule);
+
+        var part = rule.Split(" ");
+        var operand = int.Parse(part[1]);
+
+        return part[0] switch
+        {
+            "*" => a => a * operand,
+            "+" => a => a + operand,
+            _ => throw new NotImplementedException(operation),
+        };
     }
 }
