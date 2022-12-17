@@ -19,4 +19,15 @@ public class MonkeySimulation
 	}
 
 	public Monkey[] Monkey { get; }
+
+    public void ProcessRound()
+    {
+		foreach (var monkey in Monkey)
+		{
+			while (monkey.InspectItem(out int targetMonkey, out int worryLevel))
+			{
+				Monkey[targetMonkey].AddItem(worryLevel);
+			}
+		}
+    }
 }

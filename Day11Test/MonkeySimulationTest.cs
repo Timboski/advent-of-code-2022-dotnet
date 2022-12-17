@@ -10,7 +10,8 @@ public class MonkeySimulationTest
         var sut = new MonkeySimulation(monkeyDataFile);
 
         // Act
-        // Run Rounds (for zero just check initial data)
+        for (int i = 0; i < numberOfRounds; ++i)
+            sut.ProcessRound();
 
         // Assert
         for (int i = 0; i < expectedItems.Length; ++i)
@@ -29,6 +30,15 @@ public class MonkeySimulationTest
                     new int[] { 54, 65, 75, 74 },
                     new int[] { 79, 60, 97},
                     new int[] { 74 }
+                }},
+            new object[] {
+                "day11-example-input.txt",
+                1,
+                new int[4][] {
+                    new int[] { 20, 23, 27, 26 },
+                    new int[] { 2080, 25, 167, 207, 401, 1046 },
+                    new int[] { },
+                    new int[] { }
                 }},
         };
 }

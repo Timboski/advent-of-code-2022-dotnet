@@ -26,6 +26,9 @@ public class Monkey
         return true;
     }
 
+    public void AddItem(int worryLevel)
+        => _items.Enqueue(worryLevel);
+
     /// <example>
     /// String format: "  Starting items: 79, 98"
     /// </example>
@@ -35,7 +38,7 @@ public class Monkey
             .Split("Starting items:")[1]
             .Split(",")
             .Select(int.Parse);
-        foreach (var item in items) _items.Enqueue(item);
+        foreach (var item in items) AddItem(item);
     }
 
     /// <example>
