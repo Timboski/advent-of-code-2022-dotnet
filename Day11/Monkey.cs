@@ -81,9 +81,9 @@ public class Monkey
     /// </example>
     private Func<BigInteger, int> ParseTargetDecision(List<string> testDescription)
     {
-        var testDivisor = BigInteger.Parse(testDescription[0].Split("Test: divisible by ")[1]);
+        var testDivisor = int.Parse(testDescription[0].Split("Test: divisible by ")[1]);
         var trueMonkey = int.Parse(testDescription[1].Split("If true: throw to monkey ")[1]);
         var falseMonkey = int.Parse(testDescription[2].Split("If false: throw to monkey ")[1]);
-        return worry => worry % testDivisor == 0 ? trueMonkey : falseMonkey;
+        return worry => worry.IsDivisibleBy(testDivisor) ? trueMonkey : falseMonkey;
     }
 }
