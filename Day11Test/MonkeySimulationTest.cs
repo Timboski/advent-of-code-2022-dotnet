@@ -35,6 +35,7 @@ public class MonkeySimulationTest
 
     [Theory]
     [InlineData("day11-example-input.txt", 10605)]
+    [InlineData("day11-input.txt", 120756)]
     public void GivenMonkeyData_WhenFindMonkyBusinessAfter20Rounds_ReturnsExpectedScore(string monkeyDataFile, long expectedMonkeyBusiness)
     {
         // Arrange
