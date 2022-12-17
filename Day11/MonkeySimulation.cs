@@ -20,6 +20,17 @@ public class MonkeySimulation
 
 	public Monkey[] Monkey { get; }
 
+    public int FindMonkeyBusiness(int numberOfRounds)
+    {
+		for (int i = 0; i < numberOfRounds; ++i) ProcessRound();
+
+        return Monkey
+			.Select(m => m.NumInspections)
+			.OrderDescending()
+			.Take(2)
+			.Aggregate(1, (acc, a) => acc * a);
+    }
+
     public void ProcessRound()
     {
 		foreach (var monkey in Monkey)

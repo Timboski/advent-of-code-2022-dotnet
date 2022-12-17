@@ -15,11 +15,15 @@ public class Monkey
 
     public int[] Items => _items.ToArray();
 
+    public int NumInspections { get; private set; } = 0;
+
     public bool InspectItem(out int targetMonkey, out int worryLevel)
     {
 		targetMonkey = 0;
         worryLevel = 0;
 		if (!_items.TryDequeue(out int item)) return false;
+
+        ++NumInspections;
 
         worryLevel = _worryEvaulation(item) / 3;
         targetMonkey = _findTargetMonkey(worryLevel);

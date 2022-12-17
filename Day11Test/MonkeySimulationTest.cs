@@ -18,6 +18,20 @@ public class MonkeySimulationTest
             Assert.Equal(expectedItems[i], sut.Monkey[i].Items);
     }
 
+    [Theory]
+    [InlineData("day11-example-input.txt", 10605)]
+    public void GivenMonkeyData_WhenFindMonkyBusinessAfter20Rounds_ReturnsExpectedScore(string monkeyDataFile, int expectedMonkeyBusiness)
+    {
+        // Arrange
+        var sut = new MonkeySimulation(monkeyDataFile);
+
+        // Act
+        var monkeyBusiness = sut.FindMonkeyBusiness(20);
+
+        // Assert
+        Assert.Equal(expectedMonkeyBusiness, monkeyBusiness);
+    }
+
     public static IEnumerable<object[]> ExampleRoundData() 
         => new List<object[]>
         {
