@@ -50,6 +50,17 @@ public class MonkeySimulationTest
 
     [Theory]
     [InlineData("day11-example-input.txt", 1, new int[] { 2, 4, 3, 6 })]
+    [InlineData("day11-example-input.txt", 20, new int[] { 99, 97, 8, 103 })]
+    [InlineData("day11-example-input.txt", 1000, new int[] { 5204, 4792, 199, 5192 })]
+    [InlineData("day11-example-input.txt", 2000, new int[] { 10419, 9577, 392, 10391})]
+    [InlineData("day11-example-input.txt", 3000, new int[] { 15638, 14358, 587, 15593 })]
+    [InlineData("day11-example-input.txt", 4000, new int[] { 20858, 19138, 780, 20797 })]
+    [InlineData("day11-example-input.txt", 5000, new int[] { 26075, 23921, 974, 26000 })]
+    [InlineData("day11-example-input.txt", 6000, new int[] { 31294, 28702, 1165, 31204 })]
+    [InlineData("day11-example-input.txt", 7000, new int[] { 36508, 33488, 1360, 36400 })]
+    [InlineData("day11-example-input.txt", 8000, new int[] { 41728, 38268, 1553, 41606 })]
+    [InlineData("day11-example-input.txt", 9000, new int[] { 46945, 43051, 1746, 46807 })]
+    [InlineData("day11-example-input.txt", 10000, new int[] { 52166, 47830, 1938, 52013 })]
     public void GivenMonkeyData_WhenFindMonkyBusinessWithNoRelief_ReturnsExpectedScore(string monkeyDataFile, int numRounds, int[] expectedMonkeyBusiness)
     {
         // Arrange
