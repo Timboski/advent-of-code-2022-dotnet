@@ -15,6 +15,7 @@ public static class BigIntegerUtils
             11 => number.IsDivisibleBy11(),
             13 => number.IsDivisibleBy13(),
             17 => number.IsDivisibleBy17(),
+            19 => number.IsDivisibleBy19(),
             _ => number % divisor == 0,
         };
 
@@ -115,5 +116,22 @@ public static class BigIntegerUtils
         }
 
         return int.Parse(reducedNumberDigits).IntIsDivisible(17);
+    }
+
+    /// <summary>
+    /// Add twice the last digit to the rest.
+    /// </summary>
+    public static bool IsDivisibleBy19(this BigInteger number)
+    {
+        var reducedNumberDigits = number.ToString();
+        while (reducedNumberDigits.Length > 6)
+        {
+            var lastDigit = int.Parse(reducedNumberDigits.Last().ToString());
+            var remainingDigits = BigInteger.Parse(reducedNumberDigits[0..^1]);
+            var reducedNumber = remainingDigits + (lastDigit * 2);
+            reducedNumberDigits = reducedNumber.ToString();
+        }
+
+        return int.Parse(reducedNumberDigits).IntIsDivisible(19);
     }
 }
