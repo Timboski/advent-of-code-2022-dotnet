@@ -33,6 +33,23 @@ public class HeightMapTest
         Assert.True(sut.IsComplete);
     }
 
+    [Fact]
+    public void GivenMapDataWithStartAndEnd_WhenCreateHeightMap_FlaggedAsNotComplete()
+    {
+        // Arrange
+        var map = GenerateMap("""
+            aaaa
+            aSaa
+            aaEa
+            """);
+
+        // Act
+        var sut = new HeightMap(map);
+
+        // Assert
+        Assert.False(sut.IsComplete);
+    }
+
     private static List<string> GenerateMap(string mapData) 
         => mapData.Split(Environment.NewLine).ToList();
 }
