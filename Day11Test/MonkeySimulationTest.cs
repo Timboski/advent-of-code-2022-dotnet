@@ -75,6 +75,21 @@ public class MonkeySimulationTest
         Assert.Equal(expectedMonkeyBusiness, monkeyBusiness);
     }
 
+    [Theory]
+    [MemberData(nameof(Part2Regression))]
+    public void GivenMonkeyData_WhenFindTotalMonkyBusinessWithNoRelief_ReturnsExpectedScore(string monkeyDataFile, BigInteger expectedMonkeyBusiness)
+    {
+        // Arrange
+        const int NumRounds = 10000;
+        var sut = new MonkeySimulation(monkeyDataFile);
+
+        // Act
+        var monkeyBusiness = sut.FindMonkeyBusiness(NumRounds);
+
+        // Assert
+        Assert.Equal(expectedMonkeyBusiness, monkeyBusiness);
+    }
+
     public static IEnumerable<object[]> ExampleRoundData() 
         => new List<object[]>
         {
@@ -210,5 +225,20 @@ public class MonkeySimulationTest
                     new BigInteger[] { 95, 88, 53, 75 },
                     new BigInteger[] { 50, 77, 98, 85, 94, 56, 89 },
                 }},
+        };
+
+    public static IEnumerable<object[]> Part2Regression()
+        => new List<object[]>
+        {
+            new object[] {
+                // Check part2 example
+                "day11-example-input.txt",
+                (BigInteger)2713310158,
+            },
+            new object[] {
+                // Check part2 example
+                "day11-input.txt",
+                (BigInteger)39109444654,
+            },
         };
 }
