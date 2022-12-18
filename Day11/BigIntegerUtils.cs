@@ -60,15 +60,23 @@ public static class BigIntegerUtils
     /// </summary>
     public static bool IsDivisibleBy7(this BigInteger number)
     {
-        var reducedNumber = number.ToString()
-            .Reverse()
-            .Chunk(2)
-            .Select(a => string.Join("", a.Reverse()))
-            .Select(int.Parse)
-            .Select(n => n % 7)
-            .Select((item, index) => item * (int)(Math.Pow(2, index)))
-            .Sum();
-        return reducedNumber.IntIsDivisible(7);
+        var reducedNumberDigits = number.ToString();
+        while (reducedNumberDigits.Length > 6)
+        {
+            var chunks = reducedNumberDigits
+                .Reverse()
+                .Chunk(2)
+                .Select(a => string.Join("", a.Reverse()))
+                .Select(int.Parse)
+                .Select(n => n % 7);
+
+            var reducedNumber = chunks
+                .Select((item, index) =>  BigInteger.Pow(2, index) * item)
+                .Aggregate((BigInteger)0, (acc, item) => acc + item);
+            
+            reducedNumberDigits = reducedNumber.ToString();
+        }
+        return int.Parse(reducedNumberDigits).IntIsDivisible(7);
     }
 
     /// <summary>

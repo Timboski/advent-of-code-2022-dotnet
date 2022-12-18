@@ -72,4 +72,17 @@ public class BigIntegerUtilsTest
         // Assert
         Assert.False(isDivisible);
     }
+
+    [Fact]
+    public void GivenVeryLargeNumber_WhenCheckIfDivisibleBy7_ReturnsCorrectResult()
+    {
+        // Arrange
+        var number = BigInteger.Parse("741560367431738106290685030976411681679097726943798419121598922246422246224");
+
+        // Act
+        var isDivisible = number.IsDivisibleBy(7);
+
+        // Assert
+        Assert.False(isDivisible);
+    }
 }
