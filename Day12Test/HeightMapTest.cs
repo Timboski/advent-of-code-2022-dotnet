@@ -16,6 +16,23 @@ public class HeightMapTest
         Assert.Throws<NoStartException>(() => new HeightMap(map));
     }
 
+    [Fact]
+    public void GivenMapDataWithStartAndNoEnd_WhenCreateHeightMap_FlaggedAsComplete()
+    {
+        // Arrange
+        var map = GenerateMap("""
+            aaaa
+            aSaa
+            aaaa
+            """);
+
+        // Act
+        var sut = new HeightMap(map);
+
+        // Assert
+        Assert.True(sut.IsComplete);
+    }
+
     private static List<string> GenerateMap(string mapData) 
         => mapData.Split(Environment.NewLine).ToList();
 }
