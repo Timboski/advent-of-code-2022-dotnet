@@ -4,24 +4,22 @@ namespace Day11;
 
 public class Monkey
 {
-	private readonly Queue<WorryLevel> _items = new();
-    private readonly Action<WorryLevel> _worryEvaulation;
-    private readonly Func<WorryLevel, int> _findTargetMonkey;
-    private readonly bool _relief;
+	private readonly Queue<IWorryLevel> _items = new();
+    private readonly Action<IWorryLevel> _worryEvaulation;
+    private readonly Func<IWorryLevel, int> _findTargetMonkey;
 
 	public Monkey(List<string> monkeyData, bool relief = false)
     {
-        ParseStartingItems(monkeyData[0]);
+        ParseStartingItems(monkeyData[0], relief);
         _worryEvaulation = ParseWorryEvaluation(monkeyData[1]);
         _findTargetMonkey = ParseTargetDecision(monkeyData.Skip(2).ToList());
-        _relief = relief;
     }
 
     public BigInteger[] Items => _items.ToArray().Select(m => m.Level).ToArray();
 
     public int NumInspections { get; private set; } = 0;
 
-    public bool InspectItem(out int targetMonkey, out WorryLevel? worryLevel)
+    public bool InspectItem(out int targetMonkey, out IWorryLevel? worryLevel)
     {
         targetMonkey = 0;
 		if (!_items.TryDequeue(out worryLevel)) return false;
@@ -34,20 +32,26 @@ public class Monkey
         return true;
     }
 
-    public void AddItem(WorryLevel worryLevel)
+    public void AddItem(IWorryLevel worryLevel)
         => _items.Enqueue(worryLevel);
 
     /// <example>
     /// String format: "  Starting items: 79, 98"
     /// </example>
-    private void ParseStartingItems(string itemsList)
+    private void ParseStartingItems(string itemsList, bool relief)
     {
+        IWorryLevel ToWorry(int level) 
+            => relief ? 
+                new WorryLevelWithRelief(level) : 
+                new WorryLevel(level);
+
         var items = itemsList
             .Split("Starting items:")[1]
             .Split(",")
             .Select(int.Parse)
-            .Select(i => new WorryLevel(i));
-        foreach (WorryLevel item in items) AddItem(item);
+            .Select(ToWorry);
+
+        foreach (IWorryLevel item in items) AddItem(item);
     }
 
     /// <example>
@@ -56,7 +60,7 @@ public class Monkey
     /// "  Operation: new = old * old"
     /// "  Operation: new = old + 3"
     /// </example>
-    private static Action<WorryLevel> ParseWorryEvaluation(string operation)
+    private static Action<IWorryLevel> ParseWorryEvaluation(string operation)
     {
         var rule = operation.Split("Operation: new = old ")[1];
         if (rule == "* old") return a => a.Square();
@@ -79,7 +83,7 @@ public class Monkey
     ///     If false: throw to monkey 3
     /// """
     /// </example>
-    private Func<WorryLevel, int> ParseTargetDecision(List<string> testDescription)
+    private Func<IWorryLevel, int> ParseTargetDecision(List<string> testDescription)
     {
         var testDivisor = int.Parse(testDescription[0].Split("Test: divisible by ")[1]);
         var trueMonkey = int.Parse(testDescription[1].Split("If true: throw to monkey ")[1]);

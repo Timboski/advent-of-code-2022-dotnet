@@ -2,14 +2,14 @@
 
 namespace Day11;
 
-public class WorryLevel
+public class WorryLevel : IWorryLevel
 {
-	private Dictionary<int, Remainder> _level = new();
+    private Dictionary<int, Remainder> _level = new();
 
     public WorryLevel(int level)
     {
         var divisors = new int[] { 2, 3, 5, 7, 11, 13, 17, 19, 23 };
-        foreach (var divisor in divisors) 
+        foreach (var divisor in divisors)
             _level[divisor] = new Remainder(level, divisor);
     }
 

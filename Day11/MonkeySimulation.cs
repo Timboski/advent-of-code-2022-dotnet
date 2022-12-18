@@ -43,7 +43,7 @@ public class MonkeySimulation
     {
 		foreach (var monkey in Monkey)
 		{
-			while (monkey.InspectItem(out int targetMonkey, out WorryLevel? worryLevel))
+			while (monkey.InspectItem(out int targetMonkey, out IWorryLevel? worryLevel))
 			{
 				worryLevel = worryLevel ?? throw new NullReferenceException();
 				Monkey[targetMonkey].AddItem(worryLevel);
