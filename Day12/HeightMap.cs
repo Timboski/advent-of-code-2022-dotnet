@@ -83,6 +83,8 @@ public class HeightMap
         if (y < 0) yield break;
         if (y >= YSize) yield break;
 
+        if (_mapData[x, y] == '#') yield break;
+
         var newMap = (char[,])_mapData.Clone();
         newMap[_startX, _startY] = '#';
         newMap[x, y] = 'S';

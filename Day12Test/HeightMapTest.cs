@@ -263,4 +263,29 @@ public class HeightMapTest
         // Assert
         Assert.Equal(expectedMaps, nextSteps.Select(a => a.ToString()));
     }
+
+    [Fact]
+    public void GivenHeightMapWithThreeAlreadyVisitedSteps_WhenFindSteps_ReturnsRemainingOne()
+    {
+        // Arrange
+        var sut = new HeightMap("""
+            a#aa
+            #S#a
+            aaaE
+            """);
+
+        var down = """
+            a#aa
+            ###a
+            aSaE
+            """;
+
+        var expectedMaps = new[] { down };
+
+        // Act
+        var nextSteps = sut.FindSteps();
+
+        // Assert
+        Assert.Equal(expectedMaps, nextSteps.Select(a => a.ToString()));
+    }
 }
