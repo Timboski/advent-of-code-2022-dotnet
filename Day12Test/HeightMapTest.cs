@@ -6,11 +6,11 @@ public class HeightMapTest
     public void GivenMapDataWithNoStart_WhenCreateHeightMap_ThrowsException()
     {
         // Arrange
-        var map = GenerateMap("""
+        var map = """
             aaaa
             aaaa
             aaaa
-            """);
+            """;
 
         // Act, Assert
         Assert.Throws<NoStartException>(() => new HeightMap(map));
@@ -20,11 +20,11 @@ public class HeightMapTest
     public void GivenMapDataWithStartAndNoEnd_WhenCreateHeightMap_FlaggedAsComplete()
     {
         // Arrange
-        var map = GenerateMap("""
+        var map = """
             aaaa
             aSaa
             aaaa
-            """);
+            """;
 
         // Act
         var sut = new HeightMap(map);
@@ -37,11 +37,11 @@ public class HeightMapTest
     public void GivenMapDataWithStartAndEnd_WhenCreateHeightMap_FlaggedAsNotComplete()
     {
         // Arrange
-        var map = GenerateMap("""
+        var map = """
             aaaa
             aSaa
             aaEa
-            """);
+            """;
 
         // Act
         var sut = new HeightMap(map);
@@ -50,6 +50,46 @@ public class HeightMapTest
         Assert.False(sut.IsComplete);
     }
 
-    private static List<string> GenerateMap(string mapData) 
-        => mapData.Split(Environment.NewLine).ToList();
+    [Fact]
+    public void GivenHeightMapWithAllDirectionsFree_WhenFindSteps_ReturnsFourNewMaps()
+    {
+        // Arrange
+        var sut = new HeightMap("""
+            aaaa
+            aSaa
+            aaaE
+            """);
+
+        var up = """
+            aSaa
+            a#aa
+            aaaE
+            """;
+
+        var down = """
+            aaaa
+            a#aa
+            aSaE
+            """;
+
+        var left = """
+            aaaa
+            S#aa
+            aaaE
+            """;
+
+        var right = """
+            aaaa
+            a#Sa
+            aaaE
+            """;
+
+        var expectedMaps = new[] { up, down, left, right };
+
+        // Act
+        var nextSteps = sut.FindSteps();
+
+        // Assert
+        Assert.Equal(expectedMaps, nextSteps.Select(a => a.ToString()));
+    }
 }
