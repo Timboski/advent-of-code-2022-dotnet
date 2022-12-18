@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Text;
 
 namespace Day12;
 
@@ -22,9 +21,11 @@ public class HeightMap
     public HeightMap(char[,] map)
     {
         _mapData = map;
-        for (int x = 0; x < map.GetLength(0); ++x)
+        XSize = _mapData.GetLength(0);
+        YSize = _mapData.GetLength(1);
+        for (int x = 0; x < XSize; ++x)
         {
-            for (int y = 0; y < map.GetLength(1); ++y)
+            for (int y = 0; y < YSize; ++y)
             {
                 var glyph = _mapData[x, y];
 
@@ -43,12 +44,12 @@ public class HeightMap
 
     public override string ToString()
     {
-        var mapData = new List<string>(_mapData.GetLength(1));
+        var mapData = new List<string>(YSize);
 
-        for (int y = 0; y < _mapData.GetLength(1); ++y)
+        for (int y = 0; y < YSize; ++y)
         {
-            var sb = new StringBuilder(_mapData.GetLength(0));
-            for (int x = 0; x < _mapData.GetLength(0); ++x)
+            var sb = new StringBuilder(XSize);
+            for (int x = 0; x < XSize; ++x)
             {
                 sb.Append(_mapData[x, y]);
             }
@@ -60,6 +61,10 @@ public class HeightMap
     }
 
     public bool IsComplete { get; } = true;
+
+    public int XSize { get; }
+
+    public int YSize { get; }
 
     public List<HeightMap> FindSteps() 
         => new[] {
@@ -73,7 +78,10 @@ public class HeightMap
 
     private IEnumerable<HeightMap> CheckLocation(int x, int y)
     {
+        if (x < 0) yield break;
+        if (x >= XSize) yield break;
         if (y < 0) yield break;
+        if (y >= YSize) yield break;
 
         var newMap = (char[,])_mapData.Clone();
         newMap[_startX, _startY] = '#';

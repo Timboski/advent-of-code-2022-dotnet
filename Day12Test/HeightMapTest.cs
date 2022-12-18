@@ -125,4 +125,111 @@ public class HeightMapTest
         // Assert
         Assert.Equal(expectedMaps, nextSteps.Select(a => a.ToString()));
     }
+
+    [Fact]
+    public void GivenHeightMapWithStartOnBottom_WhenFindSteps_ReturnsThreeNewMaps()
+    {
+        // Arrange
+        var sut = new HeightMap("""
+            aaaa
+            aSaa
+            """);
+
+        var up = """
+            aSaa
+            a#aa
+            """;
+
+        var left = """
+            aaaa
+            S#aa
+            """;
+
+        var right = """
+            aaaa
+            a#Sa
+            """;
+
+        var expectedMaps = new[] { up, left, right };
+
+        // Act
+        var nextSteps = sut.FindSteps();
+
+        // Assert
+        Assert.Equal(expectedMaps, nextSteps.Select(a => a.ToString()));
+    }
+
+    [Fact]
+    public void GivenHeightMapWithStartOnLef_WhenFindSteps_ReturnsThreeNewMaps()
+    {
+        // Arrange
+        var sut = new HeightMap("""
+            aaa
+            Saa
+            aaE
+            """);
+
+        var up = """
+            Saa
+            #aa
+            aaE
+            """;
+
+        var down = """
+            aaa
+            #aa
+            SaE
+            """;
+
+        var right = """
+            aaa
+            #Sa
+            aaE
+            """;
+
+        var expectedMaps = new[] { up, down, right };
+
+        // Act
+        var nextSteps = sut.FindSteps();
+
+        // Assert
+        Assert.Equal(expectedMaps, nextSteps.Select(a => a.ToString()));
+    }
+
+    [Fact]
+    public void GivenHeightMapWithStartOnRigh_WhenFindSteps_ReturnsThreeNewMaps()
+    {
+        // Arrange
+        var sut = new HeightMap("""
+            aaaa
+            aaaS
+            aaaE
+            """);
+
+        var up = """
+            aaaS
+            aaa#
+            aaaE
+            """;
+
+        var down = """
+            aaaa
+            aaa#
+            aaaS
+            """;
+
+        var left = """
+            aaaa
+            aaS#
+            aaaE
+            """;
+
+        var expectedMaps = new[] { up, down, left };
+
+        // Act
+        var nextSteps = sut.FindSteps();
+
+        // Assert
+        Assert.Equal(expectedMaps, nextSteps.Select(a => a.ToString()));
+    }
 }
