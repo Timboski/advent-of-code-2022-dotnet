@@ -203,25 +203,25 @@ public class HeightMapTest
         var sut = new HeightMap("""
             aaaa
             aaaS
-            aaaE
+            Eaaa
             """);
 
         var up = """
             aaaS
             aaa#
-            aaaE
+            Eaaa
             """;
 
         var down = """
             aaaa
             aaa#
-            aaaS
+            EaaS
             """;
 
         var left = """
             aaaa
             aaS#
-            aaaE
+            Eaaa
             """;
 
         var expectedMaps = new[] { up, down, left };
@@ -281,6 +281,37 @@ public class HeightMapTest
             """;
 
         var expectedMaps = new[] { down };
+
+        // Act
+        var nextSteps = sut.FindSteps();
+
+        // Assert
+        Assert.Equal(expectedMaps, nextSteps.Select(a => a.ToString()));
+    }
+
+    [Fact]
+    public void GivenHeightMapWithDifferentHeights_WhenFindSteps_FollowsSingleLevelChange()
+    {
+        // Arrange
+        var sut = new HeightMap("""
+            xaxx
+            bSez
+            xdxE
+            """, 'c');
+
+        var down = """
+            xaxx
+            b#ez
+            xSxE
+            """;
+
+        var left = """
+            xaxx
+            S#ez
+            xdxE
+            """;
+
+        var expectedMaps = new[] { down, left };
 
         // Act
         var nextSteps = sut.FindSteps();

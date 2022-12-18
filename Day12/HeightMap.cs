@@ -4,22 +4,24 @@ namespace Day12;
 
 public class HeightMap
 {
+    private readonly char _startHeight;
     private readonly char[,] _mapData;
     private readonly int _startX = -1;
     private readonly int _startY = -1;
 
-    public HeightMap(string map)
-        : this(map.Split(Environment.NewLine).ToList())
+    public HeightMap(string map, char startHeight = 'a')
+        : this(map.Split(Environment.NewLine).ToList(), startHeight)
     {
     }
 
-    public HeightMap(List<string> map)
-        : this(ParseMap(map))
+    public HeightMap(List<string> map, char startHeight = 'a')
+        : this(ParseMap(map), startHeight)
     {
     }
 
-    public HeightMap(char[,] map)
+    public HeightMap(char[,] map, char startHeight = 'a')
     {
+        _startHeight = startHeight;
         _mapData = map;
         XSize = _mapData.GetLength(0);
         YSize = _mapData.GetLength(1);
@@ -83,7 +85,9 @@ public class HeightMap
         if (y < 0) yield break;
         if (y >= YSize) yield break;
 
-        if (_mapData[x, y] == '#') yield break;
+        var accessableHeights = new [] 
+            { (char)(_startHeight - 1), _startHeight, (char)(_startHeight + 1) };
+        if (!accessableHeights.Contains(_mapData[x, y])) yield break;
 
         var newMap = (char[,])_mapData.Clone();
         newMap[_startX, _startY] = '#';
