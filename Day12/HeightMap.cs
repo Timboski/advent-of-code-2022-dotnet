@@ -85,8 +85,10 @@ public class HeightMap
         if (y < 0) yield break;
         if (y >= YSize) yield break;
 
-        var accessableHeights = new [] 
+        var accessableHeights = new List<char>() 
             { (char)(_startHeight - 1), _startHeight, (char)(_startHeight + 1) };
+        if (_startHeight >= 'y') accessableHeights.Add('E');
+
         if (!accessableHeights.Contains(_mapData[x, y])) yield break;
 
         var newMap = (char[,])_mapData.Clone();

@@ -319,4 +319,32 @@ public class HeightMapTest
         // Assert
         Assert.Equal(expectedMaps, nextSteps.Select(a => a.ToString()));
     }
+
+    [Fact]
+    public void GivenHeightMapWithStartTooLow_WhenFindSteps_CannotGetToEnd()
+    {
+        // Arrange
+        var sut = new HeightMap("SE", 'c');
+
+        // Act
+        var nextSteps = sut.FindSteps();
+
+        // Assert
+        Assert.Empty(nextSteps);
+    }
+
+    [Fact]
+    public void GivenHeightMapWithStartHighEnough_WhenFindSteps_CanGetToEnd()
+    {
+        // Arrange
+        var sut = new HeightMap("SE", 'y');
+
+        var expectedMaps = new[] { "#S" };
+
+        // Act
+        var nextSteps = sut.FindSteps();
+
+        // Assert
+        Assert.Equal(expectedMaps, nextSteps.Select(a => a.ToString()));
+    }
 }
