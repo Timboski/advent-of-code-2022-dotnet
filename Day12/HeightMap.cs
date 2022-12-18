@@ -73,6 +73,8 @@ public class HeightMap
 
     private IEnumerable<HeightMap> CheckLocation(int x, int y)
     {
+        if (y < 0) yield break;
+
         var newMap = (char[,])_mapData.Clone();
         newMap[_startX, _startY] = '#';
         newMap[x, y] = 'S';

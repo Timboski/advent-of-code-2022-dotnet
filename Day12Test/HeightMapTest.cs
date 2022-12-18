@@ -92,4 +92,37 @@ public class HeightMapTest
         // Assert
         Assert.Equal(expectedMaps, nextSteps.Select(a => a.ToString()));
     }
+
+    [Fact]
+    public void GivenHeightMapWithStartOnTop_WhenFindSteps_ReturnsThreeNewMaps()
+    {
+        // Arrange
+        var sut = new HeightMap("""
+            aSaa
+            aaaE
+            """);
+
+        var down = """
+            a#aa
+            aSaE
+            """;
+
+        var left = """
+            S#aa
+            aaaE
+            """;
+
+        var right = """
+            a#Sa
+            aaaE
+            """;
+
+        var expectedMaps = new[] { down, left, right };
+
+        // Act
+        var nextSteps = sut.FindSteps();
+
+        // Assert
+        Assert.Equal(expectedMaps, nextSteps.Select(a => a.ToString()));
+    }
 }
