@@ -197,7 +197,7 @@ public class HeightMapTest
     }
 
     [Fact]
-    public void GivenHeightMapWithStartOnRigh_WhenFindSteps_ReturnsThreeNewMaps()
+    public void GivenHeightMapWithStartOnRight_WhenFindSteps_ReturnsThreeNewMaps()
     {
         // Arrange
         var sut = new HeightMap("""
@@ -225,6 +225,37 @@ public class HeightMapTest
             """;
 
         var expectedMaps = new[] { up, down, left };
+
+        // Act
+        var nextSteps = sut.FindSteps();
+
+        // Assert
+        Assert.Equal(expectedMaps, nextSteps.Select(a => a.ToString()));
+    }
+
+    [Fact]
+    public void GivenHeightMapWithStartInCorner_WhenFindSteps_ReturnsTwoNewMaps()
+    {
+        // Arrange
+        var sut = new HeightMap("""
+            Saaa
+            aaaa
+            aaaE
+            """);
+
+        var down = """
+            #aaa
+            Saaa
+            aaaE
+            """;
+
+        var right = """
+            #Saa
+            aaaa
+            aaaE
+            """;
+
+        var expectedMaps = new[] { down, right };
 
         // Act
         var nextSteps = sut.FindSteps();
