@@ -10,16 +10,16 @@ public class HeightMap
     private readonly int _startY = -1;
 
     public HeightMap(string map, char startHeight = 'a')
-        : this(map.Split(Environment.NewLine).ToList(), startHeight)
+        : this(map.Split(Environment.NewLine).ToArray(), startHeight)
     {
     }
 
-    public HeightMap(List<string> map, char startHeight = 'a')
+    public HeightMap(string[] map, char startHeight = 'a')
         : this(ParseMap(map), startHeight)
     {
     }
 
-    public HeightMap(char[,] map, char startHeight = 'a')
+    public HeightMap(char[,] map, char startHeight)
     {
         _startHeight = startHeight;
         _mapData = map;
@@ -68,6 +68,8 @@ public class HeightMap
 
     public int YSize { get; }
 
+    public int PathLength => CountVisitedElements();
+
     public List<HeightMap> FindSteps() 
         => new[] {
                 (_startX, _startY - 1),
@@ -89,17 +91,18 @@ public class HeightMap
             { (char)(_startHeight - 1), _startHeight, (char)(_startHeight + 1) };
         if (_startHeight >= 'y') accessableHeights.Add('E');
 
-        if (!accessableHeights.Contains(_mapData[x, y])) yield break;
+        var level = _mapData[x, y];
+        if (!accessableHeights.Contains(level)) yield break;
 
         var newMap = (char[,])_mapData.Clone();
         newMap[_startX, _startY] = '#';
         newMap[x, y] = 'S';
-        yield return new HeightMap(newMap);
+        yield return new HeightMap(newMap, level);
     }
 
-    private static char[,] ParseMap(List<string> map)
+    private static char[,] ParseMap(string[] map)
     {
-        var mapData = new char[map[0].Length, map.Count];
+        var mapData = new char[map[0].Length, map.Length];
         foreach (var (line, y) in map.Select((line, rowIndex) => (line, rowIndex)))
         {
             foreach (var (glyph, x) in line.Select((glyph, columnIndex) => (glyph, columnIndex)))
@@ -109,5 +112,18 @@ public class HeightMap
         }
 
         return mapData;
+    }
+
+    private int CountVisitedElements()
+    {
+        var count = 0;
+        for (int x = 0; x < XSize; ++x)
+        {
+            for (int y = 0; y < YSize; ++y)
+            {
+                if (_mapData[x, y] == '#') ++count;
+            }
+        }
+        return count;
     }
 }

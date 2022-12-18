@@ -347,4 +347,23 @@ public class HeightMapTest
         // Assert
         Assert.Equal(expectedMaps, nextSteps.Select(a => a.ToString()));
     }
+
+    [Fact]
+    public void GivenFinishedPath_WhenFindLength_ReturnsCorrectNumberOfSteps()
+    {
+        // Arrange
+        var sut = new HeightMap("""
+            #ab#####
+            ##c#####
+            a####S##
+            ac######
+            ab######
+            """);
+
+        // Act
+        var numSteps = sut.PathLength;
+
+        // Assert
+        Assert.Equal(31, numSteps);
+    }
 }
