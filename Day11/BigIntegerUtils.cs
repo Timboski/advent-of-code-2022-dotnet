@@ -63,19 +63,17 @@ public static class BigIntegerUtils
         var reducedNumberDigits = number.ToString();
         while (reducedNumberDigits.Length > 6)
         {
-            var chunks = reducedNumberDigits
+            var reducedNumber = reducedNumberDigits
                 .Reverse()
                 .Chunk(2)
                 .Select(a => string.Join("", a.Reverse()))
                 .Select(int.Parse)
-                .Select(n => n % 7);
-
-            var reducedNumber = chunks
-                .Select((item, index) =>  BigInteger.Pow(2, index) * item)
+                .Select(n => n % 7).Select((item, index) =>  BigInteger.Pow(2, index) * item)
                 .Aggregate((BigInteger)0, (acc, item) => acc + item);
             
             reducedNumberDigits = reducedNumber.ToString();
         }
+
         return int.Parse(reducedNumberDigits).IntIsDivisible(7);
     }
 
