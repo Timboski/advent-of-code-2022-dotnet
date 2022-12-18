@@ -24,9 +24,14 @@ public class MonkeySimulation
 
     public BigInteger FindMonkeyBusiness(int numberOfRounds)
     {
-		for (int i = 0; i < numberOfRounds; ++i) ProcessRound();
+		for (int i = 0; i < numberOfRounds; ++i)
+        {
+			// Console.Write($"Processing round: {i}");
+            ProcessRound();
+			// Console.WriteLine(" - done");
+        }
 
-		var mostBusiness = Monkey
+        var mostBusiness = Monkey
 			.Select(m => m.NumInspections)
 			.OrderDescending()
 			.Take(2);
@@ -38,8 +43,9 @@ public class MonkeySimulation
     {
 		foreach (var monkey in Monkey)
 		{
-			while (monkey.InspectItem(out int targetMonkey, out BigInteger worryLevel))
+			while (monkey.InspectItem(out int targetMonkey, out WorryLevel? worryLevel))
 			{
+				worryLevel = worryLevel ?? throw new NullReferenceException();
 				Monkey[targetMonkey].AddItem(worryLevel);
 			}
 		}

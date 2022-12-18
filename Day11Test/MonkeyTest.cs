@@ -30,7 +30,8 @@ public class MonkeyTest
 
         // Act
         var res = new List<BigInteger>(expectedWorryLevel.Length);
-        while (sut.InspectItem(out int _, out BigInteger worryLevel)) res.Add(worryLevel);
+        while (sut.InspectItem(out int _, out WorryLevel? worryLevel)) 
+            res.Add(worryLevel?.Level ?? 0);
 
         // Assert
         Assert.Equal(expectedWorryLevel, res);
@@ -45,7 +46,7 @@ public class MonkeyTest
 
         // Act
         var res = new List<int>(expectedTargetMonkey.Length);
-        while (sut.InspectItem(out int targetMonkey, out BigInteger _)) res.Add(targetMonkey);
+        while (sut.InspectItem(out int targetMonkey, out WorryLevel? _)) res.Add(targetMonkey);
 
         // Assert
         Assert.Equal(expectedTargetMonkey, res);

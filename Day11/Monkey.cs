@@ -4,9 +4,9 @@ namespace Day11;
 
 public class Monkey
 {
-	private readonly Queue<BigInteger> _items = new();
-    private readonly Func<BigInteger, BigInteger> _worryEvaulation;
-    private readonly Func<BigInteger, int> _findTargetMonkey;
+	private readonly Queue<WorryLevel> _items = new();
+    private readonly Action<WorryLevel> _worryEvaulation;
+    private readonly Func<WorryLevel, int> _findTargetMonkey;
     private readonly bool _relief;
 
 	public Monkey(List<string> monkeyData, bool relief = false)
@@ -17,25 +17,24 @@ public class Monkey
         _relief = relief;
     }
 
-    public BigInteger[] Items => _items.ToArray();
+    public BigInteger[] Items => _items.ToArray().Select(m => m.Level).ToArray();
 
     public int NumInspections { get; private set; } = 0;
 
-    public bool InspectItem(out int targetMonkey, out BigInteger worryLevel)
+    public bool InspectItem(out int targetMonkey, out WorryLevel? worryLevel)
     {
-		targetMonkey = 0;
-        worryLevel = 0;
-		if (!_items.TryDequeue(out BigInteger item)) return false;
+        targetMonkey = 0;
+		if (!_items.TryDequeue(out worryLevel)) return false;
 
         NumInspections = checked(NumInspections + 1);
 
-        worryLevel = _worryEvaulation(item);
-        if (_relief) worryLevel /= 3;
+        _worryEvaulation(worryLevel);
+        worryLevel.ComputeRelief();
         targetMonkey = _findTargetMonkey(worryLevel);
         return true;
     }
 
-    public void AddItem(BigInteger worryLevel)
+    public void AddItem(WorryLevel worryLevel)
         => _items.Enqueue(worryLevel);
 
     /// <example>
@@ -46,8 +45,9 @@ public class Monkey
         var items = itemsList
             .Split("Starting items:")[1]
             .Split(",")
-            .Select(BigInteger.Parse);
-        foreach (var item in items) AddItem(item);
+            .Select(int.Parse)
+            .Select(i => new WorryLevel(i));
+        foreach (WorryLevel item in items) AddItem(item);
     }
 
     /// <example>
@@ -56,18 +56,18 @@ public class Monkey
     /// "  Operation: new = old * old"
     /// "  Operation: new = old + 3"
     /// </example>
-    private static Func<BigInteger, BigInteger> ParseWorryEvaluation(string operation)
+    private static Action<WorryLevel> ParseWorryEvaluation(string operation)
     {
         var rule = operation.Split("Operation: new = old ")[1];
-        if (rule == "* old") return a => checked(a * a);
+        if (rule == "* old") return a => a.Square();
 
         var part = rule.Split(" ");
-        var operand = BigInteger.Parse(part[1]);
+        var operand = int.Parse(part[1]);
 
         return part[0] switch
         {
-            "*" => a => checked(a * operand),
-            "+" => a => checked(a + operand),
+            "*" => a => a.Multiply(operand),
+            "+" => a => a.Add(operand),
             _ => throw new NotImplementedException(operation),
         };
     }
@@ -79,7 +79,7 @@ public class Monkey
     ///     If false: throw to monkey 3
     /// """
     /// </example>
-    private Func<BigInteger, int> ParseTargetDecision(List<string> testDescription)
+    private Func<WorryLevel, int> ParseTargetDecision(List<string> testDescription)
     {
         var testDivisor = int.Parse(testDescription[0].Split("Test: divisible by ")[1]);
         var trueMonkey = int.Parse(testDescription[1].Split("If true: throw to monkey ")[1]);
