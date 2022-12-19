@@ -5,7 +5,6 @@ namespace Day12;
 public class HillClimb
 {
 	private readonly Queue<HeightMap> _heightMap = new();
-	private readonly Dictionary<Point, int> _visited = new();
 
 	public HillClimb(string filename)
 	{
@@ -15,13 +14,14 @@ public class HillClimb
 
     public int FindPath()
     {
+        var visited = new HashSet<Point>();
 		while (_heightMap.TryDequeue(out HeightMap heightMap))
         {
             var pathLength = heightMap.PathLength;
             var stepStart = heightMap.Start;
-            if (!_visited.ContainsKey(stepStart))
+            if (!visited.Contains(stepStart))
             {
-                _visited[stepStart] = pathLength;
+                visited.Add(stepStart);
 
                 if (heightMap.IsComplete) return heightMap.PathLength;
 
