@@ -290,7 +290,7 @@ public class HeightMapTest
     }
 
     [Fact]
-    public void GivenHeightMapWithDifferentHeights_WhenFindSteps_FollowsSingleLevelChange()
+    public void GivenHeightMapWithDifferentHeights_WhenFindSteps_OnlyGoesUpOneLevel()
     {
         // Arrange
         var sut = new HeightMap("""
@@ -298,6 +298,12 @@ public class HeightMapTest
             bSez
             xdxE
             """, 'c');
+
+        var up = """
+            xSxx
+            b#ez
+            xdxE
+            """;
 
         var down = """
             xaxx
@@ -311,7 +317,7 @@ public class HeightMapTest
             xdxE
             """;
 
-        var expectedMaps = new[] { down, left };
+        var expectedMaps = new[] { up, down, left };
 
         // Act
         var nextSteps = sut.FindSteps();
