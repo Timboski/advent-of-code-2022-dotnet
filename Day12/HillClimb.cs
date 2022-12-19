@@ -4,8 +4,8 @@ namespace Day12;
 
 public class HillClimb
 {
-	private Queue<HeightMap> _heightMap = new();
-	private Dictionary<Point, int> _visited = new();
+	private readonly Queue<HeightMap> _heightMap = new();
+	private readonly Dictionary<Point, int> _visited = new();
 
 	public HillClimb(string filename)
 	{
@@ -15,13 +15,15 @@ public class HillClimb
 
     public int FindPath()
     {
+        var start = _heightMap.Peek();
+
 		var processedMaps = 0;
 		var throttle = 0;
 		while (_heightMap.TryDequeue(out HeightMap heightMap))
         {
             var pathLength = heightMap.PathLength;
             var stepStart = heightMap.Start;
-            if (!_visited.ContainsKey(stepStart) || pathLength < _visited[stepStart])
+            if (!_visited.ContainsKey(stepStart))
             {
                 _visited[stepStart] = pathLength;
 
@@ -47,7 +49,9 @@ public class HillClimb
 
 		Console.WriteLine("FAILED");
 		Console.WriteLine(processedMaps);
-		throw new PathNotFoundException();
+        Console.WriteLine($"Queue Length: {_heightMap.Count}");
+        Console.WriteLine(start.GetVisitedMap(_visited));
+        throw new PathNotFoundException();
 
         void DisplayState(int processedMaps, HeightMap heightMap)
         {

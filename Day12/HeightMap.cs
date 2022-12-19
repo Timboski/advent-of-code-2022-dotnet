@@ -57,6 +57,28 @@ public class HeightMap
         return string.Join(Environment.NewLine, mapData);
     }
 
+    public string GetVisitedMap(Dictionary<Point, int> visited)
+    {
+        var mapData = new List<string>(YSize);
+
+        for (int y = 0; y < YSize; ++y)
+        {
+            var sb = new StringBuilder(XSize);
+            for (int x = 0; x < XSize; ++x)
+            {
+                if (visited.ContainsKey(new Point(x, y)))
+                    //sb.Append('.');
+                    sb.Append(char.ToUpper(_mapData[x, y]));
+                else
+                    sb.Append(_mapData[x, y]);
+            }
+
+            mapData.Add(sb.ToString());
+        }
+
+        return string.Join(Environment.NewLine, mapData);
+    }
+
     public Point Start { get; } = new(-1, -1);
 
     public bool IsComplete { get; } = true;
