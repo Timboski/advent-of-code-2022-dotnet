@@ -1,8 +1,11 @@
-﻿namespace Day12;
+﻿using System.Drawing;
+
+namespace Day12;
 
 public class HillClimb
 {
 	private Queue<HeightMap> _heightMap = new();
+	private Dictionary<Point, int> _visited = new();
 
 	public HillClimb(string filename)
 	{
@@ -14,25 +17,45 @@ public class HillClimb
     {
 		var processedMaps = 0;
 		var throttle = 0;
-		while (_heightMap.TryDequeue(out HeightMap heightMap)) 
-		{
-			++processedMaps;
-			++throttle;
-			if (throttle >= 100000)
-			{
-				throttle = 0;
-                Console.WriteLine($"Iteration: {processedMaps}");
-                Console.WriteLine($"Path Length: {heightMap.PathLength}");
-                Console.WriteLine($"Queue Length: {_heightMap.Count}");
-                Console.WriteLine(heightMap.ToString());
-				Console.WriteLine();
-			}
+		while (_heightMap.TryDequeue(out HeightMap heightMap))
+        {
+            var pathLength = heightMap.PathLength;
+            var stepStart = heightMap.Start;
+            if (!_visited.ContainsKey(stepStart) || pathLength < _visited[stepStart])
+            {
+                _visited[stepStart] = pathLength;
 
-			if (heightMap.IsComplete) return heightMap.PathLength;
+                ++processedMaps;
+                ++throttle;
+                if (throttle >= 100)
+                {
+                    throttle = 0;
+                    DisplayState(processedMaps, heightMap);
+                }
 
-			foreach (var step in heightMap.FindSteps()) _heightMap.Enqueue(step);
+                if (heightMap.IsComplete)
+                {
+                    Console.WriteLine("COMPLETED");
+                    DisplayState(processedMaps, heightMap);
+                    return heightMap.PathLength;
+                }
+
+                foreach (var step in heightMap.FindSteps())
+                    _heightMap.Enqueue(step);
+            }
 		}
 
+		Console.WriteLine("FAILED");
+		Console.WriteLine(processedMaps);
 		throw new PathNotFoundException();
+
+        void DisplayState(int processedMaps, HeightMap heightMap)
+        {
+            Console.WriteLine(heightMap.ToString());
+            Console.WriteLine($"Iteration: {processedMaps}");
+            Console.WriteLine($"Path Length: {heightMap.PathLength}");
+            Console.WriteLine($"Queue Length: {_heightMap.Count}");
+            Console.WriteLine();
+        }
     }
 }

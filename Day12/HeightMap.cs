@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Drawing;
+using System.Text;
 
 namespace Day12;
 
@@ -6,8 +7,6 @@ public class HeightMap
 {
     private readonly char _startHeight;
     private readonly char[,] _mapData;
-    private readonly int _startX = -1;
-    private readonly int _startY = -1;
 
     public HeightMap(string map, char startHeight = 'a')
         : this(map.Split(Environment.NewLine).ToArray(), startHeight)
@@ -31,17 +30,13 @@ public class HeightMap
             {
                 var glyph = _mapData[x, y];
 
-                if (glyph == 'S')
-                {
-                    _startX = x;
-                    _startY = y;
-                }
+                if (glyph == 'S') Start = new(x, y);
 
                 if (glyph == 'E') IsComplete = false;
             }
         }
 
-        if (_startX < 0) throw new NoStartException();
+        if (Start.X < 0) throw new NoStartException();
     }
 
     public override string ToString()
@@ -62,6 +57,8 @@ public class HeightMap
         return string.Join(Environment.NewLine, mapData);
     }
 
+    public Point Start { get; } = new(-1, -1);
+
     public bool IsComplete { get; } = true;
 
     public int XSize { get; }
@@ -72,31 +69,31 @@ public class HeightMap
 
     public List<HeightMap> FindSteps() 
         => new[] {
-                (_startX, _startY - 1),
-                (_startX, _startY + 1),
-                (_startX - 1, _startY),
-                (_startX + 1, _startY),
+                new Point(Start.X, Start.Y - 1),
+                new Point(Start.X, Start.Y + 1),
+                new Point(Start.X - 1, Start.Y),
+                new Point(Start.X + 1, Start.Y)
             }
-            .SelectMany(pos => CheckLocation(pos.Item1, pos.Item2))
+            .SelectMany(pos => CheckLocation(pos))
             .ToList();
 
-    private IEnumerable<HeightMap> CheckLocation(int x, int y)
+    private IEnumerable<HeightMap> CheckLocation(Point pos)
     {
-        if (x < 0) yield break;
-        if (x >= XSize) yield break;
-        if (y < 0) yield break;
-        if (y >= YSize) yield break;
+        if (pos.X < 0) yield break;
+        if (pos.X >= XSize) yield break;
+        if (pos.Y < 0) yield break;
+        if (pos.Y >= YSize) yield break;
 
         var accessableHeights = new List<char>() 
             { (char)(_startHeight - 1), _startHeight, (char)(_startHeight + 1) };
         if (_startHeight >= 'y') accessableHeights.Add('E');
 
-        var level = _mapData[x, y];
+        var level = _mapData[pos.X, pos.Y];
         if (!accessableHeights.Contains(level)) yield break;
 
         var newMap = (char[,])_mapData.Clone();
-        newMap[_startX, _startY] = '#';
-        newMap[x, y] = 'S';
+        newMap[Start.X, Start.Y] = '#';
+        newMap[pos.X, pos.Y] = 'S';
         yield return new HeightMap(newMap, level);
     }
 
