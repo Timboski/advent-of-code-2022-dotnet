@@ -15,4 +15,18 @@ public class IntegerElementTest
         // Assert
         Assert.True(correctOrder);
     }
+
+    [Fact]
+    public void GivenIntegerElements_WhenCheckIsBeforeLowerIntegerElement_ReturnsFalse()
+    {
+        // Arrange
+        var sut = new IntegerElement(8);
+        var lower = new IntegerElement(4);
+
+        // Act
+        var correctOrder = sut.IsBefore(lower);
+
+        // Assert
+        Assert.False(correctOrder);
+    }
 }
