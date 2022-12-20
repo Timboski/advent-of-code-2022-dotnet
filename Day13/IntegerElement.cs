@@ -16,8 +16,9 @@ public class IntegerElement : IElement
             return Order.Correct;
         }
 
-        throw new NotImplementedException("Only support same type");
+        // Other type is an array - promote ourselves to match
+        return PromoteToArray().CheckOrder(other);
     }
 
-    public ArrayElement PromoteToArray() => new(_value.ToString());
+    public ArrayElement PromoteToArray() => new($"[{_value}]");
 }

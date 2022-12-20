@@ -1,26 +1,60 @@
-﻿using System.Linq;
+﻿using System.Text;
 
 namespace Day13;
 
 public class ArrayElement : IElement
 {
-    private readonly List<IElement> _elements;
+    private readonly List<IElement> _elements = new();
 
     public ArrayElement(string arrayDescription)
-        => _elements = arrayDescription
-                        .Trim('[', ']')
-                        .Split(',')
-                        .Select(CreateElement)
-                        .ToList();
-
-    private IElement CreateElement(string description)
+        : this(StartStream(arrayDescription))
     {
-        // Check if it is an integer
-        if (int.TryParse(description, out int result))
-            return new IntegerElement(result);
+    }
 
-        // Must be a nested array
-        return new ArrayElement(description);
+    private ArrayElement(CharEnumerator descriptionStream)
+    {
+        CheckAndSkipChar(descriptionStream, '[');
+        while (true)
+        {
+            if (descriptionStream.Current == ',') 
+                descriptionStream.MoveNext();
+
+            var curr = descriptionStream.Current;
+            if (curr == ']') break;
+
+            _elements.Add(
+                curr == '[' ?
+                new ArrayElement(descriptionStream) :
+                new IntegerElement(ReadInteger(descriptionStream))
+             );
+        }
+
+        CheckAndSkipChar(descriptionStream, ']');
+    }
+
+    private static CharEnumerator StartStream(string arrayDescription)
+    {
+        var descriptionStream = arrayDescription.GetEnumerator();
+        descriptionStream.MoveNext();
+        return descriptionStream;
+    }
+
+    private static void CheckAndSkipChar(CharEnumerator ds, char expectedChar)
+    {
+        if (ds.Current != expectedChar)
+            throw new InvalidOperationException("Array start expected");
+        ds.MoveNext();
+    }
+
+    private static int ReadInteger(CharEnumerator ds)
+    {
+        var sb = new StringBuilder();
+        while (char.IsDigit(ds.Current))
+        {
+            sb.Append(ds.Current);
+            ds.MoveNext();
+        }
+        return int.Parse(sb.ToString());
     }
 
     public Order CheckOrder(IElement other)
