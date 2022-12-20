@@ -2,10 +2,24 @@
 
 public class ArrayElement
 {
-	public ArrayElement(string arrayDescription)
-	{
+	private readonly List<IntegerElement> _elements;
 
-	}
+    public ArrayElement(string arrayDescription) 
+        => _elements = arrayDescription
+                        .Trim('[', ']')
+                        .Split(',')
+                        .Select(int.Parse)
+                        .Select(a => new IntegerElement(a))
+                        .ToList();
 
-	public Order CheckOrder(ArrayElement other) => Order.Correct;
+    public Order CheckOrder(ArrayElement other)
+    {
+        for (int i = 0; i < _elements.Count; ++i) 
+        {
+            Order order = _elements[i].CheckOrder(other._elements[i]);
+            if (order != Order.Equal) return order;
+        }
+
+        return Order.Equal;
+    }
 }
