@@ -27,7 +27,7 @@ public class HeightMapTest
             """;
 
         // Act
-        var sut = new HeightMap(map);
+        var sut = new HeightMap(map, 'E');
 
         // Assert
         Assert.True(sut.IsComplete);
@@ -371,5 +371,32 @@ public class HeightMapTest
 
         // Assert
         Assert.Equal(31, numSteps);
+    }
+
+    [Fact]
+    public void GivenHeightMap_WhenInvert_ReturnsInvertedHeightMap()
+    {
+        // Arrange
+        var sut = new HeightMap("""
+            Sabqponm
+            abcryxxl
+            accszExk
+            acctuvwj
+            abdefghi
+            """);
+
+        var invertedMap = """
+            EEyjklmn
+            Eyxibcco
+            ExxhaScp
+            Exxgfedq
+            Eywvutsr
+            """;
+
+        // Act
+        var inverted = sut.Invert();
+
+        // Assert
+        Assert.Equal(invertedMap, inverted.ToString());
     }
 }

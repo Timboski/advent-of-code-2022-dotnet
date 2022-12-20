@@ -31,11 +31,10 @@ public class HeightMap
                 var glyph = _mapData[x, y];
 
                 if (glyph == 'S') Start = new(x, y);
-
-                if (glyph == 'E') IsComplete = false;
             }
         }
 
+        IsComplete = startHeight == 'E';
         if (Start.X < 0) throw new NoStartException();
     }
 
@@ -57,7 +56,7 @@ public class HeightMap
         return string.Join(Environment.NewLine, mapData);
     }
 
-    public string GetVisitedMap(Dictionary<Point, int> visited)
+    public string GetVisitedMap(HashSet<Point> visited)
     {
         var mapData = new List<string>(YSize);
 
@@ -66,7 +65,7 @@ public class HeightMap
             var sb = new StringBuilder(XSize);
             for (int x = 0; x < XSize; ++x)
             {
-                if (visited.ContainsKey(new Point(x, y)))
+                if (visited.Contains(new Point(x, y)))
                     //sb.Append('.');
                     sb.Append(char.ToUpper(_mapData[x, y]));
                 else
@@ -81,7 +80,7 @@ public class HeightMap
 
     public Point Start { get; } = new(-1, -1);
 
-    public bool IsComplete { get; } = true;
+    public bool IsComplete { get; }
 
     public int XSize { get; }
 
@@ -96,8 +95,29 @@ public class HeightMap
                 new Point(Start.X - 1, Start.Y),
                 new Point(Start.X + 1, Start.Y)
             }
-            .SelectMany(pos => CheckLocation(pos))
+            .SelectMany(CheckLocation)
             .ToList();
+
+    public HeightMap Invert()
+    {
+        var invertedMap = (char[,])_mapData.Clone();
+
+        for (int x = 0; x < XSize; ++x)
+        {
+            for (int y = 0; y < YSize; ++y)
+            {
+                invertedMap[x, y] = invertedMap[x, y] switch
+                {
+                    'S' => 'E',
+                    'E' => 'S',
+                    'a' => 'E',
+                    char c => (char)('z' - (c - 'a'))
+                };
+            }
+        }
+
+        return new HeightMap(invertedMap, 'a');
+    }
 
     private IEnumerable<HeightMap> CheckLocation(Point pos)
     {
@@ -108,8 +128,8 @@ public class HeightMap
 
         var level = _mapData[pos.X, pos.Y];
         if (level == '#') yield break;
-        level = level == 'E' ? 'z' : level;
-        if (level > _startHeight + 1) yield break;
+        var testLevel = level == 'E' ? 'z' : level;
+        if (testLevel > _startHeight + 1) yield break;
 
         var newMap = (char[,])_mapData.Clone();
         newMap[Start.X, Start.Y] = '#';

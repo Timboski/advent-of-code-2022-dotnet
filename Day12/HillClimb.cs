@@ -12,12 +12,17 @@ public class HillClimb
 		_heightMap.Enqueue(new HeightMap(lines));
 	}
 
+    public int FindHikingTrail()
+    {
+        _heightMap.Enqueue(_heightMap.Dequeue().Invert());
+        return FindPath();
+    }
+
     public int FindPath()
     {
         var visited = new HashSet<Point>();
 		while (_heightMap.TryDequeue(out HeightMap heightMap))
         {
-            var pathLength = heightMap.PathLength;
             var stepStart = heightMap.Start;
             if (!visited.Contains(stepStart))
             {

@@ -16,4 +16,19 @@ public class HillCLimbTest
         // Assert
         Assert.Equal(expectedNumberOfSteps, steps);
     }
+
+    [Theory]
+    [InlineData("day12-example-input.txt", 29)]
+    // [InlineData("day12-input.txt", ???)]
+    public void GivenHillCLimbWithMapData_WhenFindHikingTrail_ReturnsNumberOfSteps(string filename, int expectedNumberOfSteps)
+    {
+        // Arrange
+        var sut = new HillClimb(filename);
+
+        // Act
+        var steps = sut.FindHikingTrail();
+
+        // Assert
+        Assert.Equal(expectedNumberOfSteps, steps);
+    }
 }
