@@ -3,44 +3,44 @@ namespace Day13Test;
 public class IntegerElementTest
 {
     [Fact]
-    public void GivenIntegerElements_WhenCheckIsBeforeHigherIntegerElement_ReturnsTrue()
+    public void GivenIntegerElement_WhenCheckOrderWithHigherIntegerElement_ReturnsOrderCorrect()
     {
         // Arrange
         var sut = new IntegerElement(4);
         var higher = new IntegerElement(8);
 
         // Act
-        var correctOrder = sut.IsBefore(higher);
+        var res = sut.CheckOrder(higher);
 
         // Assert
-        Assert.True(correctOrder);
+        Assert.Equal(Order.Correct, res);
     }
 
     [Fact]
-    public void GivenIntegerElements_WhenCheckIsBeforeLowerIntegerElement_ReturnsFalse()
+    public void GivenIntegerElement_WhenCheckOrderWithLowerIntegerElement_ReturnsOrderWrong()
     {
         // Arrange
         var sut = new IntegerElement(8);
         var lower = new IntegerElement(4);
 
         // Act
-        var correctOrder = sut.IsBefore(lower);
+        var res = sut.CheckOrder(lower);
 
         // Assert
-        Assert.False(correctOrder);
+        Assert.Equal(Order.Wrong, res);
     }
 
     [Fact]
-    public void GivenIntegerElements_WhenCheckIsBeforeEqualIntegerElement_ReturnsTrue()
+    public void GivenIntegerElement_WhenCheckOrderWithEqualIntegerElement_ReturnsOrderEqual()
     {
         // Arrange
         var sut = new IntegerElement(5);
         var equalValue = new IntegerElement(5);
 
         // Act
-        var correctOrder = sut.IsBefore(equalValue);
+        var res = sut.CheckOrder(equalValue);
 
         // Assert
-        Assert.True(correctOrder);
+        Assert.Equal(Order.Equal, res);
     }
 }
