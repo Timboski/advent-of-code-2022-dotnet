@@ -12,6 +12,8 @@ public class ArrayElementTest
     [InlineData("[1,1,2,4,5]", "[1,1,2,4]", Order.Wrong)]
     [InlineData("[[1],[0,1,2]", "[[2],[2,3,4]]", Order.Correct)]
     [InlineData("[[1],[2,3,4]]", "[[1],4]", Order.Correct)] // Second Example
+    [InlineData("[9]", "[[8,7,6]]", Order.Wrong)] // Third Example
+    [InlineData("[1, 9]", "[1, [8,7,6]]", Order.Wrong)]
     public void GivenTwoArrayStrings_WhenParseAndCompare_ReturnsExpectedOrder(string leftArray, string rightArray, Order expectedOrder)
     {
         // Arrange
