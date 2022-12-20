@@ -41,6 +41,7 @@ public class ArrayElement : IElement
             return Order.Equal;
         }
 
-        throw new NotImplementedException("Only support same type");
+        // Other is an integer - promote it to an array
+        return CheckOrder(((IntegerElement)other).PromoteToArray());
     }
 }

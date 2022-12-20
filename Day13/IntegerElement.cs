@@ -18,4 +18,6 @@ public class IntegerElement : IElement
 
         throw new NotImplementedException("Only support same type");
     }
+
+    public ArrayElement PromoteToArray() => new(_value.ToString());
 }
