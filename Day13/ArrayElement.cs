@@ -20,6 +20,8 @@ public class ArrayElement
             if (order != Order.Equal) return order;
         }
 
+        if (other._elements.Count > _elements.Count) return Order.Correct;
+
         return Order.Equal;
     }
 }
