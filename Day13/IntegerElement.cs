@@ -7,5 +7,5 @@ public class IntegerElement
     public IntegerElement(int value) => _value = value;
 
     public bool IsBefore(IntegerElement other) 
-        => _value < other._value;
+        => _value <= other._value;
 }

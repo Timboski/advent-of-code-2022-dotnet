@@ -29,4 +29,18 @@ public class IntegerElementTest
         // Assert
         Assert.False(correctOrder);
     }
+
+    [Fact]
+    public void GivenIntegerElements_WhenCheckIsBeforeEqualIntegerElement_ReturnsTrue()
+    {
+        // Arrange
+        var sut = new IntegerElement(5);
+        var equalValue = new IntegerElement(5);
+
+        // Act
+        var correctOrder = sut.IsBefore(equalValue);
+
+        // Assert
+        Assert.True(correctOrder);
+    }
 }
