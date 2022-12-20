@@ -19,7 +19,7 @@ public class HillCLimbTest
 
     [Theory]
     [InlineData("day12-example-input.txt", 29)]
-    // [InlineData("day12-input.txt", ???)]
+    [InlineData("day12-input.txt", 465)]
     public void GivenHillCLimbWithMapData_WhenFindHikingTrail_ReturnsNumberOfSteps(string filename, int expectedNumberOfSteps)
     {
         // Arrange
