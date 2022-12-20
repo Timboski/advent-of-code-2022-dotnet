@@ -21,7 +21,7 @@ public class HillClimb
     public int FindPath()
     {
         var visited = new HashSet<Point>();
-		while (_heightMap.TryDequeue(out HeightMap heightMap))
+		while (_heightMap.TryDequeue(out HeightMap? heightMap))
         {
             var stepStart = heightMap.Start;
             if (!visited.Contains(stepStart))
