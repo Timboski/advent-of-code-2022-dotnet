@@ -2,7 +2,7 @@
 
 public enum Order
 {
-    Correct,
-    Equal,
-    Wrong
+    Correct = -1,
+    Equal = 0,
+    Wrong = 1,
 }
