@@ -132,7 +132,7 @@ public class CaveTest
 
     [Theory]
     [InlineData("day14-example-input.txt", 93)]
-    //[InlineData("day14-input.txt", 610)]
+    [InlineData("day14-input.txt", 27194)]
     public void GivenCaveData_WhenRunUntilBlocked_ReturnsNumberOfIterations(string filename, int expectedIterations)
     {
         // Arrange
