@@ -4,12 +4,20 @@ namespace Day14;
 
 public class BoundingBox
 {
-    public BoundingBox(Point initialPoint)
+    public BoundingBox(Point initialPoint) 
+        : this(initialPoint.X, 
+              initialPoint.Y, 
+              initialPoint.X + 1,
+              initialPoint.Y + 1)
     {
-        MinX = initialPoint.X;
-        MinY = initialPoint.Y;
-        MaxX = initialPoint.X + 1;
-        MaxY = initialPoint.Y + 1;
+    }
+
+    public BoundingBox(int minX, int minY, int maxX, int maxY)
+    {
+        MinX = minX;
+        MinY = minY;
+        MaxX = maxX;
+        MaxY = maxY;
     }
 
     public void EnclosePoints(IEnumerable<Point> points)
