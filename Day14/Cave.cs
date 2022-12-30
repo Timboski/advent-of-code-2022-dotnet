@@ -6,12 +6,12 @@ namespace Day14;
 public class Cave
 {
     private readonly BoundingBox _box;
-    private readonly Dictionary<Point, char> _grid = new();
+    private readonly Dictionary<(int, int), char> _grid = new();
 
     public Cave(BoundingBox box, Point sandEntry)
     {
         _box = box;
-        _grid[sandEntry] = '+';
+        _grid[(sandEntry.X, sandEntry.Y)] = '+';
     }
 
     public void AddPath(IEnumerable<Point> points)
@@ -19,7 +19,7 @@ public class Cave
         var start = points.First();
         var end = points.Last();
         for (int y = start.Y; y <= end.Y; y++)
-            _grid[new Point(start.X, y)] = '#';
+            _grid[(start.X, y)] = '#';
     }
 
     public override string ToString()
@@ -31,7 +31,7 @@ public class Cave
         {
             var sb = new StringBuilder(lineSize);
             for (int x = _box.MinX; x < _box.MaxX; x++)
-                if (_grid.ContainsKey(new Point(x, y))) sb.Append(_grid[new Point(x, y)]);
+                if (_grid.ContainsKey((x, y))) sb.Append(_grid[(x, y)]);
                 else sb.Append('.');
 
             lines.Add(sb.ToString());
