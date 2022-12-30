@@ -59,6 +59,12 @@ public class Cave
         foreach (var path in paths) AddPath(path);
     }
 
-    public Point FallFrom(Point point) 
-        => point - new Size(0, -1);
+    public Point FallFrom(Point point)
+    {
+        var down = (X:point.X, Y:point.Y + 1);
+        if (!_grid.ContainsKey(down)) return new Point(down.X, down.Y);
+
+        // Move not possible
+        return point;
+    }
 }
