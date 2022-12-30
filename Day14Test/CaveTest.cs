@@ -94,6 +94,24 @@ public class CaveTest
         Assert.Equal(new Point(expectedX, expectedY), newPos);
     }
 
+    [Theory]
+    [MemberData(nameof(ExampleSand))]
+    public void GivenExmpaleCave_WhenDropSand_ReturnsPrintableRepresentation(int numIterations, string expectedDisplay)
+    {
+        // Arrange
+        _output.WriteLine($"Iterations: {numIterations}");
+        var box = new BoundingBox(494, 0, 504, 10);
+        var sut = new Cave(box, new Point(500, 0));
+        sut.AddPaths(FileParser.ReadFile("day14-example-input.txt"));
+
+        // Act
+        for (int i = 0; i < numIterations; i++) sut.AddSand();
+
+        // Assert
+        _output.WriteLine(sut.ToString());
+        Assert.Equal(expectedDisplay, sut.ToString());
+    }
+
     public static IEnumerable<object[]> PathTestData()
         => new List<object[]>
              {
@@ -156,5 +174,85 @@ public class CaveTest
                     ..........
                     """
                 }
+            };
+
+    public static IEnumerable<object[]> ExampleSand()
+        => new List<object[]>
+             {
+                new object[] {
+                    1,
+                    """
+                    ......+...
+                    ..........
+                    ..........
+                    ..........
+                    ....#...##
+                    ....#...#.
+                    ..###...#.
+                    ........#.
+                    ......o.#.
+                    #########.
+                    """
+                },
+                new object[] {
+                    2,
+                    """
+                    ......+...
+                    ..........
+                    ..........
+                    ..........
+                    ....#...##
+                    ....#...#.
+                    ..###...#.
+                    ........#.
+                    .....oo.#.
+                    #########.
+                    """
+                },
+                new object[] {
+                    5,
+                    """
+                    ......+...
+                    ..........
+                    ..........
+                    ..........
+                    ....#...##
+                    ....#...#.
+                    ..###...#.
+                    ......o.#.
+                    ....oooo#.
+                    #########.
+                    """
+                },
+                new object[] {
+                    22,
+                    """
+                    ......+...
+                    ..........
+                    ......o...
+                    .....ooo..
+                    ....#ooo##
+                    ....#ooo#.
+                    ..###ooo#.
+                    ....oooo#.
+                    ...ooooo#.
+                    #########.
+                    """
+                },
+                new object[] {
+                    24,
+                    """
+                    ......+...
+                    ..........
+                    ......o...
+                    .....ooo..
+                    ....#ooo##
+                    ...o#ooo#.
+                    ..###ooo#.
+                    ....oooo#.
+                    .o.ooooo#.
+                    #########.
+                    """
+                },
             };
 }

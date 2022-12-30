@@ -7,11 +7,13 @@ public class Cave
 {
     private readonly BoundingBox _box;
     private readonly Dictionary<(int, int), char> _grid = new();
+    private readonly Point _sandEntry;
 
     public Cave(BoundingBox box, Point sandEntry)
     {
         _box = box;
         _grid[(sandEntry.X, sandEntry.Y)] = '+';
+        _sandEntry = sandEntry;
     }
 
     public void AddPath(IEnumerable<Point> points)
@@ -80,5 +82,22 @@ public class Cave
 
         point = Point.Empty;
         return false;
+    }
+
+    public void AddSand()
+    {
+        var current = _sandEntry;
+        while (true)
+        {
+            var newPos = FallFrom(current);
+            if (newPos == current)
+            {
+                // Sand stopped - add to the grad.
+                _grid[(current.X, current.Y)] = 'o';
+                return;
+            }
+
+            current = newPos;
+        }
     }
 }
