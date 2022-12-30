@@ -4,6 +4,14 @@ namespace Day14;
 
 public static class FileParser
 {
+    public static BoundingBox FindBoundngBox(string filename)
+    {
+        var box = new BoundingBox(new Point(500, 0));
+        var points = File.ReadAllLines(filename).SelectMany(ReadPath);
+        box.EnclosePoints(points);
+        return box;
+    }
+
     /// <example>
     /// Format: "498,4 -> 498,6 -> 496,6"
     /// </example>

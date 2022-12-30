@@ -18,4 +18,18 @@ public class FileParserTest
         // Assert
         Assert.Equal(expected, points);
     }
+
+    [Theory]
+    [InlineData("day14-example-input.txt", 494, 0, 504, 10)]
+    public void GivenDataFile_WhenFindBoundingBox_ReturnsExpectedExtent(string filename, int minX, int minY, int maxX, int maxY)
+    {
+        // Arrange, Act
+        var box = FileParser.FindBoundngBox(filename);
+
+        // Assert
+        Assert.Equal(minX, box.MinX);
+        Assert.Equal(maxX, box.MaxX);
+        Assert.Equal(minY, box.MinY);
+        Assert.Equal(maxY, box.MaxY);
+    }
 }
