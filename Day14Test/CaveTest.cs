@@ -74,6 +74,23 @@ public class CaveTest
         Assert.Equal(expectedDisplay, sut.ToString());
     }
 
+    [Theory]
+    [InlineData(500,1,500,2)]
+    public void GivenCave_WhenMoveSand_ReturnsNewPosition(int startX, int startY, int expectedX, int expectedY)
+    {
+        // Arrange
+        var box = new BoundingBox(494, 0, 504, 4);
+        var sut = new Cave(box, new Point(500, 0));
+        sut.AddPath(new[] { new Point(499, 3), new Point(501, 3) });
+        _output.WriteLine(sut.ToString());
+
+        // Act
+        var newPos = sut.FallFrom(new Point(startX, startY));
+
+        // Assert
+        Assert.Equal(new Point(expectedX, expectedY), newPos);
+    }
+
     public static IEnumerable<object[]> PathTestData()
         => new List<object[]>
              {

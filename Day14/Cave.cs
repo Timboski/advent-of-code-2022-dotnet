@@ -58,4 +58,7 @@ public class Cave
     {
         foreach (var path in paths) AddPath(path);
     }
+
+    public Point FallFrom(Point point) 
+        => point - new Size(0, -1);
 }
