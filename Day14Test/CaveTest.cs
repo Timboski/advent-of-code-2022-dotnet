@@ -24,20 +24,12 @@ public class CaveTest
         Assert.Equal(expectedDisplay, display);
     }
 
-    [Fact]
-    public void GivenEmptyCave_WhenAddVerticalPath_ReturnsPrintableRepresentation()
+    [Theory]
+    [MemberData(nameof(PathTestData))]
+    public void GivenEmptyCaveAndPath_WhenAddPath_ReturnsPrintableRepresentation(BoundingBox box, IEnumerable<Point> path, string expectedDisplay)
     {
         // Arrange
-        var box = new BoundingBox(494, 0, 504, 5);
         var sut = new Cave(box, new Point(500, 0));
-        var path = new[] { new Point(496, 1), new Point(496, 3) };
-        var expectedDisplay = """
-            ......+...
-            ..#.......
-            ..#.......
-            ..#.......
-            ..........
-            """;
 
         // Act
         sut.AddPath(path);
@@ -45,4 +37,30 @@ public class CaveTest
         // Assert
         Assert.Equal(expectedDisplay, sut.ToString());
     }
+
+    public static IEnumerable<object[]> PathTestData()
+        => new List<object[]>
+             {
+                new object[] {
+                    new BoundingBox(494, 0, 504, 5),
+                    new[] { new Point(496, 1), new Point(496, 3) },
+                    """
+                    ......+...
+                    ..#.......
+                    ..#.......
+                    ..#.......
+                    ..........
+                    """
+                },
+                new object[] {
+                    new BoundingBox(494, 0, 504, 4),
+                    new[] { new Point(496, 2), new Point(501, 2) },
+                    """
+                    ......+...
+                    ..........
+                    ..######..
+                    ..........
+                    """
+                }
+            };
 }

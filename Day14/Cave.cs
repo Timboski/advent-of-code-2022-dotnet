@@ -18,8 +18,9 @@ public class Cave
     {
         var start = points.First();
         var end = points.Last();
-        for (int y = start.Y; y <= end.Y; y++)
-            _grid[(start.X, y)] = '#';
+        for (int x = start.X; x <= end.X; x++)
+            for (int y = start.Y; y <= end.Y; y++)
+                _grid[(x, y)] = '#';
     }
 
     public override string ToString()
