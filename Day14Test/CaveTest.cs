@@ -1,9 +1,14 @@
 using System.Drawing;
+using Xunit.Abstractions;
 
 namespace Day14Test;
 
 public class CaveTest
 {
+    private readonly ITestOutputHelper _output;
+
+    public CaveTest(ITestOutputHelper output) => _output = output;
+
     [Fact]
     public void GivenEmptyCave_WhenConvertToString_ReturnsPrintableRepresentation()
     {
@@ -26,9 +31,10 @@ public class CaveTest
 
     [Theory]
     [MemberData(nameof(PathTestData))]
-    public void GivenEmptyCaveAndPath_WhenAddPath_ReturnsPrintableRepresentation(BoundingBox box, IEnumerable<Point> path, string expectedDisplay)
+    public void GivenEmptyCaveAndPath_WhenAddPath_ReturnsPrintableRepresentation(string desciption, BoundingBox box, IEnumerable<Point> path, string expectedDisplay)
     {
         // Arrange
+        _output.WriteLine(desciption);
         var sut = new Cave(box, new Point(500, 0));
 
         // Act
@@ -42,6 +48,7 @@ public class CaveTest
         => new List<object[]>
              {
                 new object[] {
+                    "Vertical Line",
                     new BoundingBox(494, 0, 504, 5),
                     new[] { new Point(496, 1), new Point(496, 3) },
                     """
@@ -53,8 +60,32 @@ public class CaveTest
                     """
                 },
                 new object[] {
+                    "Horizontal Line",
                     new BoundingBox(494, 0, 504, 4),
                     new[] { new Point(496, 2), new Point(501, 2) },
+                    """
+                    ......+...
+                    ..........
+                    ..######..
+                    ..........
+                    """
+                },
+                new object[] {
+                    "Reverse Vertical Line",
+                    new BoundingBox(494, 0, 504, 5),
+                    new[] { new Point(496, 3), new Point(496, 1) },
+                    """
+                    ......+...
+                    ..#.......
+                    ..#.......
+                    ..#.......
+                    ..........
+                    """
+                },
+                new object[] {
+                    "Reverse Horizontal Line",
+                    new BoundingBox(494, 0, 504, 4),
+                    new[] { new Point(501, 2), new Point(496, 2) },
                     """
                     ......+...
                     ..........

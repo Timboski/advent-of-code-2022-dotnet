@@ -16,10 +16,15 @@ public class Cave
 
     public void AddPath(IEnumerable<Point> points)
     {
-        var start = points.First();
-        var end = points.Last();
-        for (int x = start.X; x <= end.X; x++)
-            for (int y = start.Y; y <= end.Y; y++)
+        var first = points.First();
+        var second = points.Last();
+        var startX = Math.Min(first.X, second.X);
+        var endX = Math.Max(first.X, second.X);
+        var startY = Math.Min(first.Y, second.Y);
+        var endY = Math.Max(first.Y, second.Y);
+
+        for (int x = startX; x <= endX; x++)
+            for (int y = startY; y <= endY; y++)
                 _grid[(x, y)] = '#';
     }
 
