@@ -21,6 +21,7 @@ public class FileParserTest
 
     [Theory]
     [InlineData("day14-example-input.txt", 494, 0, 504, 10)]
+    [InlineData("day14-input.txt", 479, 0, 534, 168)]
     public void GivenDataFile_WhenFindBoundingBox_ReturnsExpectedExtent(string filename, int minX, int minY, int maxX, int maxY)
     {
         // Arrange, Act
