@@ -9,4 +9,10 @@ cave.AddPaths(paths);
 var iterations = cave.AddSandUntilStable();
 
 Console.WriteLine($"Part1 : {iterations}");
-Console.WriteLine(cave.ToString());
+
+var cave2 = new Cave(box, new Point(500, 0));
+cave2.AddPaths(paths);
+cave2.SetInfiniteFloor();
+var iterations2 = cave2.AddSandUntilStable();
+
+Console.WriteLine($"Part2 : {iterations2}");
