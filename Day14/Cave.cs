@@ -61,14 +61,10 @@ public class Cave
 
     public Point FallFrom(Point point)
     {
-        // Try to move straight down
-        if (CheckAndCreatePoint(point.X, point.Y + 1, out Point newPoint)) return newPoint;
-        
-        // Try to move down left
-        if (CheckAndCreatePoint(point.X - 1, point.Y + 1, out newPoint)) return newPoint;
-        
-        // Try to move down right
-        if (CheckAndCreatePoint(point.X + 1, point.Y + 1, out newPoint)) return newPoint;
+        // Try straight down, then left, then right.
+        var y = point.Y + 1;
+        foreach (var x in new[] { point.X, point.X - 1, point.X + 1 })
+            if (CheckAndCreatePoint(x, y, out Point newPoint)) return newPoint;
         
         // Move not possible
         return point;
