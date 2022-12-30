@@ -44,6 +44,36 @@ public class CaveTest
         Assert.Equal(expectedDisplay, sut.ToString());
     }
 
+    [Fact]
+    public void GivenCaveData_WhenAddPaths_ReturnsPrintableRepresentation()
+    {
+        // Arrange
+        var filename = "day14-example-input.txt";
+        var box = new BoundingBox(494, 0, 504, 10);
+        var paths = FileParser.ReadFile(filename);
+        var sut = new Cave(box, new Point(500, 0));
+
+        var expectedDisplay = """
+            ......+...
+            ..........
+            ..........
+            ..........
+            ....#...##
+            ....#...#.
+            ..###...#.
+            ........#.
+            ........#.
+            #########.
+            """;
+
+
+        // Act
+        sut.AddPaths(paths);
+
+        // Assert
+        Assert.Equal(expectedDisplay, sut.ToString());
+    }
+
     public static IEnumerable<object[]> PathTestData()
         => new List<object[]>
              {

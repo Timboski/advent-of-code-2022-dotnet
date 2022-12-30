@@ -12,6 +12,9 @@ public static class FileParser
         return box;
     }
 
+    public static IEnumerable<IEnumerable<Point>> ReadFile(string filename) 
+        => File.ReadAllLines(filename).Select(ReadPath);
+
     /// <example>
     /// Format: "498,4 -> 498,6 -> 496,6"
     /// </example>

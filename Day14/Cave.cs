@@ -53,4 +53,9 @@ public class Cave
 
         return string.Join(Environment.NewLine, lines);
     }
+
+    public void AddPaths(IEnumerable<IEnumerable<Point>> paths)
+    {
+        foreach (var path in paths) AddPath(path);
+    }
 }
