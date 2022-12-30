@@ -114,6 +114,7 @@ public class CaveTest
 
     [Theory]
     [InlineData("day14-example-input.txt", 24)]
+    [InlineData("day14-input.txt", 610)]
     public void GivenCaveData_WhenRunUntilStable_ReturnsNumberOfIterations(string filename, int expectedIterations)
     {
         // Arrange
