@@ -61,8 +61,13 @@ public class Cave
 
     public Point FallFrom(Point point)
     {
+        // Try to move straight down
         var down = (X:point.X, Y:point.Y + 1);
         if (!_grid.ContainsKey(down)) return new Point(down.X, down.Y);
+
+        // Try to move down left
+        var downLeft = (X: point.X - 1, Y: point.Y + 1);
+        if (!_grid.ContainsKey(downLeft)) return new Point(downLeft.X, downLeft.Y);
 
         // Move not possible
         return point;
