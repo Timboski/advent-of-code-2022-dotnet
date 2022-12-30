@@ -33,6 +33,15 @@ public class BoundingBox
         MaxY = Math.Max(MaxY, point.Y + 1);
     }
 
+    public bool ContainsPoint(Point point)
+    {
+        if (point.X < MinX) return false;
+        if (point.X >= MaxX) return false;
+        if (point.Y < MinY) return false;
+        if (point.Y >= MaxY) return false;
+        return true;
+    }
+
     public int MinX { get; private set; }
     public int MaxX { get; private set; }
     public int MinY { get; private set; }

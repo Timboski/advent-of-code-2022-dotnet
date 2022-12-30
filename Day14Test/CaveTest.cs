@@ -112,6 +112,23 @@ public class CaveTest
         Assert.Equal(expectedDisplay, sut.ToString());
     }
 
+    [Theory]
+    [InlineData("day14-example-input.txt", 24)]
+    public void GivenCaveData_WhenRunUntilStable_ReturnsNumberOfIterations(string filename, int expectedIterations)
+    {
+        // Arrange
+        var box = FileParser.FindBoundngBox(filename);
+        var paths = FileParser.ReadFile(filename);
+        var sut = new Cave(box, new Point(500, 0));
+        sut.AddPaths(paths);
+
+        // Act
+        var iterations = sut.AddSandUntilStable();
+
+        // Assert
+        Assert.Equal(expectedIterations, iterations);
+    }
+
     public static IEnumerable<object[]> PathTestData()
         => new List<object[]>
              {

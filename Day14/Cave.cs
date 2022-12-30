@@ -84,7 +84,7 @@ public class Cave
         return false;
     }
 
-    public void AddSand()
+    public bool AddSand()
     {
         var current = _sandEntry;
         while (true)
@@ -94,10 +94,19 @@ public class Cave
             {
                 // Sand stopped - add to the grad.
                 _grid[(current.X, current.Y)] = 'o';
-                return;
+                return true;
             }
+
+            if (!_box.ContainsPoint(newPos)) return false;
 
             current = newPos;
         }
+    }
+
+    public int AddSandUntilStable()
+    {
+        var iterations = 0;
+        while (AddSand()) iterations++;
+        return iterations;
     }
 }
