@@ -6,6 +6,7 @@ var box = FileParser.FindBoundngBox(filename);
 var paths = FileParser.ReadFile(filename);
 var cave = new Cave(box, new Point(500, 0));
 cave.AddPaths(paths);
+var iterations = cave.AddSandUntilStable();
 
-Console.WriteLine("Part1 : Initial map");
+Console.WriteLine($"Part1 : {iterations}");
 Console.WriteLine(cave.ToString());
