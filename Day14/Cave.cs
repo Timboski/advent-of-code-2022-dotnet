@@ -8,6 +8,7 @@ public class Cave
     private readonly BoundingBox _box;
     private readonly Dictionary<(int, int), char> _grid = new();
     private readonly Point _sandEntry;
+    private bool _floor = false;
 
     public Cave(BoundingBox box, Point sandEntry)
     {
@@ -63,8 +64,11 @@ public class Cave
 
     public Point FallFrom(Point point)
     {
-        // Try straight down, then left, then right.
+        // Check if hit the floor
         var y = point.Y + 1;
+        if (_floor && y > _box.MaxY) return point;
+
+        // Try straight down, then left, then right.
         foreach (var x in new[] { point.X, point.X - 1, point.X + 1 })
             if (CheckAndCreatePoint(x, y, out Point newPoint)) return newPoint;
         
@@ -86,6 +90,9 @@ public class Cave
 
     public bool AddSand()
     {
+        if (_grid[(_sandEntry.X, _sandEntry.Y)] == 'o')
+            return false; // Blocked - no sand can flow.
+
         var current = _sandEntry;
         while (true)
         {
@@ -97,8 +104,7 @@ public class Cave
                 return true;
             }
 
-            if (!_box.ContainsPoint(newPos)) return false;
-
+            if (!_floor && !_box.ContainsPoint(newPos)) return false;
             current = newPos;
         }
     }
@@ -109,4 +115,6 @@ public class Cave
         while (AddSand()) iterations++;
         return iterations;
     }
+
+    public void SetInfiniteFloor() => _floor = true;
 }
