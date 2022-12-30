@@ -78,6 +78,7 @@ public class CaveTest
     [InlineData(500, 1, 500, 2)] // Nothing below
     [InlineData(500, 2, 500, 2)] // Path blocked
     [InlineData(499, 2, 498, 3)] // Move down left
+    [InlineData(501, 2, 502, 3)] // Move down right
     public void GivenCave_WhenMoveSand_ReturnsNewPosition(int startX, int startY, int expectedX, int expectedY)
     {
         // Arrange

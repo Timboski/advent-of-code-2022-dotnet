@@ -69,6 +69,10 @@ public class Cave
         var downLeft = (X: point.X - 1, Y: point.Y + 1);
         if (!_grid.ContainsKey(downLeft)) return new Point(downLeft.X, downLeft.Y);
 
+        // Try to move down right
+        var downRight = (X: point.X + 1, Y: point.Y + 1);
+        if (!_grid.ContainsKey(downRight)) return new Point(downRight.X, downRight.Y);
+
         // Move not possible
         return point;
     }
