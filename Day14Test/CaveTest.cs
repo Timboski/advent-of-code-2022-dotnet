@@ -92,6 +92,19 @@ public class CaveTest
                     ..######..
                     ..........
                     """
+                },
+                new object[] {
+                    "Two Lines",
+                    new BoundingBox(494, 0, 504, 6),
+                    new[] { new Point(496, 1), new Point(496, 4), new Point(501, 4) },
+                    """
+                    ......+...
+                    ..#.......
+                    ..#.......
+                    ..#.......
+                    ..######..
+                    ..........
+                    """
                 }
             };
 }

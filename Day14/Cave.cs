@@ -16,8 +16,16 @@ public class Cave
 
     public void AddPath(IEnumerable<Point> points)
     {
-        var first = points.First();
-        var second = points.Last();
+        var current = points.First();
+        foreach (var point in points.Skip(1))
+        {
+            AddLine(current, point);
+            current = point;
+        }
+    }
+
+    private void AddLine(Point first, Point second)
+    {
         var startX = Math.Min(first.X, second.X);
         var endX = Math.Max(first.X, second.X);
         var startY = Math.Min(first.Y, second.Y);
