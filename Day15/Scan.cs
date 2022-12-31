@@ -19,7 +19,7 @@ public class Scan
             (int min, int max) = sensor.GetRange(row);
             for (var x = min; x < max; x++) set.Add(x);
 
-            if (sensor.NearestBeaconPosition.Y == row) 
+            if (sensor.NearestBeaconPosition.Y == row)
                 beacons.Add(sensor.NearestBeaconPosition.X);
         }
 
@@ -30,17 +30,25 @@ public class Scan
 
     public int FindTuningFrequency(int maxScan)
     {
-        for (int x = 0; x < maxScan; x++)
+        for (int y = 0; y < maxScan; y++)
+            if (IsRowComplete(y, maxScan, out int x))
+                return checked((4000000 * x) + y);
+
+        throw new InvalidDataException("No beacon possible");
+    }
+
+    public bool IsRowComplete(int y, int maxScan, out int x)
+    {
+        x = 0;
+        for (var curr = 0; curr < maxScan; curr++)
         {
-            for (int y = 0; y < maxScan; y++)
+            if (!_sensors.Any(s => !s.IsBeaconPossible(curr, y)))
             {
-                if (!_sensors.Any(s => !s.IsBeaconPossible(x, y)))
-                {
-                    return checked((4000000 * x) + y);
-                }
+                x = curr;
+                return true;
             }
         }
 
-        throw new InvalidDataException("No beacon possible");
+        return false;
     }
 }
