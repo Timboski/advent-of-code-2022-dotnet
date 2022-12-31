@@ -30,13 +30,24 @@ public class Sensor
 
     private static int TakeLeadingInteger(string data)
     {
-        static bool VaildInteger(char digit) 
+        static bool VaildInteger(char digit)
             => char.IsDigit(digit) || digit == '-';
 
         return int.Parse(string.Concat(data.TakeWhile(VaildInteger)));
     }
 
-    public bool IsBeaconPossible(int x, int y) 
+    public (int min, int max) GetRange(int row)
+    {
+        int yDiff = Math.Abs(row - Position.Y);
+        var rowRange = _range - yDiff;
+        if (rowRange < 0) return (0, 0); // Nothing in range
+
+        int min = Position.X - rowRange;
+        int max = Position.X + rowRange + 1; // One after range
+        return (min, max);
+    }
+
+    public bool IsBeaconPossible(int x, int y)
         => ManhattenDistance(x, y) > _range;
 
     private int ManhattenDistance(int x, int y)

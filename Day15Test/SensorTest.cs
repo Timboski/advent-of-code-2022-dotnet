@@ -83,4 +83,26 @@ public class SensorTest
         // Assert
         Assert.True(isPossible);
     }
+
+    [Theory]
+    [InlineData(18, -5, 10)]
+    [InlineData(20, -3, 8)]
+    [InlineData(25, 2, 3)]
+    [InlineData(26, 0, 0)]
+    [InlineData(15, -2, 7)]
+    [InlineData(11, 2, 3)]
+    [InlineData(10, 0, 0)]
+    public void GivenSensor_WhenGetRangeOnARow_ReturnsRange(int row, int minRange, int maxRange)
+    {
+        // Arrange
+        var data = "Sensor at x=2, y=18: closest beacon is at x=-2, y=15";
+        var sut = new Sensor(data);
+
+        // Act
+        (int min, int max) = sut.GetRange(row);
+
+        // Assert
+        Assert.Equal(minRange, min);
+        Assert.Equal(maxRange, max);
+    }
 }
