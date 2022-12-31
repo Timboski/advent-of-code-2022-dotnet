@@ -19,10 +19,7 @@ public class Sensor
 
         Position = new Point(numbers[0], numbers[1]);
         NearestBeaconPosition = new Point(numbers[2], numbers[3]);
-
-        var xDiff = Math.Abs(Position.X - NearestBeaconPosition.X);
-        var yDiff = Math.Abs(Position.Y - NearestBeaconPosition.Y);
-        _range = xDiff + yDiff;
+        _range = ManhattenDistance(numbers[2], numbers[3]);
     }
 
     public Point Position { get; }
@@ -37,5 +34,15 @@ public class Sensor
             => char.IsDigit(digit) || digit == '-';
 
         return int.Parse(string.Concat(data.TakeWhile(VaildInteger)));
+    }
+
+    public bool IsBeaconPossible(int x, int y) 
+        => ManhattenDistance(x, y) > _range;
+
+    private int ManhattenDistance(int x, int y)
+    {
+        var xDiff = Math.Abs(Position.X - x);
+        var yDiff = Math.Abs(Position.Y - y);
+        return xDiff + yDiff;
     }
 }
