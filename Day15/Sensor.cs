@@ -18,10 +18,13 @@ public class Sensor
         Position = new Point(numbers[0], numbers[1]);
     }
 
+    public Point Position { get; }
+
     private static int TakeLeadingInteger(string data)
     {
-        return int.Parse(string.Concat(data.TakeWhile(l => !",:".Contains(l))));
-    }
+        static bool VaildInteger(char digit) 
+            => char.IsDigit(digit) || digit == '-';
 
-    public Point Position { get; }
+        return int.Parse(string.Concat(data.TakeWhile(VaildInteger)));
+    }
 }
