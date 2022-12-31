@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace Day15Test;
 
 public class ScanTest
@@ -20,9 +22,9 @@ public class ScanTest
     }
 
     [Theory]
-    [InlineData("day15-example-input.txt", 20, 56000011)]
-    // [InlineData("day15-input.txt", 4000000, ??)]
-    public void GivenInputData_WhenFindOnlyPossiblePosition_ReturnsTuningFrequency(string filename, int maxScan, int expectedTuningFrequency)
+    [InlineData("day15-example-input.txt", 20, "56000011")]
+    [InlineData("day15-input.txt", 4000000, "13673971349056")]
+    public void GivenInputData_WhenFindOnlyPossiblePosition_ReturnsTuningFrequency(string filename, int maxScan, string expectedTuningFrequency)
     {
         // Arrange
         var sut = new Scan(filename);
@@ -31,6 +33,6 @@ public class ScanTest
         var tuningFrequency = sut.FindTuningFrequency(maxScan);
 
         // Assert
-        Assert.Equal(expectedTuningFrequency, tuningFrequency);
+        Assert.Equal(BigInteger.Parse(expectedTuningFrequency), tuningFrequency);
     }
 }
