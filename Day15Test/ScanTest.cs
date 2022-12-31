@@ -6,6 +6,7 @@ public class ScanTest
     [InlineData("day15-example-input.txt", 10, 26)]
     [InlineData("day15-example-input.txt", 9, 25)]
     [InlineData("day15-example-input.txt", 11, 28)]
+    [InlineData("day15-input.txt", 2000000, 5335787)]
     public void GivenInputData_WhenFindExcludedPositions_ReturnsExpectedNumberOfPositions(string filename, int row, int numPositions)
     {
         // Arrange
