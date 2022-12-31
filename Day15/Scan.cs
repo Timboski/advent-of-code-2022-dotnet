@@ -27,4 +27,20 @@ public class Scan
 
         return set;
     }
+
+    public int FindTuningFrequency(int maxScan)
+    {
+        for (int x = 0; x < maxScan; x++)
+        {
+            for (int y = 0; y < maxScan; y++)
+            {
+                if (!_sensors.Any(s => !s.IsBeaconPossible(x, y)))
+                {
+                    return checked((4000000 * x) + y);
+                }
+            }
+        }
+
+        throw new InvalidDataException("No beacon possible");
+    }
 }
