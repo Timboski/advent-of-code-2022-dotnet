@@ -25,4 +25,10 @@
     <ProjectReference Include="..\Day15\Day15.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="day15-example-input.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
