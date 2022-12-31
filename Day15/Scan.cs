@@ -1,4 +1,6 @@
-﻿namespace Day15;
+﻿using System.Numerics;
+
+namespace Day15;
 
 public class Scan
 {
@@ -28,11 +30,11 @@ public class Scan
         return set;
     }
 
-    public int FindTuningFrequency(int maxScan)
+    public BigInteger FindTuningFrequency(int maxScan)
     {
         for (int y = 0; y <= maxScan; y++)
             if (!IsRowComplete(y, maxScan, out int x))
-                return checked((4000000 * x) + y);
+                return (new BigInteger(x) * 4000000) + y;
 
         throw new InvalidDataException("No beacon possible");
     }
