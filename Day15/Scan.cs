@@ -30,25 +30,47 @@ public class Scan
 
     public int FindTuningFrequency(int maxScan)
     {
-        for (int y = 0; y < maxScan; y++)
-            if (IsRowComplete(y, maxScan, out int x))
+        for (int y = 0; y <= maxScan; y++)
+            if (!IsRowComplete(y, maxScan, out int x))
                 return checked((4000000 * x) + y);
 
         throw new InvalidDataException("No beacon possible");
     }
 
-    public bool IsRowComplete(int y, int maxScan, out int x)
+    private bool IsRowComplete(int y, int maxScan, out int x)
     {
-        x = 0;
-        for (var curr = 0; curr < maxScan; curr++)
+        var ranges = _sensors
+            .Select(s => s.GetRange(y))
+            .Select(r => TrimRange(r, maxScan))
+            .Where(NotEmptyRange)
+            .OrderBy(i => i.min);
+
+        int curr = 0;
+        foreach (var range in ranges)
         {
-            if (!_sensors.Any(s => !s.IsBeaconPossible(curr, y)))
+            if (range.min > curr)
             {
+                // Found a gap
                 x = curr;
-                return true;
+                return false;
             }
+
+            // Max could be smaller if fully enclosed.
+            curr = Math.Max(curr, range.max);
         }
 
-        return false;
+        // Check if we got to the end
+        x = curr;
+        return curr > maxScan;
     }
+
+    static (int min, int max) TrimRange((int, int) input, int maxRange)
+    {
+        int min = Math.Max(input.Item1, 0);
+        int max = Math.Min(input.Item2, maxRange + 1);
+        return (min, max);
+    }
+
+    static bool NotEmptyRange((int, int) input)
+        => input.Item2 > input.Item1;
 }
