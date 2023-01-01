@@ -38,8 +38,8 @@ public class VolcanoMazeTest
         var sut = new VolcanoMaze(filename);
 
         // Assert
-        foreach (var valve in expectedValves)
-            Assert.Equal(valve.Pressure, sut.GetPressure(valve.Valve));
+        foreach (var (valve, pressure) in expectedValves)
+            Assert.Equal(pressure, sut.GetPressure(valve));
     }
 
     [Fact]
@@ -64,7 +64,7 @@ public class VolcanoMazeTest
         var sut = new VolcanoMaze(filename);
 
         // Assert
-        foreach (var valve in expectedValves)
-            Assert.Equal(valve.Paths, sut.GetPaths(valve.Valve));
+        foreach (var (valve, paths) in expectedValves)
+            Assert.Equal(paths, sut.GetPaths(valve));
     }
 }
