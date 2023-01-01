@@ -38,7 +38,33 @@ public class VolcanoMazeTest
         var sut = new VolcanoMaze(filename);
 
         // Assert
-        foreach (var valve in expectedValves )
+        foreach (var valve in expectedValves)
             Assert.Equal(valve.Pressure, sut.GetPressure(valve.Valve));
+    }
+
+    [Fact]
+    public void GivenInputFile_WhenCreateVolcanoMaze_PathsToOtherValvesAreListed()
+    {
+        // Arrange
+        var filename = "day16-example-input.txt";
+        var expectedValves = new (string Valve, string[] Paths)[] {
+                ("AA", new [] { "DD", "II", "BB" }),
+                ("BB", new [] { "CC", "AA" }),
+                ("CC", new [] { "DD", "BB" }),
+                ("DD", new [] { "CC", "AA", "EE" }),
+                ("EE", new [] { "FF", "DD" }),
+                ("FF", new [] { "EE", "GG" }),
+                ("GG", new [] { "FF", "HH" }),
+                ("HH", new [] { "GG" }),
+                ("II", new [] { "AA", "JJ" }),
+                ("JJ", new [] { "II" })
+            };
+
+        // Act
+        var sut = new VolcanoMaze(filename);
+
+        // Assert
+        foreach (var valve in expectedValves)
+            Assert.Equal(valve.Paths, sut.GetPaths(valve.Valve));
     }
 }
