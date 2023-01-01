@@ -78,9 +78,54 @@ public class VolcanoMazeTest
         var sut = new VolcanoMaze(filename);
 
         // Act
-        var nextStates = sut.FindNextStates(currentState);
+        var nextStates = sut.FindNextStates(currentState, 0, 30);
 
         // Assert
-        Assert.Equal(expectedNextStates, nextStates);
+        Assert.Equal(expectedNextStates, nextStates.Select(a => a.State));
+    }
+
+    [Fact]
+    public void GivenVolcanoMazeAfterMoves_WhenFindNextStatesOnPreviouslyVisitedValveByWorsePath_ReturnsEmptyList()
+    {
+        // Arrange
+        var filename = "day16-example-input.txt";
+        var sut = new VolcanoMaze(filename);
+        _ = sut.FindNextStates("AA", 20, 30).ToList();
+
+        // Act
+        var nextStates = sut.FindNextStates("AA", 10, 30);
+
+        // Assert
+        Assert.Empty(nextStates);
+    }
+
+    [Fact]
+    public void GivenVolcanoMazeAfterMoves_WhenFindNextStatesOnPreviouslyVisitedValveByEqualPath_ReturnsEmptyList()
+    {
+        // Arrange
+        var filename = "day16-example-input.txt";
+        var sut = new VolcanoMaze(filename);
+        _ = sut.FindNextStates("AA", 20, 30).ToList();
+
+        // Act
+        var nextStates = sut.FindNextStates("AA", 20, 30);
+
+        // Assert
+        Assert.Empty(nextStates);
+    }
+
+    [Fact]
+    public void GivenVolcanoMazeAfterMoves_WhenFindNextStatesOnPreviouslyVisitedValveByBetterPath_ReturnsEmptyList()
+    {
+        // Arrange
+        var filename = "day16-example-input.txt";
+        var sut = new VolcanoMaze(filename);
+        _ = sut.FindNextStates("AA", 20, 30).ToList();
+
+        // Act
+        var nextStates = sut.FindNextStates("AA", 21, 30);
+
+        // Assert
+        Assert.NotEmpty(nextStates);
     }
 }

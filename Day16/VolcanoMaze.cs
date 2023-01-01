@@ -20,6 +20,7 @@ public class VolcanoMaze
     }
 
     private readonly Dictionary<string, Valve> _valves;
+    private readonly Dictionary<string, int> _visitedStates = new();
 
     public VolcanoMaze(string filename)
     {
@@ -37,8 +38,10 @@ public class VolcanoMaze
 
     public IEnumerable<string> GetPaths(string valve) => _valves[valve].Paths;
 
-    public IEnumerable<string> FindNextStates(string currentState)
+    public IEnumerable<(string State, int Pressure)> FindNextStates(string currentState, int releasedPressure, int timeRemaining)
     {
+        if (!TestAndAdd(currentState, releasedPressure)) yield break;
+
         var valve = currentState[0..2];
         var openValveStr = currentState[2..^0];
 
@@ -47,13 +50,28 @@ public class VolcanoMaze
         {
             // Open the Valve
             openValves.Add(valve);
-            yield return valve + string.Concat(openValves.Order());
+            var openedState = valve + string.Concat(openValves.Order());
+
+            // Compute released pressure
+            var newPressure = checked((_valves[valve].Pressure * timeRemaining) + releasedPressure);
+            yield return (openedState, newPressure);
         }
 
         // Move down paths
         foreach (var nextValve in _valves[valve].Paths)
         {
-            yield return nextValve + openValveStr;
+            yield return (nextValve + openValveStr, releasedPressure);
         }
+    }
+
+    private bool TestAndAdd(string state, int pressure)
+    {
+        // Check is already visited with a preferable route
+        if (_visitedStates.TryGetValue(state, out int value) &&
+            value >= pressure) return false;
+
+        // We have a better route. Store it.
+        _visitedStates[state] = pressure;
+        return true;
     }
 }
