@@ -67,4 +67,20 @@ public class VolcanoMazeTest
         foreach (var (valve, paths) in expectedValves)
             Assert.Equal(paths, sut.GetPaths(valve));
     }
+
+    [Fact]
+    public void GivenVolcanoMazeAndCurrentState_WhenFindNextStates_ReturnsListOfPossibleMoves()
+    {
+        // Arrange
+        var filename = "day16-example-input.txt";
+        var sut = new VolcanoMaze(filename);
+        var currentState = "AA";
+        var expectedNextStates = new[] { "AAAA", "DD", "II", "BB" };
+
+        // Act
+        var nextStates = sut.FindNextStates(currentState);
+
+        // Assert
+        Assert.Equal(expectedNextStates, nextStates);
+    }
 }

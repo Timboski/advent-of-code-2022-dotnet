@@ -36,4 +36,24 @@ public class VolcanoMaze
     public int GetPressure(string valve) => _valves[valve].Pressure;
 
     public IEnumerable<string> GetPaths(string valve) => _valves[valve].Paths;
+
+    public IEnumerable<string> FindNextStates(string currentState)
+    {
+        var valve = currentState[0..2];
+        var openValveStr = currentState[2..^0];
+
+        var openValves = openValveStr.Chunk(2).Select(l => string.Concat(l)).ToList();
+        if (!openValves.Contains(valve))
+        {
+            // Open the Valve
+            openValves.Add(valve);
+            yield return valve + string.Concat(openValves.Order());
+        }
+
+        // Move down paths
+        foreach (var nextValve in _valves[valve].Paths)
+        {
+            yield return nextValve + openValveStr;
+        }
+    }
 }
