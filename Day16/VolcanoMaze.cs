@@ -43,7 +43,7 @@ public class VolcanoMaze
         var openValveStr = currentState[2..^0];
 
         var openValves = openValveStr.Chunk(2).Select(l => string.Concat(l)).ToList();
-        if (!openValves.Contains(valve))
+        if (_valves[valve].Pressure > 0 && !openValves.Contains(valve))
         {
             // Open the Valve
             openValves.Add(valve);

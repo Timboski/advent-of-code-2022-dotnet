@@ -68,14 +68,14 @@ public class VolcanoMazeTest
             Assert.Equal(paths, sut.GetPaths(valve));
     }
 
-    [Fact]
-    public void GivenVolcanoMazeAndCurrentState_WhenFindNextStates_ReturnsListOfPossibleMoves()
+    [Theory]
+    [InlineData("BB", "BBBB", "CC", "AA")] // Open or move
+    [InlineData("AA", "DD", "II", "BB")] // Do not open zero pressure valves
+    public void GivenVolcanoMazeAndCurrentState_WhenFindNextStates_ReturnsListOfPossibleMoves(string currentState, params string[] expectedNextStates)
     {
         // Arrange
         var filename = "day16-example-input.txt";
         var sut = new VolcanoMaze(filename);
-        var currentState = "AA";
-        var expectedNextStates = new[] { "AAAA", "DD", "II", "BB" };
 
         // Act
         var nextStates = sut.FindNextStates(currentState);
