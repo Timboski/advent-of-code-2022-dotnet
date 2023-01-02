@@ -53,14 +53,27 @@ public class VolcanoMaze
 
     public IEnumerable<(string State, int Pressure)> FindNextStates(string currentState, int releasedPressure, int timeRemaining)
     {
-        if (!TestAndAdd(currentState, releasedPressure)) return Array.Empty<(string State, int Pressure)>();
+        var nextStates = new List<(string State, int Pressure)>();
+        if (!TestAndAdd(currentState, releasedPressure)) return nextStates;
         if (!_withElephant) return FindNextStatesOneMover(currentState, releasedPressure, timeRemaining).ToList();
 
         // We have an elephant.
-        var elephantState = currentState[2..^0];
-        var nextElephantStates = FindNextStatesOneMover(elephantState, releasedPressure, timeRemaining);
+        var currentValves = currentState[2..^0];
+        var nextElephantStates = FindNextStatesOneMover(currentValves, releasedPressure, timeRemaining);
 
-        throw new NotImplementedException();
+        var ourPosition = currentState[0..2];
+        foreach (var elephantState in nextElephantStates)
+        {
+            // Move ourself (taking into account the elephants move)
+            var newElephantPosition = elephantState.State[0..2];
+            var valvesAfterElephant = elephantState.State[2..^0];
+            var ourStartState = ourPosition + valvesAfterElephant;
+
+            var ourNextStates = FindNextStatesOneMover(ourStartState, elephantState.Pressure, timeRemaining);
+            nextStates.AddRange(ourNextStates.Select(s=>(newElephantPosition + s.State, s.Pressure)));
+        }
+
+        return nextStates; // TODO: Sort positions and make unique.
     }
 
     private IEnumerable<(string State, int Pressure)> FindNextStatesOneMover(string currentState, int releasedPressure, int timeRemaining)
