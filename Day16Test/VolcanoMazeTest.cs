@@ -128,4 +128,21 @@ public class VolcanoMazeTest
         // Assert
         Assert.NotEmpty(nextStates);
     }
+
+    [Theory]
+    [InlineData("IIII", "AAAA", "AAJJ", "JJJJ")] // Do not open zero pressure valves
+    [InlineData("BBBB", "BBCCBB", "AABBBB", "CCCC", "AAAA", "AACC")] // Open or move (can't both open same valve)
+    [InlineData("BBHH", "BBGGBB", "CCGG", "AAGG", "AAHHHH", "CCHHHH", "BBHHBBHH")] // 2x Open or move spearately
+    public void GivenVolcanoMazeWithElephantAndCurrentState_WhenFindNextStates_ReturnsListOfPossibleMoves(string currentState, params string[] expectedNextStates)
+    {
+        // Arrange
+        var filename = "day16-example-input.txt";
+        var sut = new VolcanoMaze(filename, Elephant.WithElephant);
+
+        // Act
+        var nextStates = sut.FindNextStates(currentState, 0, 30);
+
+        // Assert
+        Assert.Equal(expectedNextStates, nextStates.Select(a => a.State));
+    }
 }

@@ -1,5 +1,7 @@
 ﻿namespace Day16;
 
+public enum Elephant { WithElephant };
+
 public class VolcanoMaze
 {
     /// <example>
@@ -20,9 +22,18 @@ public class VolcanoMaze
     }
 
     private readonly Dictionary<string, Valve> _valves;
+    private readonly bool _withElephant;
     private readonly Dictionary<string, int> _visitedStates = new();
 
-    public VolcanoMaze(string filename)
+    public VolcanoMaze(string filename) : this(filename, withElephant: false)
+    {
+    }
+
+    public VolcanoMaze(string filename, Elephant _) : this(filename, withElephant: true)
+    {
+    }
+
+    private VolcanoMaze(string filename, bool withElephant)
     {
         static Valve CreateValve(string data) => new(data);
 
@@ -30,6 +41,8 @@ public class VolcanoMaze
             .ReadAllLines(filename)
             .Select(CreateValve)
             .ToDictionary(v => v.Name, v => v);
+
+        _withElephant = withElephant;
     }
 
     public string Valves => string.Concat(_valves.Keys.Order());
@@ -40,8 +53,18 @@ public class VolcanoMaze
 
     public IEnumerable<(string State, int Pressure)> FindNextStates(string currentState, int releasedPressure, int timeRemaining)
     {
-        if (!TestAndAdd(currentState, releasedPressure)) yield break;
+        if (!TestAndAdd(currentState, releasedPressure)) return Array.Empty<(string State, int Pressure)>();
+        if (!_withElephant) return FindNextStatesOneMover(currentState, releasedPressure, timeRemaining).ToList();
 
+        // We have an elephant.
+        var elephantState = currentState[2..^0];
+        var nextElephantStates = FindNextStatesOneMover(elephantState, releasedPressure, timeRemaining);
+
+        throw new NotImplementedException();
+    }
+
+    private IEnumerable<(string State, int Pressure)> FindNextStatesOneMover(string currentState, int releasedPressure, int timeRemaining)
+    {
         var valve = currentState[0..2];
         var openValveStr = currentState[2..^0];
 

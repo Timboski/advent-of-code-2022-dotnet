@@ -16,4 +16,20 @@ public class VolcanoPathFinderTest
         // Assert
         Assert.Equal(expectedResult, pressure);
     }
+
+    [Theory]
+    [InlineData("day16-example-input.txt", 1707)]
+    //[InlineData("day16-input.txt", ??)]
+    public void GivenVolcanoPathFinderWithElephant_WhenMaximisePressure_ReturnsMostPressureReleased(string filename, int expectedResult)
+    {
+        // Arrange
+        const int Elephants = 1;
+        var sut = new VolcanoPathFinder(filename, Elephant.WithElephant);
+
+        // Act
+        var pressure = sut.MaximisePressure();
+
+        // Assert
+        Assert.Equal(expectedResult, pressure);
+    }
 }
