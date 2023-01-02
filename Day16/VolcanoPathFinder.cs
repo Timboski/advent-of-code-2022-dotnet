@@ -6,6 +6,7 @@ public class VolcanoPathFinder
     private Queue<(string State, int Pressure)> _states = new();
     private Queue<(string State, int Pressure)> _nextStates = new();
     private readonly int _initialTimeRemaining;
+    private int _maxPressure = 0;
 
     public VolcanoPathFinder(string filename)
     {
@@ -31,15 +32,23 @@ public class VolcanoPathFinder
             (_nextStates, _states) = (_states, _nextStates);
         }
 
-        return _states.Select(state => state.Pressure).Max();
+        return _maxPressure;
     }
 
     private void ProcessQueue(int timeRemaining)
     {
         while (_states.TryDequeue(out var state)) 
         {
+            // Find states
             var nextStates = _volcano.FindNextStates(state.State, state.Pressure, timeRemaining);
-            foreach (var newState in nextStates) _nextStates.Enqueue(newState);
+            if (nextStates.Any())
+            {
+                // Keep track of highest pressure released
+                _maxPressure = Math.Max(_maxPressure, nextStates.Select(state => state.Pressure).Max());
+
+                // Queue up the remaining states
+                foreach (var newState in nextStates) _nextStates.Enqueue(newState);
+            }
         }
     }
 }
