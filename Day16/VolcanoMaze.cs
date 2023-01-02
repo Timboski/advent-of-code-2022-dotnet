@@ -70,10 +70,17 @@ public class VolcanoMaze
             var ourStartState = ourPosition + valvesAfterElephant;
 
             var ourNextStates = FindNextStatesOneMover(ourStartState, elephantState.Pressure, timeRemaining);
-            nextStates.AddRange(ourNextStates.Select(s=>(newElephantPosition + s.State, s.Pressure)));
+            nextStates.AddRange(ourNextStates.Select(s => CombinePositions(s, newElephantPosition)));
         }
 
-        return nextStates; // TODO: Sort positions and make unique.
+        return nextStates.DistinctBy(s => s.State);
+    }
+
+    private static (string State, int Pressure) CombinePositions((string State, int Pressure) ourState, string elephantPosition)
+    {
+        var ourPosition = ourState.State[0..2];
+        var positions = string.Concat(new[] { ourPosition, elephantPosition }.Order());
+        return (positions + ourState.State[2..^0], ourState.Pressure);
     }
 
     private IEnumerable<(string State, int Pressure)> FindNextStatesOneMover(string currentState, int releasedPressure, int timeRemaining)

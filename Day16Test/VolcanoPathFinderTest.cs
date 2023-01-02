@@ -23,7 +23,6 @@ public class VolcanoPathFinderTest
     public void GivenVolcanoPathFinderWithElephant_WhenMaximisePressure_ReturnsMostPressureReleased(string filename, int expectedResult)
     {
         // Arrange
-        const int Elephants = 1;
         var sut = new VolcanoPathFinder(filename, Elephant.WithElephant);
 
         // Act

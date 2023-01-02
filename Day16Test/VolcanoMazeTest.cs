@@ -143,6 +143,6 @@ public class VolcanoMazeTest
         var nextStates = sut.FindNextStates(currentState, 0, 30);
 
         // Assert
-        Assert.Equal(expectedNextStates, nextStates.Select(a => a.State));
+        Assert.Equal(expectedNextStates.Order(), nextStates.Select(a => a.State).Order());
     }
 }
