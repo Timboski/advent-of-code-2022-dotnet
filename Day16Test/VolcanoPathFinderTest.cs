@@ -19,7 +19,7 @@ public class VolcanoPathFinderTest
 
     [Theory]
     [InlineData("day16-example-input.txt", 1707)]
-    //[InlineData("day16-input.txt", ??)]
+    [InlineData("day16-input.txt", 2191, Skip = "Too Slow")]
     public void GivenVolcanoPathFinderWithElephant_WhenMaximisePressure_ReturnsMostPressureReleased(string filename, int expectedResult)
     {
         // Arrange
