@@ -3,11 +3,10 @@
 public class HorizontalShape
 {
 	private int _left = 3;
-	private int _bottomPos = -1; // Invalid position
+	private int _bottomPos;
 
-	public HorizontalShape()
-	{
-	}
+    public HorizontalShape(int bottomPosition) 
+		=> _bottomPos = bottomPosition;
 
     public int Bottom => _bottomPos;
     public int Top => _bottomPos + 1;
@@ -20,6 +19,4 @@ public class HorizontalShape
 			new string(rockPixel, 4) +
 			background[(_left + 4)..^0];
 	}
-
-    public void SetBottomPos(int pos) => _bottomPos = pos;
 }

@@ -3,10 +3,10 @@ namespace Day17Test;
 public class ChamberTest
 {
     [Fact]
-    public void GivenInitialShape_WhenCreateChamber_ShowsExpectedRepresentation()
+    public void GivenShapeFactory_WhenCreateChamber_ShowsExpectedRepresentation()
     {
         // Arrange
-        var initialShape = new HorizontalShape();
+        var shapeFactory = new ShapeFactory();
         var expectedChamber = """
             |..@@@@.|
             |.......|
@@ -16,7 +16,7 @@ public class ChamberTest
             """;
 
         // Act
-        var sut = new Chamber(initialShape);
+        var sut = new Chamber(shapeFactory);
 
         // Assert
         Assert.Equal(expectedChamber, sut.ToString());

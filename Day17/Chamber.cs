@@ -2,13 +2,14 @@
 
 public class Chamber
 {
+    private readonly ShapeFactory _shapeFactory;
     private HorizontalShape _shape;
     private int _top = 1;
 
-    public Chamber(HorizontalShape horizontalShape)
+    public Chamber(ShapeFactory shapeFactory)
     {
-        _shape = horizontalShape;
-        _shape.SetBottomPos(_top + 3);
+        _shapeFactory = shapeFactory;
+        _shape = _shapeFactory.Create(_top + 3);
     }
 
     public override string ToString() 
