@@ -3,16 +3,22 @@ namespace Day17Test;
 public class ChamberTest
 {
     [Fact]
-    public void GivenChamber_WhenConvertToString_ShowsEmptyChamber()
+    public void GivenInitialShape_WhenCreateChamber_ShowsExpectedRepresentation()
     {
         // Arrange
-        var expectedChamber = "+-------+";
-        var sut = new Chamber();
+        var initialShape = new HorizontalShape();
+        var expectedChamber = """
+            |..@@@@.|
+            |.......|
+            |.......|
+            |.......|
+            +-------+
+            """;
 
         // Act
-        var chamber = sut.ToString();
+        var sut = new Chamber(initialShape);
 
         // Assert
-        Assert.Equal(expectedChamber, chamber);
+        Assert.Equal(expectedChamber, sut.ToString());
     }
 }
