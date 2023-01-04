@@ -18,17 +18,27 @@ public class Chamber
 
     public int Top => Math.Max(_top, _shape.Top);
 
-    private string GetLine(int pos)
-	{
-		if (pos == 0) return "+-------+";
+    public void MoveRightIfClear()
+    {
+        var bottom = _shape.Bottom;
+        var pos = _shape.Left + 1;
+        var backgroundLines = GetBackgroundLines(bottom, _shape.Height);
 
-        const string EmptyLine = "|.......|";
-        return _shape?.GetLine(pos, EmptyLine) ?? EmptyLine;
+        bool isCollision = _shape.IsCollision(pos, backgroundLines);
+        if (!isCollision) _shape.MoveRight();
     }
 
-    public void MoveRightIfClear() 
-        => _shape.MoveRight();
-
-    public void TryMoveDown() 
+    public void TryMoveDown()
         => _shape.MoveDown();
+
+    private string GetLine(int pos) 
+        => _shape.GetLine(pos, GetBackgroundLine(pos));
+
+    private string GetBackgroundLine(int pos) 
+        => pos == 0 ? "+-------+" : "|.......|";
+
+    private string[] GetBackgroundLines(int bottom, int numLines) 
+        => Enumerable.Range(bottom, numLines)
+            .Select(GetBackgroundLine)
+            .ToArray();
 }

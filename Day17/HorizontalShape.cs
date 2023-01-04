@@ -11,7 +11,10 @@ public class HorizontalShape
     public int Bottom => _bottomPos;
     public int Top => _bottomPos + 1;
 
-	public string GetLine(int pos, string background, char rockPixel='@')
+    public int Left => _left;
+    public int Height => 1;
+
+    public string GetLine(int pos, string background, char rockPixel='@')
 	{
 		if (pos != Bottom) return background;
 
@@ -23,4 +26,11 @@ public class HorizontalShape
     public void MoveRight() => _left++;
 
     public void MoveDown() => _bottomPos--;
+
+    public bool IsCollision(int pos, IEnumerable<string> background) 
+        => background
+            .First()
+            .Skip(pos)
+            .Take(4)
+            .Any(a => a != '.');
 }
