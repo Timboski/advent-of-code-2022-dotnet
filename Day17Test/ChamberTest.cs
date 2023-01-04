@@ -136,4 +136,69 @@ public class ChamberTest
         // Assert
         Assert.Equal(expectedChamber, sut.ToString());
     }
+
+    [Fact]
+    public void GivenChamber_WhenTryMoveDown_ReturnsTrue()
+    {
+        // Arrange
+        var shapeFactory = new ShapeFactory();
+        var sut = new Chamber(shapeFactory);
+        sut.MoveRightIfClear();
+
+        // Act
+        var success = sut.TryMoveDown();
+
+        // Assert
+        Assert.True(success);
+    }
+
+    [Fact]
+    public void GivenChamberWithShapeBlockedBelow_WhenTryMoveDown_ReturnsFalse()
+    {
+        // Arrange
+        var shapeFactory = new ShapeFactory();
+        var sut = new Chamber(shapeFactory);
+        sut.MoveRightIfClear();
+        sut.TryMoveDown();
+        sut.MoveRightIfClear();
+        sut.TryMoveDown();
+        sut.MoveRightIfClear();
+        sut.TryMoveDown();
+        sut.MoveLeftIfClear();
+        var expectedChamber = """
+            |..@@@@.|
+            +-------+
+            """;
+
+        // Act
+        var success = sut.TryMoveDown();
+
+        // Assert
+        Assert.False(success);
+    }
+
+    [Fact]
+    public void GivenChamberWithShapeBlockedBelow_WhenTryMoveDown_ShapeDoesNotMove()
+    {
+        // Arrange
+        var shapeFactory = new ShapeFactory();
+        var sut = new Chamber(shapeFactory);
+        sut.MoveRightIfClear();
+        sut.TryMoveDown();
+        sut.MoveRightIfClear();
+        sut.TryMoveDown();
+        sut.MoveRightIfClear();
+        sut.TryMoveDown();
+        sut.MoveLeftIfClear();
+        var expectedChamber = """
+            |..@@@@.|
+            +-------+
+            """;
+
+        // Act
+        sut.TryMoveDown();
+
+        // Assert
+        Assert.Equal(expectedChamber, sut.ToString());
+    }
 }

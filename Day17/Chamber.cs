@@ -30,8 +30,12 @@ public class Chamber
             _shape.MoveLeft();
     }
 
-    public void TryMoveDown()
-        => _shape.MoveDown();
+    public bool TryMoveDown()
+    {
+        var canMove = !IsCollision(_shape.Bottom - 1, _shape.Left);
+        if (canMove) _shape.MoveDown();
+        return canMove;
+    }
 
     private bool IsCollision(int bottom, int pos)
     {
