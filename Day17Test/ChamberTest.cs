@@ -42,4 +42,25 @@ public class ChamberTest
         // Assert
         Assert.Equal(expectedChamber, sut.ToString());
     }
+
+    [Fact]
+    public void GivenChamber_WhenTryMoveDown_ShapeMovesDown()
+    {
+        // Arrange
+        var shapeFactory = new ShapeFactory();
+        var sut = new Chamber(shapeFactory);
+        sut.MoveRightIfClear();
+        var expectedChamber = """
+            |...@@@@|
+            |.......|
+            |.......|
+            +-------+
+            """;
+
+        // Act
+        sut.TryMoveDown();
+
+        // Assert
+        Assert.Equal(expectedChamber, sut.ToString());
+    }
 }

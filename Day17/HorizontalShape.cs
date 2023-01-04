@@ -21,4 +21,6 @@ public class HorizontalShape
 	}
 
     public void MoveRight() => _left++;
+
+    public void MoveDown() => _bottomPos--;
 }
