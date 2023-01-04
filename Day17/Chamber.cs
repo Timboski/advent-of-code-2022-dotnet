@@ -25,4 +25,9 @@ public class Chamber
         const string EmptyLine = "|.......|";
         return _shape?.GetLine(pos, EmptyLine) ?? EmptyLine;
     }
+
+    public void MoveRightIfClear()
+    {
+        _shape.MoveRight();
+    }
 }

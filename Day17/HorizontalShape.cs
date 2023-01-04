@@ -19,4 +19,6 @@ public class HorizontalShape
 			new string(rockPixel, 4) +
 			background[(_left + 4)..^0];
 	}
+
+    public void MoveRight() => _left++;
 }
