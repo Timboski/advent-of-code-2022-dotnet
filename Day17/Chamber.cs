@@ -28,6 +28,16 @@ public class Chamber
         if (!isCollision) _shape.MoveRight();
     }
 
+    public void MoveLeftIfClear()
+    {
+        var bottom = _shape.Bottom;
+        var pos = _shape.Left - 1;
+        var backgroundLines = GetBackgroundLines(bottom, _shape.Height);
+
+        bool isCollision = _shape.IsCollision(pos, backgroundLines);
+        if (!isCollision) _shape.MoveLeft();
+    }
+
     public void TryMoveDown()
         => _shape.MoveDown();
 

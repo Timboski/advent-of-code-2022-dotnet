@@ -25,6 +25,8 @@ public class HorizontalShape
 
     public void MoveRight() => _left++;
 
+    public void MoveLeft() => _left--;
+
     public void MoveDown() => _bottomPos--;
 
     public bool IsCollision(int pos, IEnumerable<string> background) 
