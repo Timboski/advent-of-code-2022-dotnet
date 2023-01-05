@@ -139,7 +139,7 @@ public class ChamberSimulationTest
                     |..####.|
                     +-------+
                     """)]
-    public void GivenSimulationTest_WhenDropBlock_ShowsExpectedRepresentation(int numBlocks, string expectedChamber)
+    public void GivenChamberSimulation_WhenDropBlocks_ShowsExpectedRepresentation(int numBlocks, string expectedChamber)
     {
         // Arrange
         var filename = "day17-example-input.txt";
@@ -153,5 +153,21 @@ public class ChamberSimulationTest
         // Assert
         _output.WriteLine(sut.ToString());
         Assert.Equal(expectedChamber, sut.ToString());
+    }
+
+    [Theory]
+    [InlineData("day17-example-input.txt", 3068)]
+    public void GivenChamberSimulationForFile_WhenDropBlocks_TowerHeightIsAsExpected(string filename, int expectedHeight)
+    {
+        // Arrange
+        var shapeFactory = new ShapeFactory();
+        var jetDirectionFactory = new JetDirectionFactory(filename);
+        var sut = new ChamberSimulation(shapeFactory, jetDirectionFactory);
+
+        // Act
+        sut.DropRocks(2022);
+
+        // Assert
+        Assert.Equal(expectedHeight, sut.Height);
     }
 }
