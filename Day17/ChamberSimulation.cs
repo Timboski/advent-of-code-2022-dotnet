@@ -13,6 +13,8 @@ public class ChamberSimulation
 
     public void DropRock()
     {
+        _chamber.AddRock();
+
         while (true)
         {
             switch (_jetDirectionFactory.NextJetDirection())

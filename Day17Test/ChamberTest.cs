@@ -3,15 +3,11 @@ namespace Day17Test;
 public class ChamberTest
 {
     [Fact]
-    public void GivenShapeFactory_WhenCreateChamber_ShowsExpectedRepresentation()
+    public void GivenShapeFactory_WhenCreateChamber_ShowsEmptyChamber()
     {
         // Arrange
         var shapeFactory = new ShapeFactory();
         var expectedChamber = """
-            |..@@@@.|
-            |.......|
-            |.......|
-            |.......|
             +-------+
             """;
 
@@ -23,11 +19,33 @@ public class ChamberTest
     }
 
     [Fact]
+    public void GivenEmptyChamber_WhenAddRock_ShowsExpectedRepresentation()
+    {
+        // Arrange
+        var shapeFactory = new ShapeFactory();
+        var sut = new Chamber(shapeFactory);
+        var expectedChamber = """
+            |..@@@@.|
+            |.......|
+            |.......|
+            |.......|
+            +-------+
+            """;
+
+        // Act
+        sut.AddRock();
+
+        // Assert
+        Assert.Equal(expectedChamber, sut.ToString());
+    }
+
+    [Fact]
     public void GivenInitialChamber_WhenMoveRightIfClear_ShapeMovesRight()
     {
         // Arrange
         var shapeFactory = new ShapeFactory();
         var sut = new Chamber(shapeFactory);
+        sut.AddRock();
         var expectedChamber = """
             |...@@@@|
             |.......|
@@ -49,6 +67,7 @@ public class ChamberTest
         // Arrange
         var shapeFactory = new ShapeFactory();
         var sut = new Chamber(shapeFactory);
+        sut.AddRock();
         sut.MoveRightIfClear();
         var expectedChamber = """
             |...@@@@|
@@ -70,6 +89,7 @@ public class ChamberTest
         // Arrange
         var shapeFactory = new ShapeFactory();
         var sut = new Chamber(shapeFactory);
+        sut.AddRock();
         sut.MoveRightIfClear();
         sut.TryMoveDown();
         var expectedChamber = """
@@ -92,6 +112,7 @@ public class ChamberTest
         // Arrange
         var shapeFactory = new ShapeFactory();
         var sut = new Chamber(shapeFactory);
+        sut.AddRock();
         sut.MoveRightIfClear();
         sut.TryMoveDown();
         sut.MoveRightIfClear();
@@ -116,6 +137,7 @@ public class ChamberTest
         // Arrange
         var shapeFactory = new ShapeFactory();
         var sut = new Chamber(shapeFactory);
+        sut.AddRock();
         sut.MoveRightIfClear();
         sut.TryMoveDown();
         sut.MoveRightIfClear();
@@ -143,6 +165,7 @@ public class ChamberTest
         // Arrange
         var shapeFactory = new ShapeFactory();
         var sut = new Chamber(shapeFactory);
+        sut.AddRock();
         sut.MoveRightIfClear();
 
         // Act
@@ -158,6 +181,7 @@ public class ChamberTest
         // Arrange
         var shapeFactory = new ShapeFactory();
         var sut = new Chamber(shapeFactory);
+        sut.AddRock();
         sut.MoveRightIfClear();
         sut.TryMoveDown();
         sut.MoveRightIfClear();
@@ -179,6 +203,7 @@ public class ChamberTest
         // Arrange
         var shapeFactory = new ShapeFactory();
         var sut = new Chamber(shapeFactory);
+        sut.AddRock();
         sut.MoveRightIfClear();
         sut.TryMoveDown();
         sut.MoveRightIfClear();
@@ -204,6 +229,7 @@ public class ChamberTest
         // Arrange
         var shapeFactory = new ShapeFactory();
         var sut = new Chamber(shapeFactory);
+        sut.AddRock();
         sut.MoveRightIfClear();
         sut.TryMoveDown();
         sut.MoveRightIfClear();

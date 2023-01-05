@@ -11,7 +11,7 @@ public class Chamber
     public Chamber(ShapeFactory shapeFactory)
     {
         _shapeFactory = shapeFactory;
-        _shape = _shapeFactory.Create(_top + 3);
+        _shape = _nullShape;
         _lines[0] = "+-------+";
     }
 
@@ -20,6 +20,9 @@ public class Chamber
             Enumerable.Range(0, Top).Reverse().Select(GetLine));
 
     public int Top => Math.Max(_top, _shape.Top);
+
+    public void AddRock() 
+        => _shape = _shapeFactory.Create(_top + 3);
 
     public void MoveRightIfClear()
     {
