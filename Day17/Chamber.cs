@@ -3,7 +3,7 @@
 public class Chamber
 {
     private readonly ShapeFactory _shapeFactory;
-    private readonly Dictionary<long, string> _lines = new();
+    private readonly SortedDictionary<long, string> _lines = new();
     private readonly IRockShape _nullShape = new NullRock();
     private IRockShape _shape;
     private long _top = 1;
@@ -51,9 +51,22 @@ public class Chamber
         for (long i = _shape.Bottom; i < _shape.Top; i++)
         {
             _lines[i] = _shape.GetLine(i, GetBackgroundLine(i), '#');
+
+            if (_lines[i] == "|#######|") ClearLines(i);
+
         }
         _top = Top;
         _shape = _nullShape;
+    }
+
+    private void ClearLines(long blockingLineIndex)
+    {
+        while (true)
+        {
+            var min = _lines.First().Key;
+            if (min >= blockingLineIndex) return;
+            _lines.Remove(min);
+        }
     }
 
     private bool IsCollision(long bottom, int pos)
