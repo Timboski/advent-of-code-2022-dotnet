@@ -22,7 +22,11 @@ public class ChamberSimulation
                 default: throw new InvalidOperationException();
             }
 
-            if (!_chamber.TryMoveDown()) return;
+            if (!_chamber.TryMoveDown())
+            {
+                _chamber.RestShape();
+                return;
+            }
         }
     }
 
