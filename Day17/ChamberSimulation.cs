@@ -2,14 +2,19 @@
 
 public class ChamberSimulation
 {
-    public readonly Chamber _chamber;
-    public readonly JetDirectionFactory _jetDirectionFactory;
+    private readonly Chamber _chamber;
+    private readonly JetDirectionFactory _jetDirectionFactory;
+    private readonly Dictionary<char, Action> _decodeJet;
 
     public ChamberSimulation(ShapeFactory shapeFactory, JetDirectionFactory jetDirectionFactory)
 	{
         _chamber =  new Chamber(shapeFactory);
         _jetDirectionFactory = jetDirectionFactory;
-	}
+
+        _decodeJet = new() {
+            { '<', _chamber.MoveLeftIfClear},
+            { '>', _chamber.MoveRightIfClear}};
+    }
 
     public void DropRock()
     {
@@ -17,20 +22,15 @@ public class ChamberSimulation
 
         while (true)
         {
-            switch (_jetDirectionFactory.NextJetDirection())
-            {
-                case '<': _chamber.MoveLeftIfClear(); break;
-                case '>': _chamber.MoveRightIfClear(); break;
-                default: throw new InvalidOperationException();
-            }
-
-            if (!_chamber.TryMoveDown())
-            {
-                _chamber.RestShape();
-                return;
-            }
+            MoveRockForJet();
+            if (!_chamber.TryMoveDown()) break;
         }
+
+        _chamber.RestShape();
     }
+
+    private void MoveRockForJet() 
+        => _decodeJet[_jetDirectionFactory.NextJetDirection()].Invoke();
 
     public override string ToString() => _chamber.ToString();
 }
