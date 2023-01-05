@@ -2,13 +2,13 @@
 {
     public interface IRockShape
     {
-        int Bottom { get; }
+        long Bottom { get; }
         int Height { get; }
         int Left { get; }
-        int Top { get; }
+        long Top { get; }
 
-        string GetLine(int pos, string background, char rockPixel = '@');
-        bool IsCollision(int pos, IEnumerable<string> background);
+        string GetLine(long vPos, string background, char rockPixel = '@');
+        bool IsCollision(int hPos, IEnumerable<string> background);
         void MoveDown();
         void MoveLeft();
         void MoveRight();

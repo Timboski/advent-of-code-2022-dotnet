@@ -3,10 +3,10 @@
 public class Chamber
 {
     private readonly ShapeFactory _shapeFactory;
-    private readonly Dictionary<int, string> _lines = new();
+    private readonly Dictionary<long, string> _lines = new();
     private readonly IRockShape _nullShape = new NullRock();
     private IRockShape _shape;
-    private int _top = 1;
+    private long _top = 1;
 
     public Chamber(ShapeFactory shapeFactory)
     {
@@ -15,11 +15,14 @@ public class Chamber
         _lines[0] = "+-------+";
     }
 
-    public override string ToString() 
+    public override string ToString()
         => string.Join(Environment.NewLine, 
-            Enumerable.Range(0, Top).Reverse().Select(GetLine));
+            Enumerable.Range(0, (int)Top)
+                .Reverse()
+                .Select(i => (long)i)
+                .Select(GetLine));
 
-    public int Top => Math.Max(_top, _shape.Top);
+    public long Top => Math.Max(_top, _shape.Top);
 
     public void AddRock() 
         => _shape = _shapeFactory.Create(_top + 3);
@@ -45,7 +48,7 @@ public class Chamber
 
     public void RestShape()
     {
-        for (int i = _shape.Bottom; i < _shape.Top; i++)
+        for (long i = _shape.Bottom; i < _shape.Top; i++)
         {
             _lines[i] = _shape.GetLine(i, GetBackgroundLine(i), '#');
         }
@@ -53,7 +56,7 @@ public class Chamber
         _shape = _nullShape;
     }
 
-    private bool IsCollision(int bottom, int pos)
+    private bool IsCollision(long bottom, int pos)
     {
         var backgroundLines = GetBackgroundLines(bottom, _shape.Height);
 
@@ -61,14 +64,15 @@ public class Chamber
         return isCollision;
     }
 
-    private string GetLine(int pos) 
+    private string GetLine(long pos) 
         => _shape.GetLine(pos, GetBackgroundLine(pos));
 
-    private string GetBackgroundLine(int pos) 
+    private string GetBackgroundLine(long pos) 
         => _lines.TryGetValue(pos, out var value) ? value : "|.......|";
 
-    private string[] GetBackgroundLines(int bottom, int numLines) 
-        => Enumerable.Range(bottom, numLines)
-            .Select(GetBackgroundLine)
-            .ToArray();
+    private IEnumerable<string> GetBackgroundLines(long bottom, int numLines)
+    {
+        for (long i = bottom; i < bottom + numLines; i++)
+            yield return GetBackgroundLine(i);
+    }
 }

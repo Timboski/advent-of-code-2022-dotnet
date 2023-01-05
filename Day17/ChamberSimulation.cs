@@ -16,11 +16,11 @@ public class ChamberSimulation
             { '>', _chamber.MoveRightIfClear}};
     }
 
-    public int Height => _chamber.Top - 1;
+    public long Height => _chamber.Top - 1;
 
-    public void DropRocks(int numBlocks)
+    public void DropRocks(long numBlocks)
     {
-        for (int i = 0; i < numBlocks; i++) DropRock();
+        for (long i = 0; i < numBlocks; i++) DropRock();
     }
 
     public void DropRock()

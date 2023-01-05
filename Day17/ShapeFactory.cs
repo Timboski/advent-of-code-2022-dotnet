@@ -5,7 +5,7 @@ public class ShapeFactory
     private int _shapeNumber = 0;
     private const int NumShapes = 5;
 
-    public IRockShape Create(int bottomPosition)
+    public IRockShape Create(long bottomPosition)
         => (_shapeNumber++ % NumShapes) switch
                 {
                     0 => new HorizontalShape(bottomPosition),

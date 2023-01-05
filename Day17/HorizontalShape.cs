@@ -2,18 +2,18 @@
 
 public class HorizontalShape : ShapeBase
 {
-    public HorizontalShape(int bottomPosition) : base(bottomPosition)
+    public HorizontalShape(long bottomPosition) : base(bottomPosition)
     {
     }
 
     public override int Height => 1;
 
-    public override string GetLine(int pos, string background, char rockPixel = '@')
+    public override string GetLine(long vPos, string background, char rockPixel = '@')
     {
-        if (pos != Bottom) return background;
+        if (vPos != Bottom) return background;
         return SetPixels(background, _left, 4, rockPixel);
     }
 
-    public override bool IsCollision(int pos, IEnumerable<string> background)
-        => CheckCollisionOnLine(background.First(), pos, 4);
+    public override bool IsCollision(int hPos, IEnumerable<string> background)
+        => CheckCollisionOnLine(background.First(), hPos, 4);
 }

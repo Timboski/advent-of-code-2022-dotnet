@@ -158,7 +158,7 @@ public class ChamberSimulationTest
     [Theory]
     [InlineData("day17-example-input.txt", 3068)]
     [InlineData("day17-input.txt", 3090)]
-    public void GivenChamberSimulationForFile_WhenDropBlocks_TowerHeightIsAsExpected(string filename, int expectedHeight)
+    public void GivenChamberSimulationForFile_WhenDropBlocks_TowerHeightIsAsExpected(string filename, long expectedHeight)
     {
         // Arrange
         var shapeFactory = new ShapeFactory();

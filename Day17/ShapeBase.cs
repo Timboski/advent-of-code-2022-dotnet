@@ -2,23 +2,23 @@
 
 public abstract class ShapeBase : IRockShape
 {
-    protected int _bottomPos;
+    protected long _bottomPos;
     protected int _left = 3;
 
-    protected ShapeBase(int bottomPos) 
+    protected ShapeBase(long bottomPos) 
         => _bottomPos = bottomPos;
 
-    public int Bottom => _bottomPos;
+    public long Bottom => _bottomPos;
 
     public int Left => _left;
 
-    public int Top => _bottomPos + Height;
+    public long Top => _bottomPos + Height;
 
     public abstract int Height { get; }
 
-    public abstract string GetLine(int pos, string background, char rockPixel = '@');
+    public abstract string GetLine(long vPos, string background, char rockPixel = '@');
 
-    public abstract bool IsCollision(int pos, IEnumerable<string> background);
+    public abstract bool IsCollision(int hPos, IEnumerable<string> background);
 
     public void MoveDown() => _bottomPos--;
 
@@ -31,9 +31,9 @@ public abstract class ShapeBase : IRockShape
             new string(rockPixel, count) +
             background[(start + count)..^0];
 
-    protected static bool CheckCollisionOnLine(string background, int pos, int count)
+    protected static bool CheckCollisionOnLine(string background, int hPos, int count)
         => background
-            .Skip(pos)
+            .Skip(hPos)
             .Take(count)
             .Any(a => a != '.');
 }
