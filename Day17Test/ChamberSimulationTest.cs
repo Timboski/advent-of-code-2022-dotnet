@@ -40,6 +40,18 @@ public class ChamberSimulationTest
                     |..####.|
                     +-------+
                     """)]
+    [InlineData(5, """
+                    |....##.|
+                    |....##.|
+                    |....#..|
+                    |..#.#..|
+                    |..#.#..|
+                    |#####..|
+                    |..###..|
+                    |...#...|
+                    |..####.|
+                    +-------+
+                    """)]
     public void GivenSimulationTest_WhenDropBlock_ShowsExpectedRepresentation(int numBlocks, string expectedChamber)
     {
         // Arrange
