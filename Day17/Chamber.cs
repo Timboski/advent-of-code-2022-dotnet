@@ -65,7 +65,7 @@ public class Chamber
         => _shape.GetLine(pos, GetBackgroundLine(pos));
 
     private string GetBackgroundLine(int pos) 
-        => _lines.TryGetValue(pos, out string value) ? value : "|.......|";
+        => _lines.TryGetValue(pos, out var value) ? value : "|.......|";
 
     private string[] GetBackgroundLines(int bottom, int numLines) 
         => Enumerable.Range(bottom, numLines)
