@@ -14,6 +14,15 @@ public class ChamberSimulationTest
                     |..####.|
                     +-------+
                     """)]
+    [InlineData(3, """
+                    |..#....|
+                    |..#....|
+                    |####...|
+                    |..###..|
+                    |...#...|
+                    |..####.|
+                    +-------+
+                    """)]
     public void GivenSimulationTest_WhenDropBlock_ShowsExpectedRepresentation(int numBlocks, string expectedChamber)
     {
         // Arrange
