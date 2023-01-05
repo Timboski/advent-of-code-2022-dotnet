@@ -165,10 +165,6 @@ public class ChamberTest
         sut.MoveRightIfClear();
         sut.TryMoveDown();
         sut.MoveLeftIfClear();
-        var expectedChamber = """
-            |..@@@@.|
-            +-------+
-            """;
 
         // Act
         var success = sut.TryMoveDown();
@@ -197,6 +193,31 @@ public class ChamberTest
 
         // Act
         sut.TryMoveDown();
+
+        // Assert
+        Assert.Equal(expectedChamber, sut.ToString());
+    }
+
+    [Fact]
+    public void GivenChamberWithShapeBlockedBelow_WhenRestShape_ShapeBecomesPartOfBackground()
+    {
+        // Arrange
+        var shapeFactory = new ShapeFactory();
+        var sut = new Chamber(shapeFactory);
+        sut.MoveRightIfClear();
+        sut.TryMoveDown();
+        sut.MoveRightIfClear();
+        sut.TryMoveDown();
+        sut.MoveRightIfClear();
+        sut.TryMoveDown();
+        sut.MoveLeftIfClear();
+        var expectedChamber = """
+            |..####.|
+            +-------+
+            """;
+
+        // Act
+        sut.RestShape();
 
         // Assert
         Assert.Equal(expectedChamber, sut.ToString());

@@ -3,13 +3,16 @@
 public class Chamber
 {
     private readonly ShapeFactory _shapeFactory;
-    private HorizontalShape _shape;
+    private readonly Dictionary<int, string> _lines = new();
+    private readonly IRockShape _nullShape = new NullRock();
+    private IRockShape _shape;
     private int _top = 1;
 
     public Chamber(ShapeFactory shapeFactory)
     {
         _shapeFactory = shapeFactory;
         _shape = _shapeFactory.Create(_top + 3);
+        _lines[0] = "+-------+";
     }
 
     public override string ToString() 
@@ -37,6 +40,16 @@ public class Chamber
         return canMove;
     }
 
+    public void RestShape()
+    {
+        for (int i = _shape.Bottom; i < _shape.Top; i++)
+        {
+            _lines[i] = _shape.GetLine(i, GetBackgroundLine(i), '#');
+        }
+        _top = Top;
+        _shape = _nullShape;
+    }
+
     private bool IsCollision(int bottom, int pos)
     {
         var backgroundLines = GetBackgroundLines(bottom, _shape.Height);
@@ -49,7 +62,7 @@ public class Chamber
         => _shape.GetLine(pos, GetBackgroundLine(pos));
 
     private string GetBackgroundLine(int pos) 
-        => pos == 0 ? "+-------+" : "|.......|";
+        => _lines.TryGetValue(pos, out string value) ? value : "|.......|";
 
     private string[] GetBackgroundLines(int bottom, int numLines) 
         => Enumerable.Range(bottom, numLines)
