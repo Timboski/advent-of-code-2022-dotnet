@@ -7,13 +7,18 @@ public class ChamberSimulation
     private readonly Dictionary<char, Action> _decodeJet;
 
     public ChamberSimulation(ShapeFactory shapeFactory, JetDirectionFactory jetDirectionFactory)
-	{
-        _chamber =  new Chamber(shapeFactory);
+    {
+        _chamber = new Chamber(shapeFactory);
         _jetDirectionFactory = jetDirectionFactory;
 
         _decodeJet = new() {
             { '<', _chamber.MoveLeftIfClear},
             { '>', _chamber.MoveRightIfClear}};
+    }
+
+    public void DropRocks(int numBlocks)
+    {
+        for (int i = 0; i < numBlocks; i++) DropRock();
     }
 
     public void DropRock()
@@ -29,8 +34,8 @@ public class ChamberSimulation
         _chamber.RestShape();
     }
 
-    private void MoveRockForJet() 
-        => _decodeJet[_jetDirectionFactory.NextJetDirection()].Invoke();
-
     public override string ToString() => _chamber.ToString();
+
+    private void MoveRockForJet()
+        => _decodeJet[_jetDirectionFactory.NextJetDirection()].Invoke();
 }
