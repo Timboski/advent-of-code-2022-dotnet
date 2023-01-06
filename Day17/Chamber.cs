@@ -77,7 +77,7 @@ public class Chamber
         return isCollision;
     }
 
-    private string GetLine(long pos) 
+    public string GetLine(long pos) 
         => _shape.GetLine(pos, GetBackgroundLine(pos));
 
     private string GetBackgroundLine(long pos) 

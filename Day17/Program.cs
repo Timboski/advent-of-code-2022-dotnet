@@ -1,14 +1,7 @@
 ﻿using Day17;
 
-Console.WriteLine($"Part 1: {FindHeight(2022)}");
-// Console.WriteLine($"Part 2: {FindHeight(1000000000000)}");
+var height1 = Simulation.FindHeight("day17-input.txt", 2022);
+Console.WriteLine($"Part 1: {height1}");
 
-static long FindHeight(long numRocks)
-{
-    var shapeFactory = new ShapeFactory();
-    var jetDirectionFactory = new JetDirectionFactory("day17-input.txt");
-    var sut = new ChamberSimulation(shapeFactory, jetDirectionFactory);
-    sut.DropRocks(numRocks);
-    var height = sut.Height;
-    return height;
-}
+var height2 = Simulation.FindHeightWithRepeat("day17-input.txt", 1000000000000);
+Console.WriteLine($"Part 2: {height2}");
