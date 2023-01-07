@@ -3,14 +3,14 @@ namespace Day18Test;
 public class BoulderBinsTest
 {
     [Fact]
-    public void GivenExampleInputBoulders_WhenSortByXAxis_BouldersWithSameXAreInSameBin()
+    public void GivenExampleInputBoulders_WhenSortIntoBinsByXAxis_BouldersWithSameXAreInSameBin()
     {
         // Arrange
         var boulders = File.ReadAllLines("day18-example-input.txt")
                             .Select(l => new Boulder(l));
 
         // Act
-        var bins = BoulderBins.Sort(boulders, Axis.X);
+        var bins = boulders.SortIntoBins(Axis.X);
 
         // Assert
         Assert.Equal(3, bins.Count());

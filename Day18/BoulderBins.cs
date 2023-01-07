@@ -2,7 +2,7 @@
 
 public static class BoulderBins
 {
-    public static IEnumerable<IEnumerable<Boulder>> Sort(IEnumerable<Boulder> boulders, Axis axis)
+    public static IEnumerable<IEnumerable<Boulder>> SortIntoBins(this IEnumerable<Boulder> boulders, Axis axis)
     {
         var bins = new Dictionary<int, List<Boulder>>();
         foreach (var boulder in boulders)
