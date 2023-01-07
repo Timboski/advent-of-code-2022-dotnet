@@ -2,10 +2,10 @@
 
 public class Boulder
 {
-	public Boulder(string description)
-	{
+    private readonly int[] _axis;
 
-	}
+    public Boulder(string description) 
+        => _axis = description.Split(',').Select(int.Parse).ToArray();
 
-	public int GetValue(Axis axis) => 2;
+    public int GetValue(Axis axis) => _axis[(int)axis];
 }
