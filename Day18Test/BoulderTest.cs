@@ -31,4 +31,19 @@ public class BoulderTest
         // Assert
         Assert.Equal(expectedY, y);
     }
+
+    [Fact]
+    public void GivenDescription_WhenGetValueOnZAxis_ReturnsZValueFromDescription()
+    {
+        // Arrange
+        var description = "2,3,5";
+        const int expectedZ = 5;
+        var sut = new Boulder(description);
+
+        // Act
+        var z = sut.GetValue(Axis.Z);
+
+        // Assert
+        Assert.Equal(expectedZ, z);
+    }
 }
