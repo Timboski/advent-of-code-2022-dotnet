@@ -5,7 +5,19 @@ public static class SurfaceAreaFinder
     public static int FindArea(string filename)
     {
         var boulders = File.ReadAllLines(filename).Select(l => new Boulder(l));
+        return FindAreaOfBoulders(boulders);
+    }
 
+    public static int FindExternalArea(string filename)
+    {
+        var boulders = File.ReadAllLines(filename).Select(l => new Boulder(l));
+        var trappedAir = boulders.FindTrappedAir();
+        var solidBoulders = boulders.Concat(trappedAir); // Fill in the air gaps so internal edges not counted
+        return FindAreaOfBoulders(solidBoulders);
+    }
+
+    private static int FindAreaOfBoulders(IEnumerable<Boulder> boulders)
+    {
         // Initial area - assuming no touching
         var area = boulders.Count() * 6;
 

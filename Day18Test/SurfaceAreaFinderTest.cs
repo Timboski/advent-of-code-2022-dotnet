@@ -13,4 +13,16 @@ public class SurfaceAreaFinderTest
         // Assert
         Assert.Equal(expectedArea, area);
     }
+
+    [Theory]
+    [InlineData("day18-example-input.txt", 58)]
+    // [InlineData("day18-input.txt", ???)]
+    public void GivenInputFile_WhenFindExternalArea_FindsExpectedArea(string filename, int expectedArea)
+    {
+        // Arrange, Act
+        var area = SurfaceAreaFinder.FindExternalArea(filename);
+
+        // Assert
+        Assert.Equal(expectedArea, area);
+    }
 }

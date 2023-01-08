@@ -14,7 +14,7 @@ public class TrappedAirTest
         var trappedAir = boulders.FindTrappedAir();
 
         // Assert
-        Assert.Equal(1, trappedAir.Count());
+        Assert.Single(trappedAir);
         Assert.Equal (expectedPosition, trappedAir.First().ToTuple());
     }
 }
