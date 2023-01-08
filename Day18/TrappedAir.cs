@@ -4,33 +4,30 @@ public static class TrappedAir
 {
     public static IEnumerable<Boulder> FindTrappedAir(this IEnumerable<Boulder> boulders)
     {
-        var potentialX = boulders.SortIntoBins(Axis.Y)
-            .SelectMany(b => b.SortIntoBins(Axis.Z))
-            .Where(b => b.Count() > 1)
-            .SelectMany(b => b.FindGaps(Axis.X))
-            .Select(g => g.ToTuple())
+        var potentialX = boulders
+            .FindGapsBetweenBoulders(Axis.X, Axis.Y, Axis.Z)
             .ToHashSet();
 
-        var potentialXY = boulders.SortIntoBins(Axis.X)
-            .SelectMany(b => b.SortIntoBins(Axis.Z))
-            .Where(b => b.Count() > 1)
-            .SelectMany(b => b.FindGaps(Axis.Y))
-            .Select(g => g.ToTuple())
+        var potentialXY = boulders
+            .FindGapsBetweenBoulders(Axis.Y, Axis.X, Axis.Z)
             .Where(potentialX.Contains)
             .ToHashSet();
 
-        var potentialXYZ = boulders.SortIntoBins(Axis.X)
-            .SelectMany(b => b.SortIntoBins(Axis.Y))
-            .Where(b => b.Count() > 1)
-            .SelectMany(b => b.FindGaps(Axis.Z))
-            .Select(g => g.ToTuple())
-            .Where(potentialXY.Contains)
-            .ToHashSet();
+        var potentialXYZ = boulders
+            .FindGapsBetweenBoulders(Axis.Z, Axis.X, Axis.Y)
+            .Where(potentialXY.Contains);
 
         // TODO: Check that potential gaps are fully enclosed.
 
         return potentialXYZ.Select(t => new Boulder(t));
     }
+    private static IEnumerable<(int X, int Y, int Z)> FindGapsBetweenBoulders(this IEnumerable<Boulder> boulders, Axis axis1, Axis axis2, Axis axis3)
+        => boulders.SortIntoBins(axis2)
+            .SelectMany(b => b.SortIntoBins(axis3))
+            .Where(b => b.Count() > 1)
+            .SelectMany(b => b.FindGaps(axis1))
+            .Select(g => g.ToTuple());
+
     private static IEnumerable<Boulder> FindGaps(this IEnumerable<Boulder> boulders, Axis axis)
     {
         var sorted = boulders.OrderBy(b => b.GetValue(axis));
