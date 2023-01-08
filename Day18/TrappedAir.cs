@@ -15,11 +15,35 @@ public static class TrappedAir
 
         var potentialXYZ = boulders
             .FindGapsBetweenBoulders(Axis.Z, Axis.X, Axis.Y)
-            .Where(potentialXY.Contains);
+            .Where(potentialXY.Contains)
+            .ToHashSet();
 
-        // TODO: Check that potential gaps are fully enclosed.
+        var rock = boulders.Select(b => b.ToTuple()).ToHashSet();
+        while (true)
+        {
+            var changed = false;
+            foreach (var gap in potentialXYZ)
+            {
+                // Check if totally enclosed (either boulder or another gap).
+                var checkPositions = new[] {
+                    (gap.X + 1, gap.Y, gap.Z),
+                    (gap.X - 1, gap.Y, gap.Z),
+                    (gap.X, gap.Y + 1, gap.Z),
+                    (gap.X, gap.Y -1, gap.Z),
+                    (gap.X, gap.Y, gap.Z + 1),
+                    (gap.X, gap.Y, gap.Z - 1)
+                };
 
-        return potentialXYZ.Select(t => new Boulder(t));
+                if (checkPositions.Any(p => !rock.Contains(p) && !potentialXYZ.Contains(p)))
+                {
+                    // Not fully enclosed. Remove from potential gaps.
+                    changed = true;
+                    potentialXYZ.Remove(gap);
+                }
+            }
+
+            if (!changed) return potentialXYZ.Select(t => new Boulder(t));
+        }
     }
     private static IEnumerable<(int X, int Y, int Z)> FindGapsBetweenBoulders(this IEnumerable<Boulder> boulders, Axis axis1, Axis axis2, Axis axis3)
         => boulders.SortIntoBins(axis2)
