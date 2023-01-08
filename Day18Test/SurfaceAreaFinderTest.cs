@@ -16,7 +16,7 @@ public class SurfaceAreaFinderTest
 
     [Theory]
     [InlineData("day18-example-input.txt", 58)]
-    // [InlineData("day18-input.txt", ???)]
+    [InlineData("day18-input.txt", 2052)]
     public void GivenInputFile_WhenFindExternalArea_FindsExpectedArea(string filename, int expectedArea)
     {
         // Arrange, Act
